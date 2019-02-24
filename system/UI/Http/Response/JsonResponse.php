@@ -1,17 +1,20 @@
 <?php
 
-namespace System\UI\Http;
+namespace System\UI\Http\Response;
 
-class Response
+use GuzzleHttp\Psr7\Response;
+use System\UI\ResponseInterface;
+
+class JsonResponse implements ResponseInterface
 {
     private $response;
     
-    public function __construct(\GuzzleHttp\Psr7\Response $response)
+    public function __construct(Response $response)
     {
         $this->response = $response;
     }
 
-    public function json()
+    public function send()
     {
         http_response_code($this->response->getStatusCode());
 

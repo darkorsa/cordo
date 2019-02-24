@@ -21,9 +21,9 @@ class Dispatcher
         $this->container    = $container;
     }
 
-    public function dispatch(string $requestMethod, string $requestUri, ServerRequestInterface $request = null)
+    public function dispatch(ServerRequestInterface $request): Response
     {
-        $routeInfo = $this->dispatcher->dispatch($requestMethod, $requestUri);
+        $routeInfo = $this->dispatcher->dispatch($request->getMethod(), $request->getUri()->getPath());
 
         switch ($routeInfo[0]) {
             case FRDispatcher::NOT_FOUND:
@@ -35,10 +35,7 @@ class Dispatcher
                 list($class, $method) = explode('@', $handler, 2);
 
                 $controller = $this->container->get($class);
-
-                if ($request) {
-                    $controller->setRequest($request);
-                }
+                //$controller->setRequest($request);
 
                 return $controller->run($method, ...array_values($vars));
         }

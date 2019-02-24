@@ -12,6 +12,11 @@ function app_path()
     return ROOT_DIR . 'turbo/';
 }
 
+function config_path()
+{
+    return ROOT_DIR . 'config/';
+}
+
 function system_path()
 {
     return ROOT_DIR . 'system/';

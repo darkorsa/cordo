@@ -10,7 +10,7 @@ $dotenv->load(root_path().'.env');
  * DI container Psr\Container\ContainerInterface
  */
 $containerBuilder = new ContainerBuilder();
-$containerBuilder->addDefinitions(root_path().'config/definitions.php');
+$containerBuilder->addDefinitions(__DIR__.'/definitions.php');
 
 if (getenv('APP_ENV') == 'production') {
     $containerBuilder->enableCompilation(storage_path().'cache');
