@@ -21,6 +21,6 @@ class Parser extends \Noodlehaus\Parser\Php
             );
         }
         // Complete parsing
-        return $this->parse($data, $filename);
+        return $this->parse($data);
     }
 }
