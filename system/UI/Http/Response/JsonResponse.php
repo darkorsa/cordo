@@ -21,6 +21,11 @@ class JsonResponse implements ResponseInterface
         header("Content-Type:{application/json}");
         header("charset:{utf-8}");
 
+        // additional header
+        foreach ($this->response->getHeaders() as $key => $val) {
+            header("{$key}:{".current($val)."}");
+        }
+
         echo $this->response->getBody();
         exit;
     }
