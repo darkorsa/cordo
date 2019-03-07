@@ -6,6 +6,7 @@ use GuzzleHttp\Psr7\Response;
 use Psr\Container\ContainerInterface;
 use FastRoute\Dispatcher as FRDispatcher;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Message\ResponseInterface;
 
 class Dispatcher
 {
@@ -21,7 +22,7 @@ class Dispatcher
         $this->container    = $container;
     }
 
-    public function dispatch(ServerRequestInterface $request): Response
+    public function dispatch(ServerRequestInterface $request): ResponseInterface
     {
         $routeInfo = $this->dispatcher->dispatch($request->getMethod(), $request->getUri()->getPath());
 
@@ -32,10 +33,14 @@ class Dispatcher
                 return new Response(404);
             case FRDispatcher::FOUND:
                 list($state, $handler, $vars) = $routeInfo;
+                
+                if (is_callable($handler)) {
+                    return $handler($request, $this->container);
+                }
+
                 list($class, $method) = explode('@', $handler, 2);
 
                 $controller = $this->container->get($class);
-                //$controller->setRequest($request);
 
                 return $controller->run($method, ...array_values($vars));
         }

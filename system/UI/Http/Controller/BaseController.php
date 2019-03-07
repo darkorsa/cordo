@@ -9,12 +9,9 @@ use Psr\Log\LoggerInterface;
 use GuzzleHttp\Psr7\Response;
 use InvalidArgumentException;
 use Psr\Container\ContainerInterface;
-use Psr\Http\Message\ServerRequestInterface;
 
 abstract class BaseController
 {
-    protected $request;
-
     protected $container;
 
     protected $logger;
@@ -22,18 +19,11 @@ abstract class BaseController
     protected $statusCode = 200;
     
     public function __construct(
-        ServerRequestInterface $request,
         ContainerInterface $container,
         LoggerInterface $logger
     ) {
-        $this->request = $request;
         $this->container = $container;
         $this->logger = $logger;
-    }
-
-    public function setRequest(ServerRequestInterface $request)
-    {
-        $this->request = $request;
     }
 
     public function run()

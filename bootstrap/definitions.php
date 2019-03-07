@@ -1,15 +1,17 @@
 <?php
 
 use Monolog\Logger;
+use System\UI\Http\Router;
 use Psr\Log\LoggerInterface;
 use Monolog\Handler\StreamHandler;
 use Psr\Http\Message\ServerRequestInterface;
 
 return [
-    'config' => DI\create(Config::class)->constructor(config_path(), DI\get(Parser::class)),
-    'lang' => DI\create(Config::class)->constructor(resources_path() . 'lang', DI\get(Parser::class)),
-    'request' => DI\get(ServerRequestInterface::class),
-    'logger' => DI\get(LoggerInterface::class),
+    'config'    => DI\create(Config::class)->constructor(config_path(), DI\get(Parser::class)),
+    'lang'      => DI\create(Config::class)->constructor(resources_path() . 'lang', DI\get(Parser::class)),
+    'request'   => DI\get(ServerRequestInterface::class),
+    'logger'    => DI\get(LoggerInterface::class),
+    'router'    => DI\create(Router::class),
     ServerRequestInterface::class => DI\factory('GuzzleHttp\Psr7\ServerRequest::fromGlobals'),
     LoggerInterface::class => DI\create(Logger::class)
         ->constructor('logger')

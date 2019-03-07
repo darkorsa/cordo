@@ -1,5 +1,10 @@
 <?php
 
-return function (FastRoute\RouteCollector $route) {
-    $route->addRoute('GET', '/welcome', 'Turbo\UI\Http\Controller\WelcomeController@greet');
-};
+use System\UI\Http\Middleware\Oauth;
+
+$router->addRoute(
+    'GET',
+    '/welcome',
+    'Turbo\UI\Http\Controller\WelcomeController@greet',
+    [Oauth::class]
+);

@@ -2,14 +2,13 @@
 
 namespace System\UI\Http\Response;
 
-use GuzzleHttp\Psr7\Response;
-use System\UI\ResponseInterface;
+use Psr\Http\Message\ResponseInterface;
 
-class JsonResponse implements ResponseInterface
+class JsonResponse implements \System\UI\ResponseInterface
 {
     private $response;
     
-    public function __construct(Response $response)
+    public function __construct(ResponseInterface $response)
     {
         $this->response = $response;
     }

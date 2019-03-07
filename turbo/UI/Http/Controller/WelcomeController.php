@@ -2,13 +2,16 @@
 
 namespace Turbo\UI\Http\Controller;
 
-use GuzzleHttp\Psr7\Response;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use System\UI\Http\Controller\BaseController;
 
 class WelcomeController extends BaseController
 {
-    public function greetAction(): Response
+    public function greetAction(ServerRequestInterface $request): ResponseInterface
     {
+        dd($request->getQueryParams());
+        
         return $this->respondWithData('Welcome to the Code Ninjas microframework!');
     }
 }

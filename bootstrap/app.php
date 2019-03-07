@@ -16,4 +16,10 @@ if (getenv('APP_ENV') == 'production') {
     $containerBuilder->enableCompilation(storage_path().'cache');
 }
 
-return $containerBuilder->build();
+$container = $containerBuilder->build();
+
+$router = $container->get('router');
+
+require_once(app_path() . 'UI/Http/routes.php');
+
+return $container;

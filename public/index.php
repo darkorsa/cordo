@@ -10,9 +10,7 @@ $container = require_once __DIR__.'/../bootstrap/app.php';
 /**
  * Dispatch request
  */
-$router = FastRoute\simpleDispatcher(require_once(app_path() . 'UI/Http/routes.php'));
-
-$dispatcher = new Dispatcher($router, $container);
+$dispatcher = new Dispatcher(FastRoute\simpleDispatcher($container->get('router')->routes()), $container);
 
 $response = new JsonResponse($dispatcher->dispatch($container->get('request')));
 $response->send();
