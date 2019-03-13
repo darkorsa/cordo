@@ -9,7 +9,7 @@ function root_path()
 
 function app_path()
 {
-    return ROOT_DIR . 'turbo/';
+    return ROOT_DIR . 'app/';
 }
 
 function config_path()

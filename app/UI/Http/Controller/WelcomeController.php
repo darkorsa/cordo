@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Turbo\UI\Http\Controller;
+namespace App\UI\Http\Controller;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
