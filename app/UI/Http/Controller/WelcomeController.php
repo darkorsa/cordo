@@ -10,8 +10,6 @@ class WelcomeController extends BaseController
 {
     public function greetAction(ServerRequestInterface $request): ResponseInterface
     {
-        dd($request->getQueryParams());
-        
         return $this->respondWithData('Welcome to the Code Ninjas microframework!');
     }
 }

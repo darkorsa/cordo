@@ -53,6 +53,12 @@ class Router
                 $route,
                 $container
             ) {
+                if (is_callable($route->handler)) {
+                    $handlerCallable = $route->handler;
+                    
+                    return $handlerCallable();
+                }
+
                 [$controller, $action] = explode('@', $route->handler);
 
                 return $container->get($controller)->{$action.'Action'}($request);

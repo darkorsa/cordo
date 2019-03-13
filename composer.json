@@ -1,5 +1,6 @@
 {
     "require": {
+        "bshaffer/oauth2-server-php": "^1.10",
         "doctrine/migrations": "2.0.x-dev",
         "guzzlehttp/psr7": "^1.5",
         "hassankhan/config": "^2.0",

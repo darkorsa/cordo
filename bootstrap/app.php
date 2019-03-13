@@ -18,8 +18,4 @@ if (getenv('APP_ENV') == 'production') {
 
 $container = $containerBuilder->build();
 
-$router = $container->get('router');
-
-require_once(app_path() . 'UI/Http/routes.php');
-
 return $container;

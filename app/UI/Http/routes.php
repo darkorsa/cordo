@@ -1,10 +1,10 @@
 <?php
 
-use System\UI\Http\Middleware\Oauth;
+use System\UI\Http\Middleware\OAuth;
 
 $router->addRoute(
     'GET',
     '/welcome',
     'App\UI\Http\Controller\WelcomeController@greet',
-    [Oauth::class]
+    [new OAuth($container)]
 );

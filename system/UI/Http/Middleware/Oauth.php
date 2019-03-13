@@ -2,17 +2,29 @@
 
 namespace System\UI\Http\Middleware;
 
-use GuzzleHttp\Psr7\Response;
+use OAuth2\Request;
+use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
-class Oauth implements MiddlewareInterface
+class OAuth implements MiddlewareInterface
 {
+    private $container;
+    
+    public function __construct(ContainerInterface $container)
+    {
+        $this->container = $container;
+    }
+    
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        // @TODO
+        if (!$this->container->get('oauth_server')->verifyResourceRequest(Request::createFromGlobals())) {
+            $this->container->get('oauth_server')->getResponse()->send();
+            die;
+        }
+
         return $handler->handle($request);
     }
 }
