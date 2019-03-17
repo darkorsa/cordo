@@ -4,7 +4,7 @@ namespace System\Auth;
 
 use OAuth2\Storage\UserCredentialsInterface;
 
-class UserCredentials implements UserCredentialsInterface
+class DemoCredentials implements UserCredentialsInterface
 {
     const LOGIN = 'demo';
 

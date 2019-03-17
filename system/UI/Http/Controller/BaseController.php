@@ -16,6 +16,8 @@ abstract class BaseController
 
     protected $logger;
 
+    protected $commandBus;
+
     protected $statusCode = 200;
     
     public function __construct(
@@ -24,6 +26,7 @@ abstract class BaseController
     ) {
         $this->container = $container;
         $this->logger = $logger;
+        $this->commandBus = $container->get('command_bus');
     }
 
     public function run()

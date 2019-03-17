@@ -1,6 +1,6 @@
 <?php
 
-namespace System\Config;
+namespace System\Application\Config;
 
 use Exception;
 use Noodlehaus\Exception\ParseException;
