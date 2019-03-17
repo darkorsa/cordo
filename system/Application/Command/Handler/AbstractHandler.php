@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace System\Application\Handler;
+namespace System\Application\Command\Handler;
 
 use League\Event\EmitterInterface;
 
-abstract class Handler
+abstract class AbstractHandler
 {
     protected $emitter;
     

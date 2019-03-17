@@ -6,10 +6,10 @@ use League\Tactician\CommandBus;
 use Monolog\Handler\StreamHandler;
 use League\Tactician\Logger\LoggerMiddleware;
 use League\Tactician\Plugins\LockingMiddleware;
-use System\Application\Handler\HandleInflector;
 use League\Tactician\Container\ContainerLocator;
 use League\Tactician\CommandEvents\EventMiddleware;
 use League\Tactician\Handler\CommandHandlerMiddleware;
+use System\Application\Command\Handler\HandleInflector;
 use League\Tactician\Logger\Formatter\ClassNameFormatter;
 use League\Tactician\Handler\CommandNameExtractor\ClassNameExtractor;
 

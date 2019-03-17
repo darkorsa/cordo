@@ -1,6 +1,6 @@
 <?php
 
-namespace System\Application\Handler;
+namespace System\Application\Command\Handler;
 
 use League\Tactician\Handler\MethodNameInflector\MethodNameInflector;
 

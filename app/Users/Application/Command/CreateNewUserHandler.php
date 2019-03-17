@@ -2,11 +2,11 @@
 
 namespace App\Users\Application\Command;
 
-use System\Application\Handler\Handler;
 use App\Users\Application\Event\UserCreated;
 use App\Users\Application\Command\CreateNewUser;
+use System\Application\Command\Handler\AbstractHandler;
 
-class CreateNewUserHandler extends Handler
+class CreateNewUserHandler extends AbstractHandler
 {
     public function handle(CreateNewUser $command): void
     {

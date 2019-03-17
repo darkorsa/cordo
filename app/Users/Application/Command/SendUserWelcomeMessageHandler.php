@@ -2,9 +2,10 @@
 
 namespace App\Users\Application\Command;
 
+use System\Application\Command\Handler\AbstractHandler;
 use App\Users\Application\Command\SendUserWelcomeMessage;
 
-class SendUserWelcomeMessageHandler
+class SendUserWelcomeMessageHandler extends AbstractHandler
 {
     public function handle(SendUserWelcomeMessage $command): void
     {
