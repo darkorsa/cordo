@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Users\Application\Command;
+namespace App\Users\Application\Command\Handler;
 
 use System\Application\Command\Handler\AbstractHandler;
 use App\Users\Application\Command\SendUserWelcomeMessage;

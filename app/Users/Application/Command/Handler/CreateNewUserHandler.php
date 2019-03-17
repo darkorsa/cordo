@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace App\Users\Application\Command;
+namespace App\Users\Application\Command\Handler;
 
 use App\Users\Application\Event\UserCreated;
 use App\Users\Application\Command\CreateNewUser;

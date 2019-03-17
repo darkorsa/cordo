@@ -1,7 +1,7 @@
 <?php
 
 use App\Users\Application\Event\UserCreated;
-use App\Users\Application\Event\UserCreatedListener;
+use App\Users\Application\Event\Listener\UserCreatedListener;
 
 $emitter->addListener(
     'users.created',

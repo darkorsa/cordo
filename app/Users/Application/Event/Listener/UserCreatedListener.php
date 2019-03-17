@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace App\Users\Application\Event;
+namespace App\Users\Application\Event\Listener;
 
 use League\Event\EventInterface;
 use System\Application\Event\AbstractListener;
