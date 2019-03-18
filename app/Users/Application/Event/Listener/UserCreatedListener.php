@@ -3,7 +3,7 @@
 namespace App\Users\Application\Event\Listener;
 
 use League\Event\EventInterface;
-use System\Application\Event\AbstractListener;
+use System\Application\Event\Listener\AbstractListener;
 use App\Users\Application\Command\SendUserWelcomeMessage;
 
 class UserCreatedListener extends AbstractListener
