@@ -1,7 +1,9 @@
 {
     "require": {
+        "beberlei/assert": "^3.2",
         "bshaffer/oauth2-server-php": "^1.10",
-        "doctrine/migrations": "2.0.x-dev",
+        "doctrine/dbal": "^2.9",
+        "doctrine/orm": "^2.6",
         "guzzlehttp/psr7": "^1.5",
         "hassankhan/config": "^2.0",
         "league/tactician": "^1.0",
@@ -13,6 +15,7 @@
         "particle/validator": "^2.3",
         "php-di/php-di": "^6.0",
         "psr/http-server-middleware": "^1.0",
+        "ramsey/uuid": "^3.8",
         "relay/relay": "2.x@dev",
         "symfony/dotenv": "^4.2"
     },

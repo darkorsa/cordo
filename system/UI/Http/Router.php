@@ -45,13 +45,14 @@ class Router
 
     private function getHandler(stdClass $route)
     {
-        return function (ServerRequestInterface $request, ContainerInterface $container) use ($route) {
+        return function (ServerRequestInterface $request, ContainerInterface $container, array $vars) use ($route) {
             $route->middlewares[] = function (
                 RequestInterface $request,
                 RequestHandlerInterface $handler
             ) use (
                 $route,
-                $container
+                $container,
+                $vars
             ) {
                 if (is_callable($route->handler)) {
                     $handlerCallable = $route->handler;
@@ -61,7 +62,7 @@ class Router
 
                 [$controller, $action] = explode('@', $route->handler);
 
-                return $container->get($controller)->{$action.'Action'}($request);
+                return $container->get($controller)->run($request, $action, $vars);
             };
 
             return $this->processMiddlewares($route->middlewares, $request);

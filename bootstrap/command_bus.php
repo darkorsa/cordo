@@ -26,7 +26,7 @@ $commandLogger = new Logger('command');
 $commandLogger->pushHandler(new StreamHandler(storage_path().'logs/command.log', Logger::DEBUG));
 
 $commandBus = new CommandBus([
-    new LoggerMiddleware(new ClassNameFormatter(), $logger),
+    new LoggerMiddleware(new ClassNameFormatter(), $commandLogger),
     new LockingMiddleware(),
     new EventMiddleware($emitter),
     $commandHandlerMiddleware,

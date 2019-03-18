@@ -2,15 +2,30 @@
 
 namespace App\Users\Application\Command\Handler;
 
+use App\Users\Domain\User;
+use League\Event\EmitterInterface;
+use App\Users\Domain\UsersInterface;
 use App\Users\Application\Event\UserCreated;
 use App\Users\Application\Command\CreateNewUser;
-use System\Application\Command\Handler\AbstractHandler;
 
-class CreateNewUserHandler extends AbstractHandler
+class CreateNewUserHandler
 {
+    private $users;
+
+    private $emitter;
+    
+    public function __construct(UsersInterface $users, EmitterInterface $emitter)
+    {
+        $this->users = $users;
+        $this->emitter = $emitter;
+    }
+    
     public function handle(CreateNewUser $command): void
     {
-        echo 'dodano!' . PHP_EOL;
+        $user = new User($command->email(), $command->password());
+
+        $this->users->add($user);
+
         $this->emitter->emit('users.created', new UserCreated($command->email()));
     }
 }

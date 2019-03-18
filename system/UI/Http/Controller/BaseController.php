@@ -9,6 +9,7 @@ use Psr\Log\LoggerInterface;
 use GuzzleHttp\Psr7\Response;
 use InvalidArgumentException;
 use Psr\Container\ContainerInterface;
+use Psr\Http\Message\RequestInterface;
 
 abstract class BaseController
 {
@@ -29,16 +30,10 @@ abstract class BaseController
         $this->commandBus = $container->get('command_bus');
     }
 
-    public function run()
+    public function run(RequestInterface $request, string $call, array $vars)
     {
-        $args = func_get_args();
-        
-        $call       = $args[0];
-        $id         = isset($args[1]) ? $args[1] : null;
-        $attributes = array_slice($args, 2);
-               
         try {
-            return $this->{$call . 'Action'}($id, $attributes);
+            return $this->{$call . 'Action'}($request, $vars);
         } catch (NotFoundException $e) {
             return $this->respondNotFound();
         } catch (Error $e) {

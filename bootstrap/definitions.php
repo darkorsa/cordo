@@ -1,12 +1,13 @@
 <?php
 
 use Noodlehaus\Config;
+use League\Event\Emitter;
 use System\UI\Http\Router;
 use Psr\Log\LoggerInterface;
+use Doctrine\ORM\EntityManager;
 use League\Event\EmitterInterface;
 use System\Application\Config\Parser;
 use Psr\Http\Message\ServerRequestInterface;
-use League\Event\Emitter;
 
 return [
     'config'    => DI\factory(function () {
@@ -20,5 +21,6 @@ return [
     'emitter'   => DI\get(EmitterInterface::class),
     ServerRequestInterface::class => DI\factory('GuzzleHttp\Psr7\ServerRequest::fromGlobals'),
     LoggerInterface::class => DI\get('logger'),
-    EmitterInterface::class => DI\get(Emitter::class)
+    EmitterInterface::class => DI\get(Emitter::class),
+    EntityManager::class => DI\get('entity_manager'),
 ];

@@ -33,16 +33,16 @@ class Dispatcher
                 return new Response(404);
             case FRDispatcher::FOUND:
                 list($state, $handler, $vars) = $routeInfo;
-                
+
                 if (is_callable($handler)) {
-                    return $handler($request, $this->container);
+                    return $handler($request, $this->container, $vars);
                 }
 
                 list($class, $method) = explode('@', $handler, 2);
 
                 $controller = $this->container->get($class);
 
-                return $controller->run($method, ...array_values($vars));
+                return $controller->run($request, $method, $vars);
         }
     }
 }

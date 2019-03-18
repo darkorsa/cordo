@@ -21,7 +21,7 @@ class UserController extends BaseController
 
         $validator = new Validator;
         $validator->required('email')->lengthBetween(6, 50)->email();
-        $validator->required('password')->lengthBetween(5, 50);
+        $validator->required('password')->lengthBetween(6, 50);
 
         $result = $validator->validate($params);
 

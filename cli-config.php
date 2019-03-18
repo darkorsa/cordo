@@ -1,25 +1,17 @@
 <?php
 
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
+use Doctrine\ORM\Tools\Console\ConsoleRunner;
+
 require 'vendor/autoload.php';
 
-use Doctrine\DBAL\DriverManager;
-use Symfony\Component\Dotenv\Dotenv;
-use Symfony\Component\Console\Helper\HelperSet;
-use Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper;
+$logger = new Logger('logger');
+$logger->pushHandler(new StreamHandler(storage_path().'logs/error.log', Logger::ERROR));
 
-$dotenv = new Dotenv();
-$dotenv->load(root_path().'.env');
-
-$dbParams = [
-    'dbname'    => getenv('DB_DATABASE'),
-    'user'      => getenv('DB_USERNAME'),
-    'password'  => getenv('DB_PASSWORD'),
-    'host'      => getenv('DB_HOST'),
-    'driver'    => 'pdo_mysql',
-];
-
-$connection = DriverManager::getConnection($dbParams);
-
-return new HelperSet([
-    'db' => new ConnectionHelper($connection),
-]);
+try {
+    $container = require_once __DIR__.'/bootstrap/app.php';
+    return ConsoleRunner::createHelperSet($container->get('entity_manager'));
+} catch (Exception $e) {
+    echo $e->getMessage() . PHP_EOL;
+}
