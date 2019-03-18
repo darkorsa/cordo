@@ -10,6 +10,7 @@
         "league/tactician-logger": "^0.10.0",
         "monolog/monolog": "^1.24",
         "nikic/fast-route": "^1.3",
+        "particle/validator": "^2.3",
         "php-di/php-di": "^6.0",
         "psr/http-server-middleware": "^1.0",
         "relay/relay": "2.x@dev",

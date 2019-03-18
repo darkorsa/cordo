@@ -2,6 +2,7 @@
 
 namespace App\Users\UI\Http\Controller;
 
+use Particle\Validator\Validator;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use System\UI\Http\Controller\BaseController;
@@ -16,7 +17,19 @@ class UserController extends BaseController
 
     public function createAction(ServerRequestInterface $request): ResponseInterface
     {
-        $params = (object) $request->getParsedBody();
+        $params = $request->getParsedBody();
+
+        $validator = new Validator;
+        $validator->required('email')->lengthBetween(6, 50)->email();
+        $validator->required('password')->lengthBetween(5, 50);
+
+        $result = $validator->validate($params);
+
+        if (!$result->isValid()) {
+            return $this->respondBadRequestError($result->getMessages());
+        }
+
+        $params = (object) $params;
         
         $command = new CreateNewUser(
             (string) $params->email,
