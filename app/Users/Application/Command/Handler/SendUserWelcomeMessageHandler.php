@@ -8,6 +8,6 @@ class SendUserWelcomeMessageHandler
 {
     public function handle(SendUserWelcomeMessage $command): void
     {
-        echo 'welcome message!';
+        //echo 'welcome message!';
     }
 }

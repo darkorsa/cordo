@@ -17,9 +17,7 @@ class DoctrineUsers implements UsersInterface
 
     public function add(User $user) : void
     {
-        echo 'zapisaneee!';
-        
-        //$this->entityManager->persist($user);
-        //$this->entityManager->flush();
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();
     }
 }

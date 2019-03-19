@@ -2,6 +2,8 @@
 
 namespace App\Users\UI\Http\Controller;
 
+use DateTime;
+use Ramsey\Uuid\Uuid;
 use Particle\Validator\Validator;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -21,7 +23,7 @@ class UserController extends BaseController
 
         $validator = new Validator;
         $validator->required('email')->lengthBetween(6, 50)->email();
-        $validator->required('password')->lengthBetween(6, 50);
+        $validator->required('password')->lengthBetween(6, 18);
 
         $result = $validator->validate($params);
 
@@ -30,10 +32,13 @@ class UserController extends BaseController
         }
 
         $params = (object) $params;
-        
+
         $command = new CreateNewUser(
+            (string) Uuid::uuid4(),
             (string) $params->email,
-            (string) $params->password
+            (string) $params->password,
+            (int) false,
+            new DateTime()
         );
 
         $this->commandBus->handle($command);

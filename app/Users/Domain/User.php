@@ -2,8 +2,8 @@
 
 namespace App\Users\Domain;
 
+use DateTime;
 use Assert\Assert;
-use Ramsey\Uuid\Uuid;
 
 final class User
 {
@@ -13,13 +13,35 @@ final class User
 
     private $password;
 
-    public function __construct(string $email, string $password)
-    {
+    private $isActive;
+
+    private $createdAt;
+
+    private $updatedAt;
+
+    public function __construct(
+        string $id,
+        string $email,
+        string $password,
+        int $isActive,
+        DateTime $createdAt,
+        ?DateTime $updatedAt = null
+    ) {
+        Assert::that($id)->notEmpty()->uuid();
         Assert::that($email)->notEmpty()->maxLength(50)->email();
-        Assert::that($password)->notEmpty()->minLength(6)->maxLength(50);
-        
-        $this->id = Uuid::uuid1();
+        Assert::that($password)->notEmpty()->minLength(6)->maxLength(18);
+        Assert::that($isActive)->integer()->between(0, 1);
+
+        $this->id = $id;
         $this->email = $email;
-        $this->password = $password;
+        $this->password = $this->hashPassword($password);
+        $this->isActive = $isActive;
+        $this->createdAt = $createdAt;
+        $this->updatedAt = $updatedAt;
+    }
+
+    private function hashPassword(string $password): string
+    {
+        return password_hash($password, PASSWORD_ARGON2ID);
     }
 }

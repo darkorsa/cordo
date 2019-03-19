@@ -22,7 +22,13 @@ class CreateNewUserHandler
     
     public function handle(CreateNewUser $command): void
     {
-        $user = new User($command->email(), $command->password());
+        $user = new User(
+            $command->id(),
+            $command->email(),
+            $command->password(),
+            $command->isActive(),
+            $command->createdAt()
+        );
 
         $this->users->add($user);
 

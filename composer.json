@@ -16,6 +16,7 @@
         "php-di/php-di": "^6.0",
         "psr/http-server-middleware": "^1.0",
         "ramsey/uuid": "^3.8",
+        "ramsey/uuid-doctrine": "^1.5",
         "relay/relay": "2.x@dev",
         "symfony/dotenv": "^4.2"
     },
