@@ -5,9 +5,11 @@ use League\Event\Emitter;
 use System\UI\Http\Router;
 use Psr\Log\LoggerInterface;
 use Doctrine\ORM\EntityManager;
+use System\UI\Transformer\TransformerManager;
 use League\Event\EmitterInterface;
 use System\Application\Config\Parser;
 use Psr\Http\Message\ServerRequestInterface;
+use System\UI\Transformer\TransformerManagerInterface;
 
 return [
     'config'    => DI\factory(function () {
@@ -23,4 +25,5 @@ return [
     LoggerInterface::class => DI\get('logger'),
     EmitterInterface::class => DI\get(Emitter::class),
     EntityManager::class => DI\get('entity_manager'),
+    TransformerManagerInterface::class => DI\get(TransformerManager::class)
 ];

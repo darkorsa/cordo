@@ -18,6 +18,9 @@ if (getenv('APP_ENV') == 'production') {
 $container = $containerBuilder->build();
 $container->set('logger', $logger);
 
+// Configs
+Loader::loadConfigs($container->get('config'));
+
 // Command bus
 $commandBus = require __DIR__.'/command_bus.php';
 $container->set('command_bus', $commandBus);

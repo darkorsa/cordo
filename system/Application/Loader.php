@@ -2,9 +2,11 @@
 
 namespace System\Application;
 
+use Noodlehaus\Config;
 use System\UI\Http\Router;
 use League\Event\EmitterInterface;
 use Psr\Container\ContainerInterface;
+use System\Application\Config\Parser;
 
 class Loader
 {
@@ -32,6 +34,18 @@ class Loader
         }
 
         return $definitions;
+    }
+
+    public static function loadConfigs(Config $config): void
+    {
+        foreach (static::$register as $module) {
+            $configsPath = static::configsPath($module);
+
+            if (file_exists($configsPath)) {
+                $moduleConfig = new Config($configsPath, new Parser());
+                $config->merge($moduleConfig);
+            }
+        }
     }
 
     public static function loadHandlersMap(): array
@@ -83,6 +97,11 @@ class Loader
         return app_path().$module.'/Application/definitions.php';
     }
 
+    protected static function configsPath(string $module): string
+    {
+        return app_path().$module.'/Application/config';
+    }
+
     protected static function handlersMapPath(string $module): string
     {
         return app_path().$module.'/Application/handlers.php';
@@ -95,6 +114,6 @@ class Loader
 
     protected static function entitiesPath(string $module): string
     {
-        return app_path().$module.'/Infrastructure/Doctrine/Metadata';
+        return app_path().$module.'/Infrastructure/Doctrine/ORM/Metadata';
     }
 }

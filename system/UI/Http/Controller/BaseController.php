@@ -10,6 +10,8 @@ use GuzzleHttp\Psr7\Response;
 use InvalidArgumentException;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\RequestInterface;
+use System\UI\Transformer\TransformerManagerInterface;
+use System\Application\Exception\ResourceNotFoundException;
 
 abstract class BaseController
 {
@@ -17,17 +19,23 @@ abstract class BaseController
 
     protected $logger;
 
+    protected $transformerManager;
+
     protected $commandBus;
 
     protected $statusCode = 200;
     
     public function __construct(
         ContainerInterface $container,
-        LoggerInterface $logger
+        LoggerInterface $logger,
+        TransformerManagerInterface $transformer
     ) {
-        $this->container = $container;
-        $this->logger = $logger;
-        $this->commandBus = $container->get('command_bus');
+        $this->container            = $container;
+        $this->logger               = $logger;
+        $this->transformerManager   = $transformer;
+        $this->commandBus           = $container->get('command_bus');
+
+        $this->registerTransformers();
     }
 
     public function run(RequestInterface $request, string $call, array $vars)
@@ -36,6 +44,8 @@ abstract class BaseController
             return $this->{$call . 'Action'}($request, $vars);
         } catch (NotFoundException $e) {
             return $this->respondNotFound();
+        } catch (ResourceNotFoundException $e) {
+            return $this->respondWithData([]);
         } catch (Error $e) {
             $this->logger->error($e);
             return $this->respondInternalError();
@@ -83,10 +93,11 @@ abstract class BaseController
     protected function respond($response, array $headers = [])
     {
         $body = [
-            'response' => $response,
-            'status_code' => $this->statusCode
+            'response' => $response
         ];
 
         return new Response($this->statusCode, $headers, (string) json_encode($body));
     }
+
+    abstract protected function registerTransformers(): void;
 }

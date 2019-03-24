@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Users\Infrastructure\Doctrine;
+namespace App\Users\Infrastructure\Doctrine\ORM;
 
 use App\Users\Domain\User;
 use Doctrine\ORM\EntityManager;
 use App\Users\Domain\UsersInterface;
 
-class DoctrineUsers implements UsersInterface
+class UserRepository implements UsersInterface
 {
     private $entityManager;
 

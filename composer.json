@@ -6,6 +6,7 @@
         "doctrine/orm": "^2.6",
         "guzzlehttp/psr7": "^1.5",
         "hassankhan/config": "^2.0",
+        "league/fractal": "^0.17.0",
         "league/tactician": "^1.0",
         "league/tactician-command-events": "^0.6.0",
         "league/tactician-container": "^2.0",

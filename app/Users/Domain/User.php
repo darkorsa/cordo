@@ -24,8 +24,7 @@ final class User
         string $email,
         string $password,
         int $isActive,
-        DateTime $createdAt,
-        ?DateTime $updatedAt = null
+        DateTime $createdAt
     ) {
         Assert::that($id)->notEmpty()->uuid();
         Assert::that($email)->notEmpty()->maxLength(50)->email();
@@ -37,7 +36,7 @@ final class User
         $this->password = $this->hashPassword($password);
         $this->isActive = $isActive;
         $this->createdAt = $createdAt;
-        $this->updatedAt = $updatedAt;
+        $this->updatedAt = new DateTime;
     }
 
     private function hashPassword(string $password): string

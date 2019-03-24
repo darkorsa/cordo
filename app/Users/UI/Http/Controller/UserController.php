@@ -7,14 +7,40 @@ use Ramsey\Uuid\Uuid;
 use Particle\Validator\Validator;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use App\Users\UI\Transformer\UserTransformer;
 use System\UI\Http\Controller\BaseController;
+use App\Users\Application\Service\UserService;
 use App\Users\Application\Command\CreateNewUser;
+use App\Users\Infrastructure\Doctrine\Query\UserFilter;
 
 class UserController extends BaseController
 {
-    public function greetAction(ServerRequestInterface $request): ResponseInterface
+    public function indexAction(ServerRequestInterface $request): ResponseInterface
     {
-        return $this->respondWithData('Welcome to the Code Ninjas microframework!');
+        $queryParams = $request->getQueryParams();
+        $config = $this->container->get('config');
+
+        $userFilter = new UserFilter();
+        $userFilter
+            ->setActive(1)
+            ->setOffset((int) ($queryParams['offset'] ?? 0))
+            ->setLimit((int) ($queryParams['limit'] ?? $config->get('users.limit')));
+        
+        $service = $this->container->get(UserService::class);
+
+        $data = $this->transformerManager->transform($service->getCollection($userFilter), 'user');
+        $data['total'] = $service->getCount($userFilter);
+
+        return $this->respondWithData($data);
+    }
+    
+    public function getAction(ServerRequestInterface $request, $params): ResponseInterface
+    {
+        $service = $this->container->get(UserService::class);
+
+        $result = $service->getOneById($params['id']);
+
+        return $this->respondWithData($this->transformerManager->transform($result, 'user'));
     }
 
     public function createAction(ServerRequestInterface $request): ResponseInterface
@@ -44,5 +70,10 @@ class UserController extends BaseController
         $this->commandBus->handle($command);
 
         return $this->respondWithSuccess();
+    }
+
+    protected function registerTransformers(): void
+    {
+        $this->transformerManager->add(new UserTransformer(), 'user');
     }
 }
