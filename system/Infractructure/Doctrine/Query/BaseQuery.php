@@ -23,14 +23,14 @@ abstract class BaseQuery
 
     protected function column(QueryBuilder $qb, QueryFilter $filter = null): string
     {
-        $filter->applyFilter($qb);
+        $this->filter($filter, $qb);
         
         return (string) $this->connection->fetchColumn($qb->getSQL(), $qb->getParameters());
     }
 
     protected function assoc(QueryBuilder $qb, QueryFilter $filter = null): array
     {
-        $filter->applyFilter($qb);
+        $this->filter($filter, $qb);
         
         $return = $this->connection->fetchAssoc($qb->getSQL(), $qb->getParameters());
 
@@ -43,8 +43,15 @@ abstract class BaseQuery
 
     protected function all(QueryBuilder $qb, QueryFilter $filter = null): array
     {
-        $filter->applyFilter($qb);
+        $this->filter($filter, $qb);
         
         return $this->connection->fetchAll($qb->getSQL(), $qb->getParameters());
+    }
+
+    protected function filter(?QueryFilter $filter, QueryBuilder $qb)
+    {
+        if (!is_null($filter)) {
+            $filter->applyFilter($qb);
+        }
     }
 }

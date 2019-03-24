@@ -10,6 +10,8 @@ use System\Application\Config\Parser;
 
 class Loader
 {
+    protected static $register = [];
+    
     public static function loadRoutes(Router $router, ContainerInterface $container): void
     {
         foreach (static::$register as $module) {
