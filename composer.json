@@ -10,6 +10,7 @@
         "league/tactician": "^1.0",
         "league/tactician-command-events": "^0.6.0",
         "league/tactician-container": "^2.0",
+        "league/tactician-doctrine": "^1.1",
         "league/tactician-logger": "^0.10.0",
         "monolog/monolog": "^1.24",
         "nikic/fast-route": "^1.3",

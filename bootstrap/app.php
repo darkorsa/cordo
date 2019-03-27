@@ -21,12 +21,12 @@ $container->set('logger', $logger);
 // Configs
 Loader::loadConfigs($container->get('config'));
 
-// Command bus
-$commandBus = require __DIR__.'/command_bus.php';
-$container->set('command_bus', $commandBus);
-
 // Database
 $entityManager = require __DIR__.'/db.php';
 $container->set('entity_manager', $entityManager);
+
+// Command bus
+$commandBus = require __DIR__.'/command_bus.php';
+$container->set('command_bus', $commandBus);
 
 return $container;
