@@ -4,7 +4,7 @@ namespace System\Infractructure\Doctrine\Query;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Query\QueryBuilder;
-use System\Infractructure\Query\QueryFilter;
+use System\Infractructure\Doctrine\Query\QueryFilter;
 use System\Application\Exception\ResourceNotFoundException;
 
 abstract class BaseQuery
@@ -48,10 +48,10 @@ abstract class BaseQuery
         return $this->connection->fetchAll($qb->getSQL(), $qb->getParameters());
     }
 
-    protected function filter(?QueryFilter $filter, QueryBuilder $qb)
+    protected function filter(?QueryFilter $queryFilter, QueryBuilder $qb)
     {
-        if (!is_null($filter)) {
-            $filter->applyFilter($qb);
+        if (!is_null($queryFilter)) {
+            $queryFilter->filter($qb);
         }
     }
 }

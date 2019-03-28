@@ -1,47 +1,29 @@
-<?php declare (strict_types=1);
+<?php
 
 namespace App\Users\Infrastructure\Doctrine\Query;
 
-use System\Infractructure\Query\QueryFilter;
+use Doctrine\DBAL\Query\QueryBuilder;
+use App\Users\Application\Query\UserFilter as Filter;
+use System\Infractructure\Doctrine\Query\QueryFilter;
 
 class UserFilter implements QueryFilter
 {
-    private $offset;
-
-    private $limit;
-
-    private $isActive;
-
-    public function setActive(int $isActive): UserFilter
+    private $userFilter;
+    
+    public function __construct(Filter $userFilter)
     {
-        $this->isActive = $isActive;
-
-        return $this;
+        $this->userFilter = $userFilter;
     }
 
-    public function setOffset(int $offset) : UserFilter
+    public function filter(QueryBuilder $qb): void
     {
-        $this->offset = $offset;
-
-        return $this;
-    }
-
-    public function setLimit(int $limit) : UserFilter
-    {
-        $this->limit = $limit;
-
-        return $this;
-    }
-
-    public function applyFilter($qb): void
-    {
-        if (!is_null($this->isActive)) {
-            $qb->where('u.is_active', $this->isActive);
+        if (!is_null($this->userFilter->getIsActive())) {
+            $qb->where('u.is_active', $this->userFilter->getIsActive());
         }
 
-        if (!is_null($this->offset) && !is_null($this->limit)) {
-            $qb->setFirstResult($this->offset);
-            $qb->setMaxResults($this->limit);
+        if (!is_null($this->userFilter->getOffset()) && !is_null($this->userFilter->getLimit())) {
+            $qb->setFirstResult($this->userFilter->getOffset());
+            $qb->setMaxResults($this->userFilter->getLimit());
         }
     }
 }

@@ -6,12 +6,12 @@ use DateTime;
 use Ramsey\Uuid\Uuid;
 use Particle\Validator\Validator;
 use Psr\Http\Message\ResponseInterface;
+use App\Users\Application\Query\UserFilter;
 use Psr\Http\Message\ServerRequestInterface;
 use App\Users\UI\Transformer\UserTransformer;
 use System\UI\Http\Controller\BaseController;
 use App\Users\Application\Service\UserService;
 use App\Users\Application\Command\CreateNewUser;
-use App\Users\Infrastructure\Doctrine\Query\UserFilter;
 
 class UserController extends BaseController
 {
@@ -22,7 +22,7 @@ class UserController extends BaseController
 
         $userFilter = new UserFilter();
         $userFilter
-            ->setActive(1)
+            ->setActive(true)
             ->setOffset((int) ($queryParams['offset'] ?? 0))
             ->setLimit((int) ($queryParams['limit'] ?? $config->get('users.limit')));
         
@@ -38,7 +38,10 @@ class UserController extends BaseController
     {
         $service = $this->container->get(UserService::class);
 
-        $result = $service->getOneById($params['id']);
+        $userFilter = new UserFilter();
+        $userFilter->setActive(true);
+
+        $result = $service->getOneById($params['id'], $userFilter);
 
         return $this->respondWithData($this->transformerManager->transform($result, 'user'));
     }
