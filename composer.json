@@ -20,6 +20,7 @@
         "ramsey/uuid": "^3.8",
         "ramsey/uuid-doctrine": "^1.5",
         "relay/relay": "2.x@dev",
+        "symfony/console": "^4.2",
         "symfony/dotenv": "^4.2"
     },
     "require-dev": {

@@ -7,6 +7,7 @@ use System\UI\Http\Router;
 use League\Event\EmitterInterface;
 use Psr\Container\ContainerInterface;
 use System\Application\Config\Parser;
+use Symfony\Component\Console\Application;
 
 class Loader
 {
@@ -20,6 +21,23 @@ class Loader
             if (file_exists($routesPath)) {
                 include_once $routesPath;
             }
+        }
+    }
+
+    public static function loadCommands(Application $application, ContainerInterface $container): void
+    {
+        foreach (static::$register as $module) {
+            $commandsPath = static::commandsPath($module);
+
+            if (!file_exists($commandsPath)) {
+                continue;
+            }
+
+            $commands = include_once $commandsPath;
+
+            array_map(function ($command) use ($application, $container) {
+                $application->add($container->get($command));
+            }, $commands);
         }
     }
 
@@ -92,6 +110,11 @@ class Loader
     protected static function routesPath(string $module): string
     {
         return app_path().$module.'/UI/Http/routes.php';
+    }
+
+    protected static function commandsPath(string $module): string
+    {
+        return app_path().$module.'/UI/Console/commands.php';
     }
 
     protected static function definitionsPath(string $module): string
