@@ -2,13 +2,13 @@
 
 namespace App\Users\Application\Event\Listener;
 
-use League\Event\EventInterface;
+use App\Users\Application\Event\UserCreated;
 use System\Application\Event\Listener\AbstractListener;
 use App\Users\Application\Command\SendUserWelcomeMessage;
 
 class UserCreatedListener extends AbstractListener
 {
-    public function handle(EventInterface $event): void
+    public function handle(UserCreated $event): void
     {
         $command = new SendUserWelcomeMessage($event->email());
 
