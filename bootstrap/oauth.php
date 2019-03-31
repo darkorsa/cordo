@@ -5,6 +5,7 @@ use OAuth2\Storage\Pdo;
 use OAuth2\GrantType\RefreshToken;
 use OAuth2\GrantType\UserCredentials;
 use OAuth2\GrantType\ClientCredentials;
+use App\Users\UI\Http\Auth\OAuth2UserCredentials;
 
 $config = $container->get('config');
 
@@ -20,8 +21,7 @@ $server = new Server($storage, [
     'access_lifetime' => $tokenLifetime,
 ]);
 
-$credentialsClass = $config->get('auth.credentials');
-$credentials = new $credentialsClass();
+$credentials = $container->get(OAuth2UserCredentials::class);
 
 $server->addGrantType(new ClientCredentials($storage));
 $server->addGrantType(new UserCredentials($credentials));

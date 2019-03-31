@@ -4,11 +4,13 @@ use Noodlehaus\Config;
 use League\Event\Emitter;
 use System\UI\Http\Router;
 use Psr\Log\LoggerInterface;
+use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManager;
-use System\UI\Transformer\TransformerManager;
 use League\Event\EmitterInterface;
+use Psr\Container\ContainerInterface;
 use System\Application\Config\Parser;
 use Psr\Http\Message\ServerRequestInterface;
+use System\UI\Transformer\TransformerManager;
 use System\UI\Transformer\TransformerManagerInterface;
 
 return [
@@ -25,5 +27,8 @@ return [
     LoggerInterface::class => DI\get('logger'),
     EmitterInterface::class => DI\get(Emitter::class),
     EntityManager::class => DI\get('entity_manager'),
-    TransformerManagerInterface::class => DI\get(TransformerManager::class)
+    TransformerManagerInterface::class => DI\get(TransformerManager::class),
+    Connection::class => DI\factory(function (ContainerInterface $c) {
+        return $c->get('entity_manager')->getConnection();
+    }),
 ];
