@@ -13,7 +13,7 @@ use Symfony\Component\Console\Application;
 require __DIR__.'/bootstrap/autoload.php';
 
 $logger = new Logger('logger');
-$logger->pushHandler(new StreamHandler('php://stdout', Logger::WARNING));
+$logger->pushHandler(new StreamHandler('php://stdout', Logger::DEBUG));
 
 try {
     // bootstapping

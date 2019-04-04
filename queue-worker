@@ -1,0 +1,54 @@
+#!/usr/bin/env php
+<?php
+
+use Monolog\Logger;
+use Bernard\Consumer;
+use Monolog\Handler\StreamHandler;
+use Bernard\Router\ClassNameRouter;
+use Bernard\Router\ContainerReceiverResolver;
+use Symfony\Component\EventDispatcher\EventDispatcher;
+use App\Users\Application\Command\SendUserWelcomeMessage;
+use App\Users\Application\Command\Handler\SendUserWelcomeMessageHandler;
+
+require __DIR__.'/bootstrap/autoload.php';
+
+$logger = new Logger('queue_logger');
+$logger->pushHandler(new StreamHandler(storage_path().'logs/error.log'));
+
+try {
+    // bootstapping
+    $container      = require __DIR__.'/bootstrap/app.php';
+    $queueFactory   = require __DIR__.'/bootstrap/queue_factory.php';
+
+    $router = new ClassNameRouter([
+        SendUserWelcomeMessage::class => SendUserWelcomeMessageHandler::class,
+    ], new ContainerReceiverResolver($container));
+
+    $eventDispatcher = new EventDispatcher();
+    
+    $eventDispatcher->addListener(
+        Bernard\BernardEvents::INVOKE,
+        function(Bernard\Event\EnvelopeEvent $envelopeEvent) {
+            echo PHP_EOL . 'Processing: ' . $envelopeEvent->getEnvelope()->getClass();
+        }
+    );
+    $eventDispatcher->addListener(
+        Bernard\BernardEvents::ACKNOWLEDGE,
+        function(Bernard\Event\EnvelopeEvent $envelopeEvent) {
+            echo PHP_EOL . 'Processed: ' . $envelopeEvent->getEnvelope()->getClass();
+        }
+    );
+    $eventDispatcher->addListener(
+        Bernard\BernardEvents::REJECT,
+        function(Bernard\Event\RejectEnvelopeEvent $envelopeEvent) {
+            echo PHP_EOL . 'Failed: ' . $envelopeEvent->getEnvelope()->getClass();
+            // you can also log error messages here
+        }
+    );
+    
+    $consumer = new Consumer($router, $eventDispatcher);
+    $consumer->consume($queueFactory->create('default'));
+} catch (Exception $e) {
+    $logger->error($e);
+    exit;
+}

@@ -9,5 +9,5 @@ return [
     CreateNewUserHandler::class => DI\create()
         ->constructor(DI\get(UserRepository::class), DI\get('emitter')),
     UserService::class => DI\create()
-        ->constructor(DI\get(UserQuery::class))
+        ->constructor(DI\get(UserQuery::class)),
 ];

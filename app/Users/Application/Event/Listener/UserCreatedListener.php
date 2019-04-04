@@ -10,7 +10,8 @@ class UserCreatedListener extends AbstractListener
 {
     public function handle(EventInterface $event): void
     {
-        $command = new SendUserWelcomeMessage($event->email());
+        $command = new SendUserWelcomeMessage();
+        $command->setEmail($event->email());
 
         $this->commandBus->handle($command);
     }

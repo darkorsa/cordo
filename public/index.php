@@ -14,7 +14,7 @@ use System\UI\Http\Middleware\ParsePutRequest;
 require __DIR__.'/../bootstrap/autoload.php';
 
 $logger = new Logger('logger');
-$logger->pushHandler(new StreamHandler(storage_path().'logs/error.log', Logger::ERROR));
+$logger->pushHandler(new StreamHandler(storage_path().'logs/error.log', Logger::DEBUG));
 
 try {
     // bootstapping

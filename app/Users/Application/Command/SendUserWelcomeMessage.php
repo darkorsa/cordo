@@ -2,16 +2,18 @@
 
 namespace App\Users\Application\Command;
 
-class SendUserWelcomeMessage
+use System\Application\Queue\AbstractMessage;
+
+class SendUserWelcomeMessage extends AbstractMessage
 {
     private $email;
 
-    public function __construct(string $email)
+    public function setEmail(string $email)
     {
         $this->email = $email;
     }
 
-    public function email() : string
+    public function getEmail() : string
     {
         return $this->email;
     }
