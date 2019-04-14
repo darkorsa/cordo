@@ -4,6 +4,7 @@ namespace App\Users\Application\Query;
 
 use App\Users\Application\Query\UserView;
 use App\Users\Application\Query\UserFilter;
+use Doctrine\Common\Collections\ArrayCollection;
 
 interface UserQuery
 {
@@ -11,5 +12,7 @@ interface UserQuery
 
     public function getById(string $userId, UserFilter $userFilter = null): UserView;
 
-    public function getAll(UserFilter $userFilter = null): array;
+    public function getByEmail(string $email, UserFilter $userFilter = null): UserView;
+
+    public function getAll(UserFilter $userFilter = null): ArrayCollection;
 }

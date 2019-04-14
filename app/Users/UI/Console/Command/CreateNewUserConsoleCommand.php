@@ -5,12 +5,15 @@ namespace App\Users\UI\Console\Command;
 use DateTime;
 use Ramsey\Uuid\Uuid;
 use Particle\Validator\Validator;
+use App\Users\Application\Service\UserService;
+use App\Users\Application\Command\CreateNewUser;
 use System\UI\Console\Command\BaseConsoleCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Output\OutputInterface;
-use App\Users\Application\Command\CreateNewUser;
+use Particle\Validator\Exception\InvalidValueException;
+use System\Application\Exception\ResourceNotFoundException;
 
 class CreateNewUserConsoleCommand extends BaseConsoleCommand
 {
@@ -32,10 +35,23 @@ class CreateNewUserConsoleCommand extends BaseConsoleCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $params = $input->getArguments();
+
+        $service = $this->container->get(UserService::class);
         
         $validator = new Validator;
-        $validator->required('email')->lengthBetween(6, 50)->email();
         $validator->required('password')->lengthBetween(6, 18);
+        $validator->required('email')
+            ->lengthBetween(6, 50)
+            ->email()
+            ->callback(function ($value) use ($service) {
+                try {
+                    $service->getOneByEmail($value);
+                    throw new InvalidValueException('Email address us not unique', 'Unique::EMAIL_NOT_UNIQUE');
+                } catch (ResourceNotFoundException $ex) {
+                    return true;
+                }
+            });
+
 
         $result = $validator->validate($params);
 

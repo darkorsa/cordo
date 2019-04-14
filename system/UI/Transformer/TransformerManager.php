@@ -8,6 +8,7 @@ use League\Fractal\Resource\Item;
 use League\Fractal\Resource\Collection;
 use League\Fractal\TransformerAbstract;
 use League\Fractal\Resource\ResourceInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 use League\Fractal\Serializer\JsonApiSerializer;
 use System\UI\Transformer\TransformerManagerInterface;
 
@@ -46,7 +47,7 @@ class TransformerManager implements TransformerManagerInterface
 
     private function resource($result, $index): ResourceInterface
     {
-        if (is_array($result)) {
+        if ($result instanceof ArrayCollection) {
             return new Collection($result, $this->get($index), $index);
         }
 

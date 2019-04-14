@@ -10,13 +10,17 @@ class UserFilter implements QueryFilter
 {
     private $userFilter;
     
-    public function __construct(Filter $userFilter)
+    public function __construct(?Filter $userFilter)
     {
         $this->userFilter = $userFilter;
     }
 
     public function filter(QueryBuilder $qb): void
     {
+        if (is_null($this->userFilter)) {
+            return;
+        }
+        
         if (!is_null($this->userFilter->getIsActive())) {
             $qb->andWhere('u.is_active', $this->userFilter->getIsActive());
         }

@@ -12,19 +12,23 @@ use App\Users\UI\Transformer\UserTransformer;
 use System\UI\Http\Controller\BaseController;
 use App\Users\Application\Service\UserService;
 use App\Users\Application\Command\CreateNewUser;
+use Particle\Validator\Exception\InvalidValueException;
+use System\Application\Exception\ResourceNotFoundException;
 
 class UserController extends BaseController
 {
     public function indexAction(ServerRequestInterface $request): ResponseInterface
     {
         $queryParams = $request->getQueryParams();
-        $config = $this->container->get('config');
+
+        $offset = (int) ($queryParams['offset'] ?? 0);
+        $limit  = (int) ($queryParams['limit'] ?? $this->container->get('config')->get('users.limit'));
 
         $userFilter = new UserFilter();
         $userFilter
             ->setActive(true)
-            ->setOffset((int) ($queryParams['offset'] ?? 0))
-            ->setLimit((int) ($queryParams['limit'] ?? $config->get('users.limit')));
+            ->setOffset($offset)
+            ->setLimit($limit);
         
         $service = $this->container->get(UserService::class);
 
@@ -50,9 +54,21 @@ class UserController extends BaseController
     {
         $params = $request->getParsedBody();
 
+        $service = $this->container->get(UserService::class);
+
         $validator = new Validator;
-        $validator->required('email')->lengthBetween(6, 50)->email();
         $validator->required('password')->lengthBetween(6, 18);
+        $validator->required('email')
+            ->lengthBetween(6, 50)
+            ->email()
+            ->callback(function ($value) use ($service) {
+                try {
+                    $service->getOneByEmail($value);
+                    throw new InvalidValueException('Email address us not unique', 'Unique::EMAIL_NOT_UNIQUE');
+                } catch (ResourceNotFoundException $ex) {
+                    return true;
+                }
+            });
 
         $result = $validator->validate($params);
 
@@ -71,7 +87,7 @@ class UserController extends BaseController
         );
 
         $this->commandBus->handle($command);
-
+        
         return $this->respondWithSuccess();
     }
 

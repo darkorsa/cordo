@@ -5,6 +5,7 @@ namespace App\Users\Application\Service;
 use App\Users\Application\Query\UserView;
 use App\Users\Application\Query\UserQuery;
 use App\Users\Application\Query\UserFilter;
+use Doctrine\Common\Collections\ArrayCollection;
 
 class UserService
 {
@@ -20,7 +21,12 @@ class UserService
         return $this->userQuery->getById($id, $userFilter);
     }
 
-    public function getCollection(UserFilter $userFilter = null): array
+    public function getOneByEmail(string $email, UserFilter $userFilter = null): UserView
+    {
+        return $this->userQuery->getByEmail($email, $userFilter);
+    }
+
+    public function getCollection(UserFilter $userFilter = null): ArrayCollection
     {
         return $this->userQuery->getAll($userFilter);
     }

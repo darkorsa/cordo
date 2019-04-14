@@ -4,6 +4,7 @@
         "beberlei/assert": "^2.6",
         "bernard/bernard": "^1.0@dev",
         "bshaffer/oauth2-server-php": "^1.10",
+        "doctrine/collections": "^1.6",
         "doctrine/dbal": "^2.9",
         "doctrine/orm": "^2.6",
         "guzzlehttp/psr7": "^1.5",
