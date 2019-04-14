@@ -3,6 +3,7 @@
 use App\Loader;
 use DI\ContainerBuilder;
 use Symfony\Component\Dotenv\Dotenv;
+use System\Application\Mail\MailerFactory;
 
 $dotenv = new Dotenv();
 $dotenv->load(root_path().'.env');
@@ -20,6 +21,10 @@ $container->set('logger', $logger);
 
 // Configs
 Loader::loadConfigs($container->get('config'));
+
+// Mailer
+$mailer = MailerFactory::factory($container->get('config')->get('mail'));
+$container->set('mailer', $mailer);
 
 // Database
 $entityManager = require __DIR__.'/db.php';

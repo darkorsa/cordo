@@ -2,19 +2,28 @@
 
 namespace App\Users\Application\Command\Handler;
 
-use Psr\Log\LoggerInterface;
-use App\Users\Application\Command\SendUserWelcomeMessage;
+use Zend\Mail\Message;
+use System\Application\Mail\MailerInterface;
 use System\Application\Queue\AbstractReceiver;
+use App\Users\Application\Command\SendUserWelcomeMessage;
 
 class SendUserWelcomeMessageHandler extends AbstractReceiver
 {
-    public function __construct(LoggerInterface $logger)
+    private $mailer;
+    
+    public function __construct(MailerInterface $mailer)
     {
-        $this->logger = $logger;
+        $this->mailer = $mailer;
     }
     
     public function handle(SendUserWelcomeMessage $command): void
     {
-        $this->logger->error('message sent to: '.$command->email().'!');
+        $message = new Message();
+        $message->addTo($command->getEmail())
+                ->addFrom('noreply@codeninjas.pl')
+                ->setSubject('Potwierdzenie założenia konta')
+                ->setBody("Gratujacje konto zostało założone!");
+
+        $this->mailer->send($message);
     }
 }

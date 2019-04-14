@@ -41,7 +41,7 @@ try {
     $eventDispatcher->addListener(
         Bernard\BernardEvents::REJECT,
         function(Bernard\Event\RejectEnvelopeEvent $envelopeEvent) {
-            echo PHP_EOL . 'Failed: ' . $envelopeEvent->getEnvelope()->getClass();
+            echo PHP_EOL . 'Failed: ' . $envelopeEvent->getEnvelope()->getMessage();
             // you can also log error messages here
         }
     );

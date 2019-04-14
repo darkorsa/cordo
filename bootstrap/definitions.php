@@ -10,6 +10,7 @@ use League\Event\EmitterInterface;
 use Psr\Container\ContainerInterface;
 use System\Application\Config\Parser;
 use Psr\Http\Message\ServerRequestInterface;
+use System\Application\Mail\MailerInterface;
 use System\UI\Transformer\TransformerManager;
 use System\UI\Transformer\TransformerManagerInterface;
 
@@ -25,6 +26,7 @@ return [
     'emitter'   => DI\get(EmitterInterface::class),
     ServerRequestInterface::class => DI\factory('GuzzleHttp\Psr7\ServerRequest::fromGlobals'),
     LoggerInterface::class => DI\get('logger'),
+    MailerInterface::class => DI\get('mailer'),
     EmitterInterface::class => DI\get(Emitter::class),
     EntityManager::class => DI\get('entity_manager'),
     TransformerManagerInterface::class => DI\get(TransformerManager::class),

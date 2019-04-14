@@ -6,7 +6,7 @@ use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
 
 $paths = Loader::loadEntities();
-$isDevMode = getenv('APP_ENV') == 'local';
+$isDevMode = getenv('APP_ENV') == 'dev';
 
 // the connection configuration
 $dbParams = [
