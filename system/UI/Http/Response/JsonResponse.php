@@ -17,8 +17,8 @@ class JsonResponse implements \System\UI\ResponseInterface
     {
         http_response_code($this->response->getStatusCode());
 
-        header("Content-Type:{application/json}");
-        header("charset:{utf-8}");
+        header("Content-Type:application/json");
+        header("charset:utf-8");
 
         // additional header
         foreach ($this->response->getHeaders() as $key => $val) {

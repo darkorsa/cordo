@@ -1,6 +1,6 @@
 {
     "require": {
-        "ext-redis": "^4.3",
+        "ext-redis": "^4.2",
         "beberlei/assert": "^2.6",
         "bernard/bernard": "^1.0@dev",
         "bshaffer/oauth2-server-php": "^1.10",
