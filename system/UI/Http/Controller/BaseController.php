@@ -5,11 +5,11 @@ namespace System\UI\Http\Controller;
 use Error;
 use Exception;
 use DI\NotFoundException;
-use Psr\Log\LoggerInterface;
 use GuzzleHttp\Psr7\Response;
 use InvalidArgumentException;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\RequestInterface;
+use System\Application\Error\ErrorReporterInterface;
 use System\UI\Transformer\TransformerManagerInterface;
 use System\Application\Exception\ResourceNotFoundException;
 
@@ -17,7 +17,7 @@ abstract class BaseController
 {
     protected $container;
 
-    protected $logger;
+    protected $errorReporter;
 
     protected $transformerManager;
 
@@ -27,11 +27,11 @@ abstract class BaseController
     
     public function __construct(
         ContainerInterface $container,
-        LoggerInterface $logger,
+        ErrorReporterInterface $errorReporter,
         TransformerManagerInterface $transformer
     ) {
         $this->container            = $container;
-        $this->logger               = $logger;
+        $this->errorReporter        = $errorReporter;
         $this->transformerManager   = $transformer;
         $this->commandBus           = $container->get('command_bus');
 
@@ -46,14 +46,11 @@ abstract class BaseController
             return $this->respondNotFound();
         } catch (ResourceNotFoundException $e) {
             return $this->respondWithData([]);
-        } catch (Error $e) {
-            $this->logger->error($e);
-            return $this->respondInternalError();
         } catch (InvalidArgumentException $e) {
-            $this->logger->error($e);
+            $this->errorReporter->report($e);
             return $this->respondBadRequestError();
-        } catch (Exception $e) {
-            $this->logger->error($e);
+        } catch (Error | Exception $e) {
+            $this->errorReporter->report($e);
             return $this->respondInternalError();
         }
     }

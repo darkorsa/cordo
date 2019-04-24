@@ -7,6 +7,7 @@
         "doctrine/collections": "^1.6",
         "doctrine/dbal": "^2.9",
         "doctrine/orm": "^2.6",
+        "filp/whoops": "^2.3",
         "guzzlehttp/psr7": "^1.5",
         "hassankhan/config": "^2.0",
         "league/fractal": "^0.17.0",

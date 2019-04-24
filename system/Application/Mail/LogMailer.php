@@ -9,11 +9,12 @@ use Zend\Mail\Transport\InMemory as InMemoryTransport;
 
 class LogMailer implements MailerInterface
 {
-    private $logPath;
+    private $logger;
     
     public function __construct(string $logPath)
     {
-        $this->logPath = $logPath;
+        $this->logger = new Logger('maillog');
+        $this->logger->pushHandler(new StreamHandler($logPath));
     }
     
     public function send(Message $message): void
@@ -28,9 +29,6 @@ class LogMailer implements MailerInterface
 
     private function logMessage(Message $message): void
     {
-        $logger = new Logger('maillog');
-        $logger->pushHandler(new StreamHandler($this->logPath));
-
-        $logger->info($message->toString());
+        $this->logger->info($message->toString());
     }
 }

@@ -2,11 +2,7 @@
 
 use App\Loader;
 use DI\ContainerBuilder;
-use Symfony\Component\Dotenv\Dotenv;
 use System\Application\Mail\MailerFactory;
-
-$dotenv = new Dotenv();
-$dotenv->load(root_path().'.env');
 
 // DI container Psr\Container\ContainerInterface
 $containerBuilder = new ContainerBuilder();
@@ -17,7 +13,7 @@ if (getenv('APP_ENV') == 'production') {
 }
 
 $container = $containerBuilder->build();
-$container->set('logger', $logger);
+$container->set('error_reporter', $errorReporter);
 
 // Configs
 Loader::loadConfigs($container->get('config'));

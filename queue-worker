@@ -3,17 +3,29 @@
 
 use Monolog\Logger;
 use Bernard\Consumer;
-use Monolog\Handler\StreamHandler;
 use Bernard\Router\ClassNameRouter;
+use Symfony\Component\Dotenv\Dotenv;
+use Monolog\Handler\NativeMailerHandler;
 use Bernard\Router\ContainerReceiverResolver;
 use Symfony\Component\EventDispatcher\EventDispatcher;
+use System\Application\Error\Handler\LoggerErrorHandler;
 use App\Users\Application\Command\SendUserWelcomeMessage;
 use App\Users\Application\Command\Handler\SendUserWelcomeMessageHandler;
 
 require __DIR__.'/bootstrap/autoload.php';
 
-$logger = new Logger('queue_logger');
-$logger->pushHandler(new StreamHandler(storage_path().'logs/error.log'));
+$dotenv = new Dotenv();
+$dotenv->load(root_path().'.env');
+
+$queueLogger = new Logger('queue_logger');
+$queueLogger->pushHandler(new NativeMailerHandler(
+    getenv('QUEUE_ERROR_EMAIL'),
+    'Queue work failed',
+    'noreply@yourdomain.com'
+));
+
+$errorReporter = require_once __DIR__.'/bootstrap/error.php';
+$errorReporter->pushHandler(new LoggerErrorHandler($queueLogger));
 
 try {
     // bootstapping
@@ -28,27 +40,32 @@ try {
     
     $eventDispatcher->addListener(
         Bernard\BernardEvents::INVOKE,
-        function(Bernard\Event\EnvelopeEvent $envelopeEvent) {
+        function (Bernard\Event\EnvelopeEvent $envelopeEvent) {
             echo PHP_EOL . 'Processing: ' . $envelopeEvent->getEnvelope()->getClass();
         }
     );
     $eventDispatcher->addListener(
         Bernard\BernardEvents::ACKNOWLEDGE,
-        function(Bernard\Event\EnvelopeEvent $envelopeEvent) {
+        function (Bernard\Event\EnvelopeEvent $envelopeEvent) {
             echo PHP_EOL . 'Processed: ' . $envelopeEvent->getEnvelope()->getClass();
         }
     );
     $eventDispatcher->addListener(
         Bernard\BernardEvents::REJECT,
-        function(Bernard\Event\RejectEnvelopeEvent $envelopeEvent) {
+        function (Bernard\Event\RejectEnvelopeEvent $envelopeEvent) use ($errorReporter) {
             echo PHP_EOL . 'Failed: ' . $envelopeEvent->getEnvelope()->getMessage();
-            // you can also log error messages here
+            try {
+                throw new Exception($envelopeEvent->getEnvelope()->getMessage());
+            } catch (Exception $e) {
+                $errorReporter->report($e);
+            }
+            
         }
     );
     
     $consumer = new Consumer($router, $eventDispatcher);
     $consumer->consume($queueFactory->create('default'));
-} catch (Exception $e) {
-    $logger->error($e);
+} catch (Error | Exception $e) {
+    $errorReporter->report($e);
     exit;
 }

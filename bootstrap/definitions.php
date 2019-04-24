@@ -3,7 +3,6 @@
 use Noodlehaus\Config;
 use League\Event\Emitter;
 use System\UI\Http\Router;
-use Psr\Log\LoggerInterface;
 use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManager;
 use League\Event\EmitterInterface;
@@ -12,6 +11,7 @@ use System\Application\Config\Parser;
 use Psr\Http\Message\ServerRequestInterface;
 use System\Application\Mail\MailerInterface;
 use System\UI\Transformer\TransformerManager;
+use System\Application\Error\ErrorReporterInterface;
 use System\UI\Transformer\TransformerManagerInterface;
 
 return [
@@ -25,7 +25,7 @@ return [
     'router'    => DI\get(Router::class),
     'emitter'   => DI\get(EmitterInterface::class),
     ServerRequestInterface::class => DI\factory('GuzzleHttp\Psr7\ServerRequest::fromGlobals'),
-    LoggerInterface::class => DI\get('logger'),
+    ErrorReporterInterface::class => DI\get('error_reporter'),
     MailerInterface::class => DI\get('mailer'),
     EmitterInterface::class => DI\get(Emitter::class),
     EntityManager::class => DI\get('entity_manager'),

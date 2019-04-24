@@ -5,16 +5,27 @@
  */
 
 use App\Loader;
-use Monolog\Logger;
+use Whoops\Run;
 use System\UI\Http\Dispatcher;
-use Monolog\Handler\StreamHandler;
+use Symfony\Component\Dotenv\Dotenv;
+use Whoops\Handler\PrettyPageHandler;
 use System\UI\Http\Response\JsonResponse;
 use System\UI\Http\Middleware\ParsePutRequest;
+use System\Application\Error\Handler\PrettyErrorHandler;
 
 require __DIR__.'/../bootstrap/autoload.php';
 
-$logger = new Logger('logger');
-$logger->pushHandler(new StreamHandler(storage_path().'logs/error.log', Logger::DEBUG));
+$dotenv = new Dotenv();
+$dotenv->load(root_path().'.env');
+
+// pretty errors
+$whoops = new Run;
+$whoops->pushHandler(new PrettyPageHandler);
+
+$errorReporter = require_once __DIR__.'/../bootstrap/error.php';
+if (getenv('APP_ENV') == 'dev') {
+    $errorReporter->pushHandler(new PrettyErrorHandler($whoops));
+}
 
 try {
     // bootstapping
@@ -35,8 +46,8 @@ try {
 
     $response = new JsonResponse($dispatcher->dispatch($container->get('request')));
     $response->send();
-} catch (Exception $e) {
-    $logger->error($e);
+} catch (Error | Exception $e) {
+    $errorReporter->report($e);
     http_response_code(500);
     exit;
 }

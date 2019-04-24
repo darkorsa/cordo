@@ -6,14 +6,23 @@
  */
 
 use App\Loader;
-use Monolog\Logger;
-use Monolog\Handler\StreamHandler;
+use Whoops\Run;
+use Symfony\Component\Dotenv\Dotenv;
+use Whoops\Handler\PlainTextHandler;
 use Symfony\Component\Console\Application;
+use System\Application\Error\Handler\PrettyErrorHandler;
 
 require __DIR__.'/bootstrap/autoload.php';
 
-$logger = new Logger('logger');
-$logger->pushHandler(new StreamHandler('php://stdout', Logger::DEBUG));
+$dotenv = new Dotenv();
+$dotenv->load(root_path().'.env');
+
+// pretty errors
+$whoops = new Run;
+$whoops->pushHandler(new PlainTextHandler);
+
+$errorReporter = require_once __DIR__.'/bootstrap/error.php';
+$errorReporter->pushHandler(new PrettyErrorHandler($whoops));
 
 try {
     // bootstapping
@@ -22,7 +31,6 @@ try {
     $application = new Application();
     Loader::loadCommands($application, $container);
     $application->run();
-} catch (Exception $e) {
-    $logger->error($e);
-    exit;
+} catch (Error | Exception $e) {
+    $errorReporter->report($e);
 }
