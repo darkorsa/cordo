@@ -52,7 +52,7 @@ class UserController extends BaseController
 
     public function createAction(ServerRequestInterface $request): ResponseInterface
     {
-        $params = $request->getParsedBody();
+        $params = (array) $request->getParsedBody();
 
         $service = $this->container->get(UserService::class);
 

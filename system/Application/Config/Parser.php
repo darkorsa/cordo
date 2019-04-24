@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace System\Application\Config;
 
@@ -7,7 +7,7 @@ use Noodlehaus\Exception\ParseException;
 
 class Parser extends \Noodlehaus\Parser\Php
 {
-    public function parseFile($filename)
+    public function parseFile($filename): array
     {
         // Run the fileEval the string, if it throws an exception, rethrow it
         try {
@@ -21,6 +21,6 @@ class Parser extends \Noodlehaus\Parser\Php
             );
         }
         // Complete parsing
-        return $this->parse($data);
+        return (array) $this->parse($data);
     }
 }
