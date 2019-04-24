@@ -24,6 +24,7 @@ $whoops->pushHandler(new PrettyPageHandler);
 
 $errorReporter = require_once __DIR__.'/../bootstrap/error.php';
 if (getenv('APP_ENV') == 'dev') {
+    $whoops->register();
     $errorReporter->pushHandler(new PrettyErrorHandler($whoops));
 }
 

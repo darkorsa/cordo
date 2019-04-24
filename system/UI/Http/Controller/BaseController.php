@@ -96,5 +96,7 @@ abstract class BaseController
         return new Response($this->statusCode, $headers, (string) json_encode($body));
     }
 
-    abstract protected function registerTransformers(): void;
+    protected function registerTransformers(): void
+    {
+    }
 }

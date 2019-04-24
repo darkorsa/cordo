@@ -7,6 +7,12 @@ use Assert\Assert;
 
 final class User
 {
+    const EMAIL_MAX_LENGTH = 50;
+
+    const PASSWORD_MIN_LENGTH = 6;
+
+    const PASSWORD_MAX_LENGTH = 18;
+    
     private $id;
 
     private $email;
@@ -26,10 +32,24 @@ final class User
         int $isActive,
         DateTime $createdAt
     ) {
-        Assert::that($id)->notEmpty()->uuid();
-        Assert::that($email)->notEmpty()->maxLength(50)->email();
-        Assert::that($password)->notEmpty()->minLength(6)->maxLength(18);
-        Assert::that($isActive)->integer()->between(0, 1);
+        // id
+        Assert::that($id)
+            ->notEmpty()
+            ->uuid();
+        // email
+        Assert::that($email)
+            ->notEmpty()
+            ->maxLength(self::EMAIL_MAX_LENGTH)
+            ->email();
+        // passowrd
+        Assert::that($password)
+            ->notEmpty()
+            ->minLength(self::PASSWORD_MIN_LENGTH)
+            ->maxLength(self::PASSWORD_MAX_LENGTH);
+        // isActive
+        Assert::that($isActive)
+            ->integer()
+            ->between(0, 1);
 
         $this->id = $id;
         $this->email = $email;
