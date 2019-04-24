@@ -9,7 +9,9 @@ use App\Loader;
 use Whoops\Run;
 use Symfony\Component\Dotenv\Dotenv;
 use Whoops\Handler\PlainTextHandler;
+use SensioLabs\Security\SecurityChecker;
 use Symfony\Component\Console\Application;
+use SensioLabs\Security\Command\SecurityCheckerCommand;
 use System\Application\Error\Handler\PrettyErrorHandler;
 
 require __DIR__.'/bootstrap/autoload.php';
@@ -29,7 +31,10 @@ try {
     $container = require_once __DIR__.'/bootstrap/app.php';
 
     $application = new Application();
+    $application->add(new SecurityCheckerCommand(new SecurityChecker()));
+    
     Loader::loadCommands($application, $container);
+    
     $application->run();
 } catch (Error | Exception $e) {
     $errorReporter->report($e);
