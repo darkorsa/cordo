@@ -139,6 +139,6 @@ class Loader
 
     protected static function entitiesPath(string $module): string
     {
-        return app_path().$module.'/Infrastructure/Doctrine/ORM/Metadata';
+        return app_path().$module.'/Infrastructure/Persistance/Doctrine/ORM/Metadata';
     }
 }

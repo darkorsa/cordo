@@ -1,6 +1,6 @@
 <?php
 
-namespace System\Infractructure\Doctrine\Query;
+namespace System\Infractructure\Persistance\Doctrine\Query;
 
 use Doctrine\DBAL\Query\QueryBuilder;
 

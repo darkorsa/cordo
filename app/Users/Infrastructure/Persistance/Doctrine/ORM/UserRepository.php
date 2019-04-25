@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Users\Infrastructure\Doctrine\ORM;
+namespace App\Users\Infrastructure\Persistance\Doctrine\ORM;
 
 use App\Users\Domain\User;
 use Doctrine\ORM\EntityManager;

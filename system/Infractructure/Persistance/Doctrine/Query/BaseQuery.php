@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace System\Infractructure\Doctrine\Query;
+namespace System\Infractructure\Persistance\Doctrine\Query;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Query\QueryBuilder;
-use System\Infractructure\Doctrine\Query\QueryFilter;
 use System\Application\Exception\ResourceNotFoundException;
+use System\Infractructure\Persistance\Doctrine\Query\QueryFilter;
 
 abstract class BaseQuery
 {

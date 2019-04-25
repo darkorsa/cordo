@@ -1,9 +1,9 @@
 <?php
 
 use App\Users\Application\Service\UserService;
-use App\Users\Infrastructure\Doctrine\Query\UserQuery;
-use App\Users\Infrastructure\Doctrine\ORM\UserRepository;
 use App\Users\Application\Command\Handler\CreateNewUserHandler;
+use App\Users\Infrastructure\Persistance\Doctrine\Query\UserQuery;
+use App\Users\Infrastructure\Persistance\Doctrine\ORM\UserRepository;
 
 return [
     CreateNewUserHandler::class => DI\create()

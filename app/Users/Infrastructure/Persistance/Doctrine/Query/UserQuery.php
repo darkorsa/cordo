@@ -1,13 +1,13 @@
 <?php declare(strict_types=1);
 
-namespace App\Users\Infrastructure\Doctrine\Query;
+namespace App\Users\Infrastructure\Persistance\Doctrine\Query;
 
 use App\Users\Application\Query\UserView;
 use App\Users\Application\Query\UserFilter;
-use System\Infractructure\Doctrine\Query\BaseQuery;
-use App\Users\Application\Query\UserQuery as UserQueryInterface;
-use App\Users\Infrastructure\Doctrine\Query\UserFilter as DoctrineUserFilter;
 use Doctrine\Common\Collections\ArrayCollection;
+use System\Infractructure\Persistance\Doctrine\Query\BaseQuery;
+use App\Users\Application\Query\UserQuery as UserQueryInterface;
+use App\Users\Infrastructure\Persistance\Doctrine\Query\UserFilter as DoctrineUserFilter;
 
 class UserQuery extends BaseQuery implements UserQueryInterface
 {

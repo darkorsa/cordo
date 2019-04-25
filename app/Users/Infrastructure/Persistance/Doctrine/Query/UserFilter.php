@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Users\Infrastructure\Doctrine\Query;
+namespace App\Users\Infrastructure\Persistance\Doctrine\Query;
 
 use Doctrine\DBAL\Query\QueryBuilder;
 use App\Users\Application\Query\UserFilter as Filter;
-use System\Infractructure\Doctrine\Query\QueryFilter;
+use System\Infractructure\Persistance\Doctrine\Query\QueryFilter;
 
 class UserFilter implements QueryFilter
 {
