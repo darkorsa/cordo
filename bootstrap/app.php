@@ -2,7 +2,7 @@
 
 use App\Loader;
 use DI\ContainerBuilder;
-use System\Application\Mail\MailerFactory;
+use System\Infractructure\Mailer\ZendMail\MailerFactory;
 
 // DI container Psr\Container\ContainerInterface
 $containerBuilder = new ContainerBuilder();

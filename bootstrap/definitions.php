@@ -9,10 +9,10 @@ use League\Event\EmitterInterface;
 use Psr\Container\ContainerInterface;
 use System\Application\Config\Parser;
 use Psr\Http\Message\ServerRequestInterface;
-use System\Application\Mail\MailerInterface;
 use System\UI\Transformer\TransformerManager;
 use System\Application\Error\ErrorReporterInterface;
 use System\UI\Transformer\TransformerManagerInterface;
+use System\Infractructure\Mailer\ZendMail\MailerInterface;
 
 return [
     'config'    => DI\factory(function () {

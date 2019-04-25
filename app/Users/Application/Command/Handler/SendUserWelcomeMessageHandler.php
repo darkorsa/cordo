@@ -3,9 +3,9 @@
 namespace App\Users\Application\Command\Handler;
 
 use Zend\Mail\Message;
-use System\Application\Mail\MailerInterface;
 use System\Application\Queue\AbstractReceiver;
 use App\Users\Application\Command\SendUserWelcomeMessage;
+use System\Infractructure\Mailer\ZendMail\MailerInterface;
 
 class SendUserWelcomeMessageHandler extends AbstractReceiver
 {

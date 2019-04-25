@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace System\Application\Mail;
+namespace System\Infractructure\Mailer\ZendMail;
 
 use InvalidArgumentException;
-use System\Application\Mail\LogMailer;
+use System\Infractructure\Mailer\ZendMail\LogMailer;
 
 class MailerFactory
 {

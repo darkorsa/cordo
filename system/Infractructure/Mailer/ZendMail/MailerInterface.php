@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace System\Application\Mail;
+namespace System\Infractructure\Mailer\ZendMail;
 
 use Zend\Mail\Message;
 
