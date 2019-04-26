@@ -2,6 +2,7 @@
 
 namespace System\Application\Error;
 
+use Exception;
 use Throwable;
 
 class ErrorReporter implements ErrorReporterInterface
@@ -15,8 +16,30 @@ class ErrorReporter implements ErrorReporterInterface
         }
     }
 
-    public function pushHandler(ErrorHandlerInterface $handler)
+    public function pushHandler(ErrorHandlerInterface $handler): void
     {
         $this->handlers[] = $handler;
+    }
+
+    public function myErrorHandler($code, $message, $file, $line)
+    {
+        $message = "Fatal Error with code {$code} occured in file: {$file} on line {$line}. Error message: {$message}";
+        
+        try {
+            throw new Exception($message);
+        } catch (Exception $e) {
+            $this->report($e);
+        }
+        
+        http_response_code(500);
+        exit;
+    }
+
+    public function fatalErrorShutdownHandler()
+    {
+        $last_error = error_get_last();
+        if ($last_error['type'] === E_ERROR) {
+            $this->myErrorHandler(E_ERROR, $last_error['message'], $last_error['file'], $last_error['line']);
+        }
     }
 }

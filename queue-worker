@@ -1,14 +1,12 @@
 #!/usr/bin/env php
 <?php
 
-use Monolog\Logger;
 use Bernard\Consumer;
 use Bernard\Router\ClassNameRouter;
 use Symfony\Component\Dotenv\Dotenv;
-use Monolog\Handler\NativeMailerHandler;
 use Bernard\Router\ContainerReceiverResolver;
 use Symfony\Component\EventDispatcher\EventDispatcher;
-use System\Application\Error\Handler\LoggerErrorHandler;
+use System\Application\Error\Handler\EmailErrorHandler;
 use App\Users\Application\Command\SendUserWelcomeMessage;
 use App\Users\Application\Command\Handler\SendUserWelcomeMessageHandler;
 
@@ -17,15 +15,8 @@ require __DIR__.'/bootstrap/autoload.php';
 $dotenv = new Dotenv();
 $dotenv->load(root_path().'.env');
 
-$queueLogger = new Logger('queue_logger');
-$queueLogger->pushHandler(new NativeMailerHandler(
-    getenv('QUEUE_ERROR_EMAIL'),
-    'Queue work failed',
-    'noreply@yourdomain.com'
-));
-
 $errorReporter = require_once __DIR__.'/bootstrap/error.php';
-$errorReporter->pushHandler(new LoggerErrorHandler($queueLogger));
+$errorReporter->pushHandler(new EmailErrorHandler());
 
 try {
     // bootstapping

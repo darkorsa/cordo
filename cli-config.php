@@ -1,17 +1,26 @@
 <?php
 
-use Monolog\Logger;
-use Monolog\Handler\StreamHandler;
+use Whoops\Run;
+use Symfony\Component\Dotenv\Dotenv;
+use Whoops\Handler\PlainTextHandler;
 use Doctrine\ORM\Tools\Console\ConsoleRunner;
+use System\Application\Error\Handler\PrettyErrorHandler;
 
 require 'vendor/autoload.php';
 
-$logger = new Logger('logger');
-$logger->pushHandler(new StreamHandler(storage_path().'logs/error.log', Logger::ERROR));
+$dotenv = new Dotenv();
+$dotenv->load(root_path().'.env');
+
+// pretty errors
+$whoops = new Run;
+$whoops->pushHandler(new PlainTextHandler);
+
+$errorReporter = require_once __DIR__.'/bootstrap/error.php';
+$errorReporter->pushHandler(new PrettyErrorHandler($whoops));
 
 try {
     $container = require_once __DIR__.'/bootstrap/app.php';
     return ConsoleRunner::createHelperSet($container->get('entity_manager'));
-} catch (Exception $e) {
-    echo $e->getMessage() . PHP_EOL;
+} catch (Error | Exception $e) {
+    $errorReporter->report($e);
 }

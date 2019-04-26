@@ -11,6 +11,7 @@ use Symfony\Component\Dotenv\Dotenv;
 use Whoops\Handler\PrettyPageHandler;
 use System\UI\Http\Response\JsonResponse;
 use System\UI\Http\Middleware\ParsePutRequest;
+use System\Application\Error\Handler\EmailErrorHandler;
 use System\Application\Error\Handler\PrettyErrorHandler;
 
 require __DIR__.'/../bootstrap/autoload.php';
@@ -18,14 +19,18 @@ require __DIR__.'/../bootstrap/autoload.php';
 $dotenv = new Dotenv();
 $dotenv->load(root_path().'.env');
 
+$debug = getenv('APP_DEBUG') == 'true';
+
 // pretty errors
 $whoops = new Run;
 $whoops->pushHandler(new PrettyPageHandler);
 
 $errorReporter = require_once __DIR__.'/../bootstrap/error.php';
-if (getenv('APP_ENV') == 'dev') {
-    $whoops->register();
+
+if (!$debug) {
     $errorReporter->pushHandler(new PrettyErrorHandler($whoops));
+} else {
+    $errorReporter->pushHandler(new EmailErrorHandler());
 }
 
 try {

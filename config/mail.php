@@ -7,6 +7,7 @@ return [
     'port'      => getenv('MAIL_PORT'),
     'username'  => getenv('MAIL_USERNAME'),
     'password'  => getenv('MAIL_PASSWORD'),
+    'from'      => 'noreply@yourdomain.com',
     // log
     'log_path'  => storage_path() . 'logs/mail.log',
 ];
