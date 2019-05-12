@@ -6,36 +6,20 @@
  */
 
 use App\Loader;
-use Whoops\Run;
-use Symfony\Component\Dotenv\Dotenv;
-use Whoops\Handler\PlainTextHandler;
 use SensioLabs\Security\SecurityChecker;
 use Symfony\Component\Console\Application;
 use SensioLabs\Security\Command\SecurityCheckerCommand;
-use System\Application\Error\Handler\PrettyErrorHandler;
 
 require __DIR__.'/bootstrap/autoload.php';
 
-$dotenv = new Dotenv();
-$dotenv->load(root_path().'.env');
+$isConsole = true;
 
-// pretty errors
-$whoops = new Run;
-$whoops->pushHandler(new PlainTextHandler);
+// bootstapping
+$container = require_once __DIR__.'/bootstrap/app.php';
 
-$errorReporter = require_once __DIR__.'/bootstrap/error.php';
-$errorReporter->pushHandler(new PrettyErrorHandler($whoops));
+$application = new Application();
+$application->add(new SecurityCheckerCommand(new SecurityChecker()));
 
-try {
-    // bootstapping
-    $container = require_once __DIR__.'/bootstrap/app.php';
+Loader::loadCommands($application, $container);
 
-    $application = new Application();
-    $application->add(new SecurityCheckerCommand(new SecurityChecker()));
-    
-    Loader::loadCommands($application, $container);
-    
-    $application->run();
-} catch (Error | Exception $e) {
-    $errorReporter->report($e);
-}
+$application->run();

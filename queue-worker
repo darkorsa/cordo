@@ -3,60 +3,49 @@
 
 use Bernard\Consumer;
 use Bernard\Router\ClassNameRouter;
-use Symfony\Component\Dotenv\Dotenv;
 use Bernard\Router\ContainerReceiverResolver;
 use Symfony\Component\EventDispatcher\EventDispatcher;
-use System\Application\Error\Handler\EmailErrorHandler;
 use App\Users\Application\Command\SendUserWelcomeMessage;
 use App\Users\Application\Command\Handler\SendUserWelcomeMessageHandler;
 
 require __DIR__.'/bootstrap/autoload.php';
 
-$dotenv = new Dotenv();
-$dotenv->load(root_path().'.env');
+$isConsole = true;
 
-$errorReporter = require_once __DIR__.'/bootstrap/error.php';
-$errorReporter->pushHandler(new EmailErrorHandler());
+// bootstapping
+$container      = require __DIR__.'/bootstrap/app.php';
+$queueFactory   = require __DIR__.'/bootstrap/queue_factory.php';
 
-try {
-    // bootstapping
-    $container      = require __DIR__.'/bootstrap/app.php';
-    $queueFactory   = require __DIR__.'/bootstrap/queue_factory.php';
+$router = new ClassNameRouter([
+    SendUserWelcomeMessage::class => SendUserWelcomeMessageHandler::class,
+], new ContainerReceiverResolver($container));
 
-    $router = new ClassNameRouter([
-        SendUserWelcomeMessage::class => SendUserWelcomeMessageHandler::class,
-    ], new ContainerReceiverResolver($container));
+$eventDispatcher = new EventDispatcher();
 
-    $eventDispatcher = new EventDispatcher();
-    
-    $eventDispatcher->addListener(
-        Bernard\BernardEvents::INVOKE,
-        function (Bernard\Event\EnvelopeEvent $envelopeEvent) {
-            echo PHP_EOL . 'Processing: ' . $envelopeEvent->getEnvelope()->getClass();
+$eventDispatcher->addListener(
+    Bernard\BernardEvents::INVOKE,
+    function (Bernard\Event\EnvelopeEvent $envelopeEvent) {
+        echo PHP_EOL . 'Processing: ' . $envelopeEvent->getEnvelope()->getClass();
+    }
+);
+$eventDispatcher->addListener(
+    Bernard\BernardEvents::ACKNOWLEDGE,
+    function (Bernard\Event\EnvelopeEvent $envelopeEvent) {
+        echo PHP_EOL . 'Processed: ' . $envelopeEvent->getEnvelope()->getClass();
+    }
+);
+$eventDispatcher->addListener(
+    Bernard\BernardEvents::REJECT,
+    function (Bernard\Event\RejectEnvelopeEvent $envelopeEvent) use ($container) {
+        echo PHP_EOL . 'Failed: ' . $envelopeEvent->getEnvelope()->getMessage();
+        try {
+            throw new Exception($envelopeEvent->getEnvelope()->getMessage());
+        } catch (Exception $e) {
+            $container->get('error_reporter')->report($e);
         }
-    );
-    $eventDispatcher->addListener(
-        Bernard\BernardEvents::ACKNOWLEDGE,
-        function (Bernard\Event\EnvelopeEvent $envelopeEvent) {
-            echo PHP_EOL . 'Processed: ' . $envelopeEvent->getEnvelope()->getClass();
-        }
-    );
-    $eventDispatcher->addListener(
-        Bernard\BernardEvents::REJECT,
-        function (Bernard\Event\RejectEnvelopeEvent $envelopeEvent) use ($errorReporter) {
-            echo PHP_EOL . 'Failed: ' . $envelopeEvent->getEnvelope()->getMessage();
-            try {
-                throw new Exception($envelopeEvent->getEnvelope()->getMessage());
-            } catch (Exception $e) {
-                $errorReporter->report($e);
-            }
-            
-        }
-    );
-    
-    $consumer = new Consumer($router, $eventDispatcher);
-    $consumer->consume($queueFactory->create('default'));
-} catch (Error | Exception $e) {
-    $errorReporter->report($e);
-    exit;
-}
+
+    }
+);
+
+$consumer = new Consumer($router, $eventDispatcher);
+$consumer->consume($queueFactory->create('default'));

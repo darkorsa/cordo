@@ -2,7 +2,14 @@
 
 use App\Loader;
 use DI\ContainerBuilder;
+use Symfony\Component\Dotenv\Dotenv;
 use System\Infractructure\Mailer\ZendMail\MailerFactory;
+
+$dotenv = new Dotenv();
+$dotenv->load(root_path().'.env');
+
+// Errors
+$errorReporter = require __DIR__.'/error.php';
 
 // DI container Psr\Container\ContainerInterface
 $containerBuilder = new ContainerBuilder();
