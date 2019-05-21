@@ -15,7 +15,7 @@ use Psr\Http\Server\RequestHandlerInterface;
 class Router
 {
     private $middlewares = [];
-    
+
     private $routes = [];
 
     public function addMiddleware(MiddlewareInterface $middleware): void
@@ -29,11 +29,11 @@ class Router
         $route->method      = $method;
         $route->path        = $path;
         $route->handler     = $handler;
-        $route->middlewares = $this->middlewares + $middlewares;
-        
+        $route->middlewares = array_merge($this->middlewares, $middlewares);
+
         $this->routes[] = $route;
     }
-    
+
     public function routes()
     {
         return function (RouteCollector $collector) {
@@ -56,7 +56,7 @@ class Router
             ) {
                 if (is_callable($route->handler)) {
                     $handlerCallable = $route->handler;
-                    
+
                     return $handlerCallable();
                 }
 
@@ -74,7 +74,7 @@ class Router
         $relay = new Relay($middlewares, function ($entry) {
             return is_string($entry) ? new $entry() : $entry;
         });
-        
+
         return $relay->handle($request);
     }
 }

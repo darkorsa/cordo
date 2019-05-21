@@ -21,6 +21,10 @@ Type::addType('uuid_binary_ordered_time', 'Ramsey\Uuid\Doctrine\UuidBinaryOrdere
 
 $config = Setup::createXMLMetadataConfiguration($paths, $isDevMode);
 
+($isDevMode)
+    ? $config->setAutoGenerateProxyClasses(true)
+    : $config->setAutoGenerateProxyClasses(false);
+
 $em = EntityManager::create($dbParams, $config);
 $em->getConnection()->getDatabasePlatform()->registerDoctrineTypeMapping('uuid_binary_ordered_time', 'binary');
 

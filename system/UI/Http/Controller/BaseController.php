@@ -24,7 +24,7 @@ abstract class BaseController
     protected $commandBus;
 
     protected $statusCode = 200;
-    
+
     public function __construct(
         ContainerInterface $container,
         ErrorReporterInterface $errorReporter,
@@ -42,10 +42,8 @@ abstract class BaseController
     {
         try {
             return $this->{$call . 'Action'}($request, $vars);
-        } catch (NotFoundException $e) {
+        } catch (NotFoundException | ResourceNotFoundException $e) {
             return $this->respondNotFound();
-        } catch (ResourceNotFoundException $e) {
-            return $this->respondWithData([]);
         } catch (InvalidArgumentException $e) {
             $this->errorReporter->report($e);
             return $this->respondBadRequestError();
@@ -71,7 +69,7 @@ abstract class BaseController
     {
         return $this->setStatusCode(500)->respond($message);
     }
-    
+
     protected function respondBadRequestError($message = 'Bad request or invalid parameters')
     {
         return $this->setStatusCode(400)->respond($message);

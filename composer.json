@@ -55,6 +55,7 @@
         "schema-create": "doctrine orm:schema-tool:create",
         "schema-drop": "doctrine orm:schema-tool:drop --force",
         "schema-update": "doctrine orm:schema-tool:update --force",
+        "schema-cache:clear-metadata": "doctrine orm:clear-cache:metadata",
         "sql-import": "doctrine dbal:import ",
         "check-style": "phpcs -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 app/ system/",
         "fix-style": "phpcbf -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 app/ system/"
