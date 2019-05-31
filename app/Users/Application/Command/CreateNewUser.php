@@ -6,23 +6,32 @@ use DateTime;
 
 class CreateNewUser
 {
-    private $id;
+    protected $id;
     
-    private $email;
+    protected $email;
 
-    private $password;
+    protected $password;
 
-    private $isActive;
+    protected $isActive;
 
-    private $createdAt;
+    protected $createdAt;
 
-    public function __construct(string $id, string $email, string $password, int $isActive, DateTime $createdAt)
-    {
+    protected $updatedAt;
+
+    public function __construct(
+        string $id,
+        string $email,
+        string $password,
+        int $isActive,
+        DateTime $createdAt,
+        DateTime $updatedAt
+    ) {
         $this->id = $id;
         $this->email = $email;
         $this->password = $password;
         $this->isActive = $isActive;
         $this->createdAt = $createdAt;
+        $this->updatedAt = $updatedAt;
     }
 
     public function id(): string
@@ -48,5 +57,10 @@ class CreateNewUser
     public function createdAt(): DateTime
     {
         return $this->createdAt;
+    }
+
+    public function updatedAt(): DateTime
+    {
+        return $this->updatedAt;
     }
 }

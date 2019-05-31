@@ -2,6 +2,8 @@
 
 namespace App\Users\Application\Query;
 
+use DateTime;
+
 class UserView
 {
     private $id;
@@ -21,8 +23,8 @@ class UserView
         string $email,
         string $password,
         int $isActive,
-        string $createdAt,
-        string $updatedAt
+        DateTime $createdAt,
+        DateTime $updatedAt
     ) {
         $this->id = $id;
         $this->email = $email;
@@ -38,9 +40,9 @@ class UserView
             $userData['id_user'],
             $userData['email'],
             $userData['password'],
-            $userData['is_active'],
-            $userData['created_at'],
-            $userData['updated_at']
+            (int) $userData['is_active'],
+            new DateTime($userData['created_at']),
+            new DateTime($userData['updated_at'])
         );
     }
 
@@ -64,12 +66,12 @@ class UserView
         return $this->isActive;
     }
 
-    public function createdAt(): string
+    public function createdAt(): DateTime
     {
         return $this->createdAt;
     }
 
-    public function updatedAt(): string
+    public function updatedAt(): DateTime
     {
         return $this->updatedAt;
     }

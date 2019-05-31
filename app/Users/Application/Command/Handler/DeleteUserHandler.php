@@ -5,10 +5,9 @@ namespace App\Users\Application\Command\Handler;
 use App\Users\Domain\User;
 use League\Event\EmitterInterface;
 use App\Users\Domain\UsersInterface;
-use App\Users\Application\Event\UserCreated;
-use App\Users\Application\Command\CreateNewUser;
+use App\Users\Application\Command\DeleteUser;
 
-class CreateNewUserHandler
+class DeleteUserHandler
 {
     private $users;
 
@@ -20,7 +19,7 @@ class CreateNewUserHandler
         $this->emitter = $emitter;
     }
     
-    public function handle(CreateNewUser $command): void
+    public function handle(DeleteUser $command): void
     {
         $user = new User(
             $command->id(),
@@ -31,8 +30,6 @@ class CreateNewUserHandler
             $command->updatedAt()
         );
 
-        $this->users->add($user);
-
-        $this->emitter->emit('users.created', new UserCreated($command->email()));
+        $this->users->delete($user);
     }
 }

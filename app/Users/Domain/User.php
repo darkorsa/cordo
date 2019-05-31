@@ -30,7 +30,8 @@ final class User
         string $email,
         string $password,
         int $isActive,
-        DateTime $createdAt
+        DateTime $createdAt,
+        DateTime $updatedAt
     ) {
         // id
         Assert::that($id)
@@ -56,7 +57,7 @@ final class User
         $this->password = $this->hashPassword($password);
         $this->isActive = $isActive;
         $this->createdAt = $createdAt;
-        $this->updatedAt = new DateTime;
+        $this->updatedAt = $updatedAt;
     }
 
     private function hashPassword(string $password): string

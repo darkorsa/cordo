@@ -25,7 +25,8 @@ class UserQuery extends BaseQuery implements UserQueryInterface
     {
         $queryBuilder = $this->createQB();
         $queryBuilder
-            ->select('u.*, ouuid_to_uuid(u.id_user) as id_user')
+            ->select('u.*')
+            ->addSelect('ouuid_to_uuid(u.id_user) as id_user')
             ->from('user', 'u')
             ->where('ouuid_to_uuid(u.id_user) = :userId')
             ->setParameter('userId', $userId);
@@ -39,7 +40,8 @@ class UserQuery extends BaseQuery implements UserQueryInterface
     {
         $queryBuilder = $this->createQB();
         $queryBuilder
-            ->select('u.*, ouuid_to_uuid(u.id_user) as id_user')
+            ->select('u.*')
+            ->addSelect('ouuid_to_uuid(u.id_user) as id_user')
             ->from('user', 'u')
             ->where('email = :email')
             ->setParameter('email', $email);
@@ -54,7 +56,8 @@ class UserQuery extends BaseQuery implements UserQueryInterface
     {
         $queryBuilder = $this->createQB();
         $queryBuilder
-            ->select('u.*, ouuid_to_uuid(u.id_user) as id_user')
+            ->select('u.*')
+            ->addSelect('ouuid_to_uuid(u.id_user) as id_user')
             ->from('user', 'u');
 
         $usersData = $this->all($queryBuilder, new DoctrineUserFilter($userFilter));

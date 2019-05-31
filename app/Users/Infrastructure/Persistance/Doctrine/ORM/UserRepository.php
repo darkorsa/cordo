@@ -20,4 +20,18 @@ class UserRepository implements UsersInterface
         $this->entityManager->persist($user);
         $this->entityManager->flush();
     }
+
+    public function update(User $user) : void
+    {
+        $this->entityManager->merge($user);
+        $this->entityManager->flush();
+    }
+
+    public function delete(User $user) : void
+    {
+        $entity = $this->entityManager->merge($user);
+
+        $this->entityManager->remove($entity);
+        $this->entityManager->flush();
+    }
 }

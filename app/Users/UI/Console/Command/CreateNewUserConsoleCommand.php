@@ -5,6 +5,7 @@ namespace App\Users\UI\Console\Command;
 use DateTime;
 use Ramsey\Uuid\Uuid;
 use Particle\Validator\Validator;
+use Particle\Validator\ValidationResult;
 use App\Users\Application\Service\UserService;
 use App\Users\Application\Command\CreateNewUser;
 use System\UI\Console\Command\BaseConsoleCommand;
@@ -36,24 +37,7 @@ class CreateNewUserConsoleCommand extends BaseConsoleCommand
     {
         $params = $input->getArguments();
 
-        $service = $this->container->get(UserService::class);
-        
-        $validator = new Validator;
-        $validator->required('password')->lengthBetween(6, 18);
-        $validator->required('email')
-            ->lengthBetween(6, 50)
-            ->email()
-            ->callback(function ($value) use ($service) {
-                try {
-                    $service->getOneByEmail($value);
-                    throw new InvalidValueException('Email address us not unique', 'Unique::EMAIL_NOT_UNIQUE');
-                } catch (ResourceNotFoundException $ex) {
-                    return true;
-                }
-            });
-
-
-        $result = $validator->validate($params);
+        $result = $this->validate($params);
 
         if (!$result->isValid()) {
             array_map(function ($message) use ($output) {
@@ -71,11 +55,34 @@ class CreateNewUserConsoleCommand extends BaseConsoleCommand
             (string) $params->email,
             (string) $params->password,
             (int) false,
+            new DateTime(),
             new DateTime()
         );
 
         $this->commandBus->handle($command);
 
         $output->writeln('<info>User successfully added!</info>');
+    }
+
+    private function validate(array $params): ValidationResult
+    {
+        $service = $this->container->get(UserService::class);
+        
+        $validator = new Validator;
+        $validator->required('password')->lengthBetween(6, 18);
+        $validator->required('email')
+            ->lengthBetween(6, 50)
+            ->email()
+            ->callback(function ($value) use ($service) {
+                try {
+                    $service->getOneByEmail($value);
+                    throw new InvalidValueException('Email address us not unique', 'Unique::EMAIL_NOT_UNIQUE');
+                } catch (ResourceNotFoundException $ex) {
+                    return true;
+                }
+            });
+
+
+        return $validator->validate($params);
     }
 }
