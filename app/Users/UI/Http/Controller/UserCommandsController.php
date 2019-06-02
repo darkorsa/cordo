@@ -4,31 +4,24 @@ namespace App\Users\UI\Http\Controller;
 
 use DateTime;
 use Ramsey\Uuid\Uuid;
-use Particle\Validator\Validator;
 use Psr\Http\Message\ResponseInterface;
-use Particle\Validator\ValidationResult;
 use Psr\Http\Message\ServerRequestInterface;
 use App\Users\Application\Command\DeleteUser;
 use App\Users\Application\Command\UpdateUser;
 use System\UI\Http\Controller\BaseController;
 use App\Users\Application\Service\UserService;
 use App\Users\Application\Command\CreateNewUser;
-use Particle\Validator\Exception\InvalidValueException;
-use System\Application\Exception\ResourceNotFoundException;
+use App\Users\UI\Validator\UserValidator;
 
 class UserCommandsController extends BaseController
 {
-    const EMAIL_MAX_LENGTH = 50;
-
-    const PASSWORD_MIN_LENGTH = 6;
-
-    const PASSWORD_MAX_LENGTH = 18;
+    use UserValidator;
 
     public function createAction(ServerRequestInterface $request): ResponseInterface
     {
         $params = (array) $request->getParsedBody();
 
-        $result = $this->validate($params);
+        $result = $this->validate($params, true);
 
         if (!$result->isValid()) {
             return $this->respondBadRequestError($result->getMessages());
@@ -46,7 +39,7 @@ class UserCommandsController extends BaseController
         );
 
         $this->commandBus->handle($command);
-        
+
         return $this->respondWithSuccess();
     }
 
@@ -69,7 +62,7 @@ class UserCommandsController extends BaseController
         $command = new UpdateUser(
             $user->id(),
             (string) $params->email,
-            (string) $params->password,
+            $user->password(),
             $user->isActive(),
             $user->createdAt(),
             new DateTime()
@@ -89,7 +82,7 @@ class UserCommandsController extends BaseController
         $command = new DeleteUser(
             $user->id(),
             $user->email(),
-            (string) 'testowe3',
+            $user->password(),
             $user->isActive(),
             $user->createdAt(),
             $user->updatedAt()
@@ -98,26 +91,5 @@ class UserCommandsController extends BaseController
         $this->commandBus->handle($command);
 
         return $this->respondWithSuccess();
-    }
-
-    private function validate(array $params): ValidationResult
-    {
-        $service = $this->container->get(UserService::class);
-        
-        $validator = new Validator;
-        $validator->required('password')->lengthBetween(self::PASSWORD_MIN_LENGTH, self::PASSWORD_MAX_LENGTH);
-        $validator->required('email')
-            ->lessThan(self::EMAIL_MAX_LENGTH)
-            ->email()
-            ->callback(function ($value) use ($service) {
-                try {
-                    $service->getOneByEmail($value);
-                    throw new InvalidValueException('Email address us not unique', 'Unique::EMAIL_NOT_UNIQUE');
-                } catch (ResourceNotFoundException $ex) {
-                    return true;
-                }
-            });
-
-        return $validator->validate($params);
     }
 }

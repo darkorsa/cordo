@@ -13,19 +13,19 @@ class CreateNewUserHandler
     private $users;
 
     private $emitter;
-    
+
     public function __construct(UsersInterface $users, EmitterInterface $emitter)
     {
         $this->users = $users;
         $this->emitter = $emitter;
     }
-    
+
     public function handle(CreateNewUser $command): void
     {
         $user = new User(
             $command->id(),
             $command->email(),
-            $command->password(),
+            $this->hashPassword($command->password()),
             $command->isActive(),
             $command->createdAt(),
             $command->updatedAt()
@@ -34,5 +34,10 @@ class CreateNewUserHandler
         $this->users->add($user);
 
         $this->emitter->emit('users.created', new UserCreated($command->email()));
+    }
+
+    private function hashPassword(string $password): string
+    {
+        return password_hash($password, PASSWORD_ARGON2ID);
     }
 }

@@ -4,20 +4,18 @@ namespace App\Users\UI\Console\Command;
 
 use DateTime;
 use Ramsey\Uuid\Uuid;
-use Particle\Validator\Validator;
-use Particle\Validator\ValidationResult;
-use App\Users\Application\Service\UserService;
 use App\Users\Application\Command\CreateNewUser;
 use System\UI\Console\Command\BaseConsoleCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Output\OutputInterface;
-use Particle\Validator\Exception\InvalidValueException;
-use System\Application\Exception\ResourceNotFoundException;
+use App\Users\UI\Validator\UserValidator;
 
 class CreateNewUserConsoleCommand extends BaseConsoleCommand
 {
+    use UserValidator;
+
     protected static $defaultName = 'users:create-user';
 
     protected function configure()
@@ -62,27 +60,5 @@ class CreateNewUserConsoleCommand extends BaseConsoleCommand
         $this->commandBus->handle($command);
 
         $output->writeln('<info>User successfully added!</info>');
-    }
-
-    private function validate(array $params): ValidationResult
-    {
-        $service = $this->container->get(UserService::class);
-        
-        $validator = new Validator;
-        $validator->required('password')->lengthBetween(6, 18);
-        $validator->required('email')
-            ->lengthBetween(6, 50)
-            ->email()
-            ->callback(function ($value) use ($service) {
-                try {
-                    $service->getOneByEmail($value);
-                    throw new InvalidValueException('Email address us not unique', 'Unique::EMAIL_NOT_UNIQUE');
-                } catch (ResourceNotFoundException $ex) {
-                    return true;
-                }
-            });
-
-
-        return $validator->validate($params);
     }
 }

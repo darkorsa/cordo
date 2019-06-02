@@ -12,7 +12,7 @@ final class User
     const PASSWORD_MIN_LENGTH = 6;
 
     const PASSWORD_MAX_LENGTH = 18;
-    
+
     private $id;
 
     private $email;
@@ -44,9 +44,7 @@ final class User
             ->email();
         // passowrd
         Assert::that($password)
-            ->notEmpty()
-            ->minLength(self::PASSWORD_MIN_LENGTH)
-            ->maxLength(self::PASSWORD_MAX_LENGTH);
+            ->notEmpty();
         // isActive
         Assert::that($isActive)
             ->integer()
@@ -54,14 +52,9 @@ final class User
 
         $this->id = $id;
         $this->email = $email;
-        $this->password = $this->hashPassword($password);
+        $this->password = $password;
         $this->isActive = $isActive;
         $this->createdAt = $createdAt;
         $this->updatedAt = $updatedAt;
-    }
-
-    private function hashPassword(string $password): string
-    {
-        return password_hash($password, PASSWORD_ARGON2ID);
     }
 }
