@@ -4,7 +4,7 @@ namespace App\Users\Application\Command\Handler;
 
 use App\Users\Domain\User;
 use League\Event\EmitterInterface;
-use App\Users\Domain\UsersInterface;
+use App\Users\Domain\UserRepository;
 use App\Users\Application\Event\UserCreated;
 use App\Users\Application\Command\CreateNewUser;
 
@@ -14,7 +14,7 @@ class CreateNewUserHandler
 
     private $emitter;
 
-    public function __construct(UsersInterface $users, EmitterInterface $emitter)
+    public function __construct(UserRepository $users, EmitterInterface $emitter)
     {
         $this->users = $users;
         $this->emitter = $emitter;

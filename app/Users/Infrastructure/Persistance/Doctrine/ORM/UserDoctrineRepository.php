@@ -4,9 +4,9 @@ namespace App\Users\Infrastructure\Persistance\Doctrine\ORM;
 
 use App\Users\Domain\User;
 use Doctrine\ORM\EntityManager;
-use App\Users\Domain\UsersInterface;
+use App\Users\Domain\UserRepository;
 
-class UserRepository implements UsersInterface
+class UserDoctrineRepository implements UserRepository
 {
     private $entityManager;
 

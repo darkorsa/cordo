@@ -1,5 +1,8 @@
 <?php
 
+define('ENV_LOCAL', 'dev');
+define('ENV_PRODUCTION', 'production');
+
 use App\Loader;
 use DI\ContainerBuilder;
 use Symfony\Component\Dotenv\Dotenv;
@@ -15,7 +18,7 @@ $errorReporter = require __DIR__.'/error.php';
 $containerBuilder = new ContainerBuilder();
 $containerBuilder->addDefinitions(Loader::loadDefinitions());
 
-if (getenv('APP_ENV') == 'production') {
+if (getenv('APP_ENV') == ENV_PRODUCTION) {
     $containerBuilder->enableCompilation(storage_path().'cache');
 }
 

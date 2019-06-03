@@ -3,14 +3,14 @@
 namespace App\Users\Infrastructure\Persistance\Doctrine\Query;
 
 use Doctrine\DBAL\Query\QueryBuilder;
-use App\Users\Application\Query\UserFilter as Filter;
+use App\Users\Application\Query\UserFilter;
 use System\Infractructure\Persistance\Doctrine\Query\QueryFilter;
 
-class UserFilter implements QueryFilter
+class UserDoctrineFilter implements QueryFilter
 {
     private $userFilter;
-    
-    public function __construct(?Filter $userFilter)
+
+    public function __construct(?UserFilter $userFilter)
     {
         $this->userFilter = $userFilter;
     }
@@ -20,7 +20,7 @@ class UserFilter implements QueryFilter
         if (is_null($this->userFilter)) {
             return;
         }
-        
+
         if (!is_null($this->userFilter->getIsActive())) {
             $qb->andWhere('u.is_active', $this->userFilter->getIsActive());
         }
