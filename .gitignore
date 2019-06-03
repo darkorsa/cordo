@@ -1,5 +1,6 @@
 .env
 vendor/
 build/
-composer.lock
 apidoc/
+logs/
+public_html/
