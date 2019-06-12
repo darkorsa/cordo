@@ -9,19 +9,11 @@ Cordos is a microframework designed to efficienly develop REST APIs based on arc
 - OAuth2
 - Package by feature
 
-Framework is compliant with PSRs:
-- PSR-1
-- PSR-2
-- PSR-3
-- PSR-4
-- PSR-7
-- PSR-11
-- PSR-15
-- PSR-18
+Framework is compliant with PSRs: PSR-1, PSR-2, PSR-3, PSR-4, PSR-7, PSR-11, PSR-15, PSR-18
 
 ## Install
 
-Just clone this repository into you new project folder
+Just clone this repository into your new project folder
 
 ``` bash
 $ git clone git@github.com:darkorsa/cordos.git .
@@ -29,7 +21,7 @@ $ git clone git@github.com:darkorsa/cordos.git .
 
 ## How things work
 
-This framework uses packaby by feature approach. It means that you organize your code in packages placed in *app/* folder.
+This framework uses package by feature approach. It means that you organize your code in packages placed in *app/* folder.
 
 ### Registering new package
 
