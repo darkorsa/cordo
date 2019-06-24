@@ -5,12 +5,12 @@ use OAuth2\Request;
 $router->addRoute(
     'POST',
     '/token',
-    function () use ($container) {
+    static function () use ($container) {
         $request = Request::createFromGlobals();
 
         $response = $container->get('oauth_server')->handleTokenRequest($request);
 
-        if ($response->getStatusText() == 'OK') {
+        if ($response->getStatusText() === 'OK') {
             $response->setParameter('login', $request->request('username'));
         }
 
@@ -22,7 +22,7 @@ $router->addRoute(
 $router->addRoute(
     'POST',
     '/token-refresh',
-    function () use ($container) {
+    static function () use ($container) {
         $response = $container->get('oauth_server')->handleTokenRequest(Request::createFromGlobals());
 
         $response->send();

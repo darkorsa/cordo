@@ -18,7 +18,7 @@ $errorReporter = require __DIR__.'/error.php';
 $containerBuilder = new ContainerBuilder();
 $containerBuilder->addDefinitions(Loader::loadDefinitions());
 
-if (getenv('APP_ENV') == ENV_PRODUCTION) {
+if (getenv('APP_ENV') === ENV_PRODUCTION) {
     $containerBuilder->enableCompilation(storage_path().'cache');
 }
 

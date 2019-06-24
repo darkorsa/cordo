@@ -25,13 +25,14 @@
         "ramsey/uuid": "^3.8",
         "ramsey/uuid-doctrine": "^1.5",
         "relay/relay": "2.x@dev",
-        "sensiolabs/security-checker": "^5.0",
+        "sensiolabs/security-checker": "^6.0",
         "symfony/console": "^4.2",
         "symfony/dotenv": "^4.2",
         "symfony/property-access": "^4.2",
         "zendframework/zend-mail": "^2.10"
     },
     "require-dev": {
+        "nunomaduro/phpinsights": "^1.7",
         "phpstan/phpstan": "^0.11.2",
         "symfony/var-dumper": "^4.2"
     },
@@ -52,6 +53,7 @@
     "scripts": {
         "test": "phpunit",
         "analyse": "phpstan analyse system app tests --level max",
+        "insights": "phpinsights -v",
         "schema-create": "doctrine orm:schema-tool:create",
         "schema-drop": "doctrine orm:schema-tool:drop --force",
         "schema-update": "doctrine orm:schema-tool:update --force",

@@ -42,13 +42,13 @@ abstract class BaseController
     {
         try {
             return $this->{$call . 'Action'}($request, $vars);
-        } catch (NotFoundException | ResourceNotFoundException $e) {
+        } catch (NotFoundException | ResourceNotFoundException $exception) {
             return $this->respondNotFound();
-        } catch (InvalidArgumentException $e) {
-            $this->errorReporter->report($e);
+        } catch (InvalidArgumentException $exception) {
+            $this->errorReporter->report($exception);
             return $this->respondBadRequestError();
-        } catch (Error | Exception $e) {
-            $this->errorReporter->report($e);
+        } catch (Error | Exception $exception) {
+            $this->errorReporter->report($exception);
             return $this->respondInternalError();
         }
     }

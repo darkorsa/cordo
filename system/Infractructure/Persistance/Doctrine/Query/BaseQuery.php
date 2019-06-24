@@ -5,7 +5,6 @@ namespace System\Infractructure\Persistance\Doctrine\Query;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Query\QueryBuilder;
 use System\Application\Exception\ResourceNotFoundException;
-use System\Infractructure\Persistance\Doctrine\Query\QueryFilter;
 
 abstract class BaseQuery
 {
@@ -21,18 +20,18 @@ abstract class BaseQuery
         return $this->connection->createQueryBuilder();
     }
 
-    protected function column(QueryBuilder $qb, QueryFilter $filter = null): string
+    protected function column(QueryBuilder $queryBuilder, ?QueryFilter $filter = null): string
     {
-        $this->filter($filter, $qb);
+        $this->filter($filter, $queryBuilder);
         
-        return (string) $this->connection->fetchColumn($qb->getSQL(), $qb->getParameters());
+        return (string) $this->connection->fetchColumn($queryBuilder->getSQL(), $queryBuilder->getParameters());
     }
 
-    protected function assoc(QueryBuilder $qb, QueryFilter $filter = null): array
+    protected function assoc(QueryBuilder $queryBuilder, ?QueryFilter $filter = null): array
     {
-        $this->filter($filter, $qb);
+        $this->filter($filter, $queryBuilder);
         
-        $return = $this->connection->fetchAssoc($qb->getSQL(), $qb->getParameters());
+        $return = $this->connection->fetchAssoc($queryBuilder->getSQL(), $queryBuilder->getParameters());
 
         if (!$return) {
             throw new ResourceNotFoundException("Cannot get resource");
@@ -41,17 +40,17 @@ abstract class BaseQuery
         return $return;
     }
 
-    protected function all(QueryBuilder $qb, QueryFilter $filter = null): array
+    protected function all(QueryBuilder $queryBuilder, ?QueryFilter $filter = null): array
     {
-        $this->filter($filter, $qb);
+        $this->filter($filter, $queryBuilder);
         
-        return $this->connection->fetchAll($qb->getSQL(), $qb->getParameters());
+        return $this->connection->fetchAll($queryBuilder->getSQL(), $queryBuilder->getParameters());
     }
 
-    protected function filter(?QueryFilter $queryFilter, QueryBuilder $qb)
+    protected function filter(?QueryFilter $queryFilter, QueryBuilder $queryBuilder)
     {
         if (!is_null($queryFilter)) {
-            $queryFilter->filter($qb);
+            $queryFilter->filter($queryBuilder);
         }
     }
 }

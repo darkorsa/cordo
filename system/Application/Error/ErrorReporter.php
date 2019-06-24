@@ -27,8 +27,8 @@ class ErrorReporter implements ErrorReporterInterface
 
         try {
             throw new Exception($message);
-        } catch (Exception $e) {
-            $this->report($e);
+        } catch (Exception $exception) {
+            $this->report($exception);
         }
 
         http_response_code(500);

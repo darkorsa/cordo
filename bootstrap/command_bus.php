@@ -2,9 +2,9 @@
 
 use App\Loader;
 use Monolog\Logger;
-use Bernard\Producer;
 use League\Tactician\CommandBus;
 use Monolog\Handler\StreamHandler;
+use System\Application\Queue\Producer;
 use League\Tactician\Logger\LoggerMiddleware;
 use System\Application\Queue\QueueMiddleware;
 use League\Tactician\Plugins\LockingMiddleware;
@@ -33,7 +33,7 @@ $commandLogger->pushHandler(new StreamHandler(storage_path().'logs/command.log',
 $queueFactory = require 'queue_factory.php';
 $producer = new Producer($queueFactory, new EventDispatcher());
 
-$commandBus = new CommandBus([
+return new CommandBus([
     new LoggerMiddleware(new ClassNameFormatter(), $commandLogger),
     new LockingMiddleware(),
     new TransactionMiddleware($entityManager),
@@ -41,5 +41,3 @@ $commandBus = new CommandBus([
     new EventMiddleware($emitter),
     $commandHandlerMiddleware,
 ]);
-
-return $commandBus;

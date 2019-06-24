@@ -15,10 +15,10 @@ use System\UI\Transformer\TransformerManagerInterface;
 use System\Infractructure\Mailer\ZendMail\MailerInterface;
 
 return [
-    'config'    => DI\factory(function () {
+    'config'    => DI\factory(static function () {
         return new Config(config_path(), new Parser());
     }),
-    'lang'      => DI\factory(function () {
+    'lang'      => DI\factory(static function () {
         return new Config(resources_path() . 'lang', new Parser());
     }),
     'request'   => DI\get(ServerRequestInterface::class),
@@ -30,7 +30,7 @@ return [
     EmitterInterface::class => DI\get(Emitter::class),
     EntityManager::class => DI\get('entity_manager'),
     TransformerManagerInterface::class => DI\get(TransformerManager::class),
-    Connection::class => DI\factory(function (ContainerInterface $c) {
-        return $c->get('entity_manager')->getConnection();
+    Connection::class => DI\factory(static function (ContainerInterface $container) {
+        return $container->get('entity_manager')->getConnection();
     }),
 ];

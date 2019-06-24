@@ -6,5 +6,5 @@ use Doctrine\DBAL\Query\QueryBuilder;
 
 interface QueryFilter
 {
-    public function filter(QueryBuilder $qb): void;
+    public function filter(QueryBuilder $queryBuilder): void;
 }

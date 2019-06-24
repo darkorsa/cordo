@@ -3,7 +3,6 @@
 namespace System\Application\Queue;
 
 use Bernard\Message;
-use Bernard\Producer;
 use League\Tactician\Middleware;
 use League\Tactician\Bernard\QueueCommand;
 use League\Tactician\Bernard\QueuedCommand;

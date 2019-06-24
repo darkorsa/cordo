@@ -7,11 +7,10 @@ use App\Users\Application\Query\UserFilter;
 use Doctrine\Common\Collections\ArrayCollection;
 use System\Infractructure\Persistance\Doctrine\Query\BaseQuery;
 use App\Users\Application\Query\UserQuery;
-use App\Users\Infrastructure\Persistance\Doctrine\Query\UserDoctrineFilter;
 
 class UserDoctrineQuery extends BaseQuery implements UserQuery
 {
-    public function count(UserFilter $userFilter = null): int
+    public function count(?UserFilter $userFilter = null): int
     {
         $queryBuilder = $this->createQB();
         $queryBuilder
@@ -21,7 +20,7 @@ class UserDoctrineQuery extends BaseQuery implements UserQuery
         return (int) $this->column($queryBuilder, new UserDoctrineFilter($userFilter));
     }
 
-    public function getById(string $userId, UserFilter $userFilter = null): UserView
+    public function getById(string $userId, ?UserFilter $userFilter = null): UserView
     {
         $queryBuilder = $this->createQB();
         $queryBuilder
@@ -36,7 +35,7 @@ class UserDoctrineQuery extends BaseQuery implements UserQuery
         return UserView::fromArray($userData);
     }
 
-    public function getByEmail(string $email, UserFilter $userFilter = null): UserView
+    public function getByEmail(string $email, ?UserFilter $userFilter = null): UserView
     {
         $queryBuilder = $this->createQB();
         $queryBuilder
@@ -52,7 +51,7 @@ class UserDoctrineQuery extends BaseQuery implements UserQuery
         return UserView::fromArray($userData);
     }
 
-    public function getAll(UserFilter $userFilter = null): ArrayCollection
+    public function getAll(?UserFilter $userFilter = null): ArrayCollection
     {
         $queryBuilder = $this->createQB();
         $queryBuilder
@@ -63,7 +62,7 @@ class UserDoctrineQuery extends BaseQuery implements UserQuery
         $usersData = $this->all($queryBuilder, new UserDoctrineFilter($userFilter));
 
         $collection = new ArrayCollection();
-        array_map(function (array $userData) use ($collection) {
+        array_map(static function (array $userData) use ($collection) {
             $collection->add(UserView::fromArray($userData));
         }, $usersData);
 

@@ -22,11 +22,11 @@ trait UserValidator
         $validator->required('email')
             ->lessThan(User::EMAIL_MAX_LENGTH)
             ->email()
-            ->callback(function ($value) use ($service) {
+            ->callback(static function ($value) use ($service) {
                 try {
                     $service->getOneByEmail($value);
                     throw new InvalidValueException('Email address us not unique', 'Unique::EMAIL_NOT_UNIQUE');
-                } catch (ResourceNotFoundException $ex) {
+                } catch (ResourceNotFoundException $exception) {
                     return true;
                 }
             });

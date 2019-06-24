@@ -18,7 +18,7 @@ $logger->pushHandler(new StreamHandler(storage_path().'logs/error.log', Logger::
 
 $errorReporter->pushHandler(new LoggerErrorHandler($logger));
 
-if (getenv('APP_DEBUG') == 'true') {
+if (getenv('APP_DEBUG') === 'true') {
     $prettyHandler = (isset($isConsole) && $isConsole)
         ? new PlainTextHandler
         : new PrettyPageHandler;

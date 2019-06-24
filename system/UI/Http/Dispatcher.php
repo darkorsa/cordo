@@ -10,7 +10,7 @@ use Psr\Http\Message\ResponseInterface;
 
 class Dispatcher
 {
-    const OPTIONS_METHOD = 3;
+    private const OPTIONS_METHOD = 3;
 
     private $dispatcher;
 

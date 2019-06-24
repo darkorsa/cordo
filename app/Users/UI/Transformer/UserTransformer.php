@@ -12,7 +12,7 @@ class UserTransformer extends TransformerAbstract
         return [
             'id'                    => $user->id(),
             'email'                 => $user->email(),
-            'modified'              => $user->updatedAt() ?: $user->createdAt(),
+            'modified'              => $user->updatedAt(),
             'links'                 => [],
         ];
     }

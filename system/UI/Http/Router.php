@@ -46,7 +46,7 @@ class Router
     private function getHandler(stdClass $route)
     {
         return function (ServerRequestInterface $request, ContainerInterface $container, array $vars) use ($route) {
-            $route->middlewares[] = function (
+            $route->middlewares[] = static function (
                 RequestInterface $request,
                 RequestHandlerInterface $handler
             ) use (
@@ -71,7 +71,7 @@ class Router
 
     private function processMiddlewares(array $middlewares, ServerRequestInterface $request): ResponseInterface
     {
-        $relay = new Relay($middlewares, function ($entry) {
+        $relay = new Relay($middlewares, static function ($entry) {
             return is_string($entry) ? new $entry() : $entry;
         });
 

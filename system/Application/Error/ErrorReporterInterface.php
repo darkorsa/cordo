@@ -3,7 +3,6 @@
 namespace System\Application\Error;
 
 use Throwable;
-use System\Application\Error\ErrorHandlerInterface;
 
 interface ErrorReporterInterface
 {

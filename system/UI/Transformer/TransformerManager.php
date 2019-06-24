@@ -10,7 +10,6 @@ use League\Fractal\TransformerAbstract;
 use League\Fractal\Resource\ResourceInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use League\Fractal\Serializer\JsonApiSerializer;
-use System\UI\Transformer\TransformerManagerInterface;
 
 class TransformerManager implements TransformerManagerInterface
 {

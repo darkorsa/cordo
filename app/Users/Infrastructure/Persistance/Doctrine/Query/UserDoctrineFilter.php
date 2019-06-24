@@ -15,19 +15,19 @@ class UserDoctrineFilter implements QueryFilter
         $this->userFilter = $userFilter;
     }
 
-    public function filter(QueryBuilder $qb): void
+    public function filter(QueryBuilder $queryBuilder): void
     {
         if (is_null($this->userFilter)) {
             return;
         }
 
         if (!is_null($this->userFilter->getIsActive())) {
-            $qb->andWhere('u.is_active', $this->userFilter->getIsActive());
+            $queryBuilder->andWhere('u.is_active', $this->userFilter->getIsActive());
         }
 
         if (!is_null($this->userFilter->getOffset()) && !is_null($this->userFilter->getLimit())) {
-            $qb->setFirstResult($this->userFilter->getOffset());
-            $qb->setMaxResults($this->userFilter->getLimit());
+            $queryBuilder->setFirstResult($this->userFilter->getOffset());
+            $queryBuilder->setMaxResults($this->userFilter->getLimit());
         }
     }
 }

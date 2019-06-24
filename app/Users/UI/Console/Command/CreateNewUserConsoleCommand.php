@@ -38,7 +38,7 @@ class CreateNewUserConsoleCommand extends BaseConsoleCommand
         $result = $this->validate($params);
 
         if (!$result->isValid()) {
-            array_map(function ($message) use ($output) {
+            array_map(static function ($message) use ($output) {
                 $output->write('<error>');
                 $output->writeln($message);
                 $output->write('</error>');

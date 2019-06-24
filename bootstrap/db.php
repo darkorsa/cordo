@@ -6,7 +6,7 @@ use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
 
 $paths = Loader::loadEntities();
-$isDevMode = getenv('APP_ENV') == ENV_LOCAL;
+$isDevMode = getenv('APP_ENV') === ENV_LOCAL;
 
 // the connection configuration
 $dbParams = [
@@ -21,11 +21,14 @@ Type::addType('uuid_binary_ordered_time', 'Ramsey\Uuid\Doctrine\UuidBinaryOrdere
 
 $config = Setup::createXMLMetadataConfiguration($paths, $isDevMode);
 
-($isDevMode)
+$isDevMode
     ? $config->setAutoGenerateProxyClasses(true)
     : $config->setAutoGenerateProxyClasses(false);
 
-$em = EntityManager::create($dbParams, $config);
-$em->getConnection()->getDatabasePlatform()->registerDoctrineTypeMapping('uuid_binary_ordered_time', 'binary');
+$entityManager = EntityManager::create($dbParams, $config);
+$entityManager
+    ->getConnection()
+    ->getDatabasePlatform()
+    ->registerDoctrineTypeMapping('uuid_binary_ordered_time', 'binary');
 
-return $em;
+return $entityManager;

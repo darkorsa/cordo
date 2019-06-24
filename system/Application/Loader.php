@@ -35,7 +35,7 @@ class Loader
 
             $commands = include_once $commandsPath;
 
-            array_map(function ($command) use ($application, $container) {
+            array_map(static function ($command) use ($application, $container) {
                 $application->add($container->get($command));
             }, $commands);
         }

@@ -7,11 +7,11 @@ use Assert\Assert;
 
 final class User
 {
-    const EMAIL_MAX_LENGTH = 50;
+    public const EMAIL_MAX_LENGTH = 50;
 
-    const PASSWORD_MIN_LENGTH = 6;
+    public const PASSWORD_MIN_LENGTH = 6;
 
-    const PASSWORD_MAX_LENGTH = 18;
+    public const PASSWORD_MAX_LENGTH = 18;
 
     private $id;
 

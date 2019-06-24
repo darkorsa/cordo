@@ -3,7 +3,6 @@
 namespace System\Infractructure\Mailer\ZendMail;
 
 use InvalidArgumentException;
-use System\Infractructure\Mailer\ZendMail\LogMailer;
 
 class MailerFactory
 {
