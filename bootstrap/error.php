@@ -20,9 +20,9 @@ $errorReporter->pushHandler(new LoggerErrorHandler($logger));
 
 if (getenv('APP_DEBUG') === 'true') {
     $prettyHandler = (isset($isConsole) && $isConsole)
-        ? new PlainTextHandler
-        : new PrettyPageHandler;
-    $whoops = new Run;
+        ? new PlainTextHandler()
+        : new PrettyPageHandler();
+    $whoops = new Run();
     $whoops->pushHandler($prettyHandler);
 
     $errorReporter->pushHandler(new PrettyErrorHandler($whoops));

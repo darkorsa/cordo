@@ -15,7 +15,7 @@ trait UserValidator
     {
         $service = $this->container->get(UserService::class);
 
-        $validator = new Validator;
+        $validator = new Validator();
         if ($requirePassword) {
             $validator->required('password')->lengthBetween(User::PASSWORD_MIN_LENGTH, User::PASSWORD_MAX_LENGTH);
         }

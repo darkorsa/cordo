@@ -49,6 +49,11 @@ return [
         SlevomatCodingStandard\Sniffs\TypeHints\DeclareStrictTypesSniff::class,
         SlevomatCodingStandard\Sniffs\TypeHints\TypeHintDeclarationSniff::class,
         NunoMaduro\PhpInsights\Domain\Insights\ForbiddenDefineFunctions::class,
+        NunoMaduro\PhpInsights\Domain\Insights\ForbiddenNormalClasses::class,
+        SlevomatCodingStandard\Sniffs\Classes\SuperfluousInterfaceNamingSniff::class,
+        SlevomatCodingStandard\Sniffs\Classes\SuperfluousAbstractClassNamingSniff::class,
+        SlevomatCodingStandard\Sniffs\Classes\SuperfluousExceptionNamingSniff::class,
+        NunoMaduro\PhpInsights\Domain\Insights\ForbiddenTraits::class,
     ],
 
     'config' => [

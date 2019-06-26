@@ -1,4 +1,7 @@
 {
+    "name": "darkorsa/cordo",
+    "description": "Microframework designed to efficienly develop REST APIs based on layered architecture and using CQRS, DDD, Events, Queues, etc.",
+    "license": "MIT",
     "require": {
         "ext-redis": "^4.1",
         "beberlei/assert": "^2.6",
