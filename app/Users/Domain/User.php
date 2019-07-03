@@ -5,7 +5,7 @@ namespace App\Users\Domain;
 use DateTime;
 use Assert\Assert;
 
-final class User
+class User
 {
     public const EMAIL_MAX_LENGTH = 50;
 

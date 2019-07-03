@@ -19,7 +19,9 @@ $dbParams = [
 
 Type::addType('uuid_binary_ordered_time', 'Ramsey\Uuid\Doctrine\UuidBinaryOrderedTimeType');
 
-$config = Setup::createXMLMetadataConfiguration($paths, $isDevMode);
+$cacheDir = storage_path() . 'cache/doctrine';
+
+$config = Setup::createXMLMetadataConfiguration($paths, $isDevMode, $cacheDir);
 
 $isDevMode
     ? $config->setAutoGenerateProxyClasses(true)
