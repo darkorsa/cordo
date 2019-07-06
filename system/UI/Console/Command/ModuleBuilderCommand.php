@@ -3,6 +3,9 @@
 namespace System\UI\Console\Command;
 
 use ZipArchive;
+use FilesystemIterator;
+use RecursiveIteratorIterator;
+use RecursiveDirectoryIterator;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -56,23 +59,22 @@ class ModuleBuilderCommand extends Command
             exit;
         }
 
-        $this->createModule($moduleName, $resourcePath);
+        $this->buildModule($moduleName, $resourcePath);
     }
 
-    protected function fixModuleName(string $moduleName): string
+    protected function buildModule(string $moduleName, string $resourcePath): void
     {
-        if (substr($moduleName, -1) !== 's') {
-            return $moduleName.'s';
-        }
+        $modulePath = app_path().$moduleName;
+        
+        $this->createModuleDir($modulePath);
 
-        return $moduleName;
-    }
+        $this->extractArchive($resourcePath, $modulePath);
 
-    protected function createModule(string $moduleName, string $resourcePath): void
-    {
-        $this->createModuleDir(app_path().$moduleName);
+        $this->renameFiles($modulePath, $moduleName);
 
-        $this->extractArchive($resourcePath, app_path().$moduleName);
+        $this->parseFiles($modulePath, $moduleName);
+
+        $this->output->writeln('Successfully done!');
     }
 
     protected function createModuleDir(string $path): void
@@ -94,4 +96,71 @@ class ModuleBuilderCommand extends Command
             $this->output->writeln('<error>Could not extract archive from path: '.$resourcePath.'</error>');
         }
     }
+
+    protected function renameFiles(string $modulePath, string $moduleName): void
+    {
+        $this->output->writeln('Renaming files...');
+
+        $directory = new RecursiveDirectoryIterator($modulePath, FilesystemIterator::SKIP_DOTS);
+        $iterator = new RecursiveIteratorIterator($directory);
+
+        foreach ($iterator as $fn) {
+
+            $replacements = $this->getReplacements($moduleName);
+
+            $renamed = str_replace(
+                array_keys($replacements),
+                array_values($replacements),
+                $fn->getPathname()
+            );
+
+            rename($fn->getPathname(), $renamed);
+        }
+    }
+
+    protected function parseFiles(string $modulePath, string $moduleName): void
+    {
+        $this->output->writeln('Parsing files...');
+
+        $directory = new RecursiveDirectoryIterator($modulePath, FilesystemIterator::SKIP_DOTS);
+        $iterator = new RecursiveIteratorIterator($directory);
+
+        foreach ($iterator as $fn) {
+
+            $replacements = $this->getReplacements($moduleName);
+
+            $fileContent = str_replace(
+                array_keys($replacements),
+                array_values($replacements),
+                file_get_contents($fn->getPathname())
+            );
+
+            file_put_contents($fn->getPathname(), $fileContent);
+        }
+    }
+
+    protected function getReplacements(string $moduleName): array
+    {
+        return [
+            '[entity]'      => strtolower($this->getSingular($moduleName)),
+            '[entities]'    => strtolower($moduleName),
+            '[Entity]'      => $this->getSingular($moduleName),
+            '[Entities]'    => $moduleName,
+        ];
+    }
+
+    protected function fixModuleName(string $moduleName): string
+    {
+        if (substr($moduleName, -1) !== 's') {
+            return $moduleName.'s';
+        }
+
+        return $moduleName;
+    }
+
+    protected function getSingular(string $moduleName): string
+    {
+        return substr($moduleName, -1) === 's' ? substr($moduleName, 0, -1) : $moduleName;
+    }
+
 }
