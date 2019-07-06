@@ -32,7 +32,8 @@
         "symfony/console": "^4.2",
         "symfony/dotenv": "^4.2",
         "symfony/property-access": "^4.2",
-        "zendframework/zend-mail": "^2.10"
+        "zendframework/zend-mail": "^2.10",
+        "zendframework/zend-servicemanager": "^3.4"
     },
     "require-dev": {
         "nunomaduro/phpinsights": "^1.7",

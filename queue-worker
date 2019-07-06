@@ -4,6 +4,7 @@
 use Bernard\Consumer;
 use Bernard\Router\ClassNameRouter;
 use Bernard\Router\ContainerReceiverResolver;
+use System\Application\Event\EventDispatcherAdapter;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use App\Users\Application\Command\SendUserWelcomeMessage;
 use App\Users\Application\Command\Handler\SendUserWelcomeMessageHandler;
@@ -20,7 +21,7 @@ $router = new ClassNameRouter([
     SendUserWelcomeMessage::class => SendUserWelcomeMessageHandler::class,
 ], new ContainerReceiverResolver($container));
 
-$eventDispatcher = new EventDispatcher();
+$eventDispatcher = new EventDispatcherAdapter(new EventDispatcher());
 
 $eventDispatcher->addListener(
     Bernard\BernardEvents::INVOKE,
