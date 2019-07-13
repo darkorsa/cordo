@@ -35,19 +35,20 @@ If you would like to utilize of UUIDs you might find usefull to create some db f
 composer sql-import resources/database/sql/uuid.sql
 ```
 
-If you plan to use OAuth2 authorization running:
+If you plan to use OAuth2 authorization run:
 
 ``` bash
 composer sql-import resources/database/sql/oauth.sql
 ```
 
-will help you creating all the neccessary db tables.
+it will create all the neccessary db tables.
 
 ## How things work
 
 Cordo does not reinvent the wheel. It is basically a set of popular PHP libraries brought together and configured in order to create a simple framework that is in compliance good programming practices for modern PHP.
 
 Some of the used libraries:
+
 - Doctrine
 - Fast Route
 - Guzzle
