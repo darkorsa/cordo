@@ -1,5 +1,11 @@
 <?php
 
+$debug = getenv('APP_DEBUG') === 'true';
+
+ini_set('display_errors', (int) $debug);
+ini_set('display_startup_errors', (int) $debug);
+error_reporting(E_ALL & E_STRICT);
+
 use Whoops\Run;
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
@@ -18,7 +24,7 @@ $logger->pushHandler(new StreamHandler(storage_path().'logs/error.log', Logger::
 
 $errorReporter->pushHandler(new LoggerErrorHandler($logger));
 
-if (getenv('APP_DEBUG') === 'true') {
+if ($debug) {
     $prettyHandler = (isset($isConsole) && $isConsole)
         ? new PlainTextHandler()
         : new PrettyPageHandler();
