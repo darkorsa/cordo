@@ -1,6 +1,6 @@
 # cordo
 
-Cordo is a microframework designed for efficienly developing REST APIs based on layered architecture and using principles such as:
+Cordo is a microframework designed for efficient development of REST APIs based on layered architecture and using principles such as:
 
 - DDD (Domain Driven Design)
 - CQRS (Command Query Responsibility Segregation)
@@ -50,6 +50,7 @@ Cordo does not reinvent the wheel. It is basically a set of popular PHP librarie
 Some of the used libraries:
 
 - [Doctrine](https://www.doctrine-project.org/)
+- [OAuth2](https://bshaffer.github.io/oauth2-server-php-docs/)
 - [Fast Route](https://github.com/nikic/FastRoute)
 - [Guzzle](http://docs.guzzlephp.org/en/stable/)
 - [Tactician](https://tactician.thephpleague.com/)
@@ -126,7 +127,7 @@ Bernard supports several different drivers:
 
 This framework is configured with Redis Extention driver by default. Driver declaration is placed in *bootstrap/queue_factory.php* and can be changed there.
 
-If you want to make your Command to be queued just make it implementing *League\Tactician\Bernard\QueueableCommand* interface.
+If you want to make your Command to be queued just make it implementing *League\Tactician\Bernard\QueueableCommand* interface or extend *System\Application\Queue\AbstractMessage* class.
 
 To launch background process that will process queued commands run in the console:
 
@@ -142,10 +143,10 @@ Just add your package folder name to the *app/Loader.php*:
 
 ``` php
 protected static $register = [
-        'Auth',
-        'Users',
-        // add you packages here
-    ];
+    'Auth',
+    'Users',
+    // add you packages here
+];
 ```
 
 Once you package is registered, framework will have access to defined routes, DI container definitions, configs, commands, etc.
@@ -306,7 +307,7 @@ To better understand how to deal with events check Users module how welcome mess
 
 ### Errors
 
-By default all errors are logged to the *storage/logs/error.log* file.
+By default all the errors are logged to the *storage/logs/error.log* file.
 
 Additionally in **dev** environment errors will be prompth to the screen in pretty format using [Whoops](https://github.com/filp/whoops). Errors in console are also pretty formated. In **production** environment errors stack traces will be emailed to the addresses defined in *config/error.php*.
 
