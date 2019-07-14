@@ -45,23 +45,25 @@ it will create all the neccessary db tables.
 
 ## How things work
 
-Cordo does not reinvent the wheel. It is basically a set of popular PHP libraries brought together and configured in order to create a simple framework that is in compliance good programming practices for modern PHP.
+Cordo does not reinvent the wheel. It is basically a set of popular PHP libraries brought together and configured in order to create a simple framework that is in compliance with good programming practices for modern PHP.
 
 Some of the used libraries:
 
-- Doctrine
-- Fast Route
-- Guzzle
-- Tactician
-- Fractal
-- Monolog
-- PHP-DI
-- Bernard
-- Whoops
-- Relay
-- Symfony Console
-- Sumfony Dotenv
-- Zend Mail
+- [Doctrine](https://www.doctrine-project.org/)
+- [Fast Route](https://github.com/nikic/FastRoute)
+- [Guzzle](http://docs.guzzlephp.org/en/stable/)
+- [Tactician](https://tactician.thephpleague.com/)
+- [Fractal](https://fractal.thephpleague.com/)
+- [Monolog](https://github.com/Seldaek/monolog)
+- [PHP-DI](http://php-di.org/)
+- [Bernard](https://bernard.readthedocs.io/)
+- [Whoops](http://filp.github.io/whoops/)
+- [Relay](https://relayphp.com/)
+- [Symfony Console](https://symfony.com/doc/current/components/console.html)
+- [Sumfony Dotenv](https://symfony.com/doc/current/components/dotenv.html)
+- [Zend Mail](https://framework.zend.com/manual/2.1/en/modules/zend.mail.introduction.html)
+
+This documentation does not focus on describing in detail how to deal with Routes, Command Bus, DI Container, querying DB, etc., for that use the documentation of the relevant library.
 
 Cordo is shipped with one previously prepared module: *Users*. It presents how the code should be organized within all the layers and utilizes of *Events* and *Queues*.
 
@@ -213,6 +215,14 @@ app/Users/
 
 This structure represents the *Domain Driven Design* model, which consists of layers: **User Interface**, **Application**, **Domain** and **Infrastructure**.
 
+If you want to quickly boilerplate your new module there's a command for that:
+
+``` bash
+php cordo system:module-builder <module_name> <module_archive>
+```
+
+you can find pre-prepared archive in app/resources/module folder with typical module structure for CRUD operations. Of course you create and use your own boilerplates.
+
 ### Routes
 
 Route definitons should be placed in *app/[PackageName]/UI/Http/routes.php* file.
@@ -225,7 +235,7 @@ Perferable way to generate API documentation is [ApiDoc](http://apidocjs.com) bu
 
 DI Conteriner definitions should be placed in *app/[PackageName]/Application/definitions.php* file.
 
-Framework uses [PHP-ID](http://php-di.org/) for DI Container, if you need to find out more check the [documentation](http://php-di.org/doc/).
+Cordo uses [PHP-ID](http://php-di.org/) for DI Container, if you need to find out more check the [documentation](http://php-di.org/doc/).
 
 ### Config
 
@@ -248,6 +258,14 @@ According to the CQRS approach preferable way is to use [Doctrine ORM](https://w
 Doctine is preconfigured to support [UUID](https://github.com/ramsey/uuid-doctrine).
 
 Also [XML Mapping](https://www.doctrine-project.org/projects/doctrine-orm/en/2.6/reference/xml-mapping.html) is supported so you can map your Domain Models directly with database tables. You should place your mappings in *app/[PackageName]/Infractructure/Doctrine/ORM/Metadata/*.
+
+When you have your mappings ready you can create/update/drop schema directly from composer:
+
+``` php
+composer schema-create
+composer schema-update
+composer schema-drop
+```
 
 ### Command bus
 
@@ -291,5 +309,18 @@ By default all errors are logged to the *storage/logs/error.log* file.
 Additionally in **dev** environment errors will be prompth to the screen in pretty format using [Whoops](https://github.com/filp/whoops). Errors in console are also pretty formated. In **production** environment errors stack traces will be emailed to the addresses defined in *config/error.php*.
 
 If you'd like to change any of that bevavior you can to it in: *bootstrap/error.php* file.
+
+## Security
+
+If you discover any security related issues, please email dkorsak@gmail.com instead of using the issue tracker.
+
+## Credits
+
+- [Dariusz Korsak][link-author]
+- [All Contributors][link-contributors]
+
+## License
+
+The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
 
 
