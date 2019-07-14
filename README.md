@@ -1,6 +1,6 @@
 # cordo
 
-Cordo is a microframework designed to efficienly develop REST APIs based on layered architecture and using principles such as:
+Cordo is a microframework designed for efficienly developing REST APIs based on layered architecture and using principles such as:
 
 - DDD (Domain Driven Design)
 - CQRS (Command Query Responsibility Segregation)
@@ -10,7 +10,7 @@ Cordo is a microframework designed to efficienly develop REST APIs based on laye
 - Package by feature
 - Zero config approach
 
-Cordo is compliant with PSRs: PSR-1, PSR-2, PSR-3, PSR-4, PSR-7, PSR-11, PSR-15, PSR-18
+It's compliant with PSRs: PSR-1, PSR-2, PSR-3, PSR-4, PSR-7, PSR-11, PSR-15, PSR-18
 
 **Note:** Cordo is still in development. All the basic features are implemented but tests are still missing. Please keep that in mind.
 
@@ -26,7 +26,7 @@ Cordo is compliant with PSRs: PSR-1, PSR-2, PSR-3, PSR-4, PSR-7, PSR-11, PSR-15,
 Just clone this repository into your new project folder.
 
 ``` bash
-$ git clone git@github.com:darkorsa/cordos.git .
+$ git clone git@github.com:darkorsa/cordo.git .
 ```
 
 If you would like to utilize of UUIDs you might find usefull to create some db functions helping translating UUIDs between strigs and binaries.
@@ -41,7 +41,7 @@ If you plan to use OAuth2 authorization run:
 composer sql-import resources/database/sql/oauth.sql
 ```
 
-it will create all the neccessary db tables.
+it will create all the neccessary db tables. Endpoints for oAuth are already there located in *app/Auth/UI/Http/routes.php*, the default ClientID is *Cordo*.
 
 ## How things work
 
@@ -64,6 +64,8 @@ Some of the used libraries:
 - [Zend Mail](https://framework.zend.com/manual/2.1/en/modules/zend.mail.introduction.html)
 
 This documentation does not focus on describing in detail how to deal with Routes, Command Bus, DI Container, querying DB, etc., for that use the documentation of the relevant library.
+
+You are also encouraged to check for yourself how things work under the hood, check the *system* folder where abstract classes and interfaces are located.
 
 Cordo is shipped with one previously prepared module: *Users*. It presents how the code should be organized within all the layers and utilizes of *Events* and *Queues*.
 
