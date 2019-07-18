@@ -28,6 +28,10 @@ $container->set('error_reporter', $errorReporter);
 // Configs
 Loader::loadConfigs($container->get('config'));
 
+// Acl
+$acl = require __DIR__.'/acl.php';
+$container->set('acl', $acl);
+
 // Mailer
 $mailer = MailerFactory::factory($container->get('config')->get('mail'));
 $container->set('mailer', $mailer);

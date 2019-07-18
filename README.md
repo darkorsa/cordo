@@ -10,7 +10,7 @@ Cordo is a microframework designed for efficient development of REST APIs based 
 - Package by feature
 - Zero config approach
 
-It's compliant with PSRs: PSR-1, PSR-2, PSR-3, PSR-4, PSR-7, PSR-11, PSR-15, PSR-18
+It's compliant with PSRs: `PSR-1`, `PSR-2`, `PSR-3`, `PSR-4`, `PSR-7`, `PSR-11`, `PSR-15`, `PSR-18`
 
 **Note:** Cordo is still in development. All the basic features are implemented but tests are still missing. Please keep that in mind.
 
@@ -41,11 +41,11 @@ If you plan to use OAuth2 authorization run:
 composer sql-import resources/database/sql/oauth.sql
 ```
 
-it will create all the neccessary db tables. Endpoints for oAuth are already there located in *app/Auth/UI/Http/routes.php*, the default ClientID is *Cordo*.
+it will create all the neccessary db tables. Endpoints for oAuth are already there located in `app/Auth/UI/Http/routes.php`, the default ClientID is *Cordo*.
 
 ## How things work
 
-Cordo does not reinvent the wheel. It is basically a set of popular PHP libraries brought together and configured in order to create a simple framework that is in compliance with good programming practices for modern PHP.
+Cordo does not reinvent the wheel. It is basically a set of popular PHP libraries put together and configured in order to create a simple framework that is in compliance with good programming practices for modern PHP.
 
 Some of the used libraries:
 
@@ -62,13 +62,14 @@ Some of the used libraries:
 - [Relay](https://relayphp.com/)
 - [Symfony Console](https://symfony.com/doc/current/components/console.html)
 - [Sumfony Dotenv](https://symfony.com/doc/current/components/dotenv.html)
+- [Zend ACL](https://docs.zendframework.com/zend-permissions-acl/usage/)
 - [Zend Mail](https://framework.zend.com/manual/2.1/en/modules/zend.mail.introduction.html)
 
 This documentation does not focus on describing in detail how to deal with Routes, Command Bus, DI Container, querying DB, etc., for that use the documentation of the relevant library.
 
-You are also encouraged to check for yourself how things work under the hood, check the *system* folder where abstract classes and interfaces are located.
+You are also encouraged to check for yourself how things work under the hood, check the `system` folder where abstract classes and interfaces are located.
 
-Cordo is shipped with one previously prepared module: *Users*. It presents how the code should be organized within all the layers and utilizes of *Events* and *Queues*.
+Cordo is shipped with one previously prepared module: `Users`. It presents how the code should be organized within all the layers and utilizes of `Events` and `Queues`.
 
 ### Entry points
 
@@ -76,7 +77,7 @@ There are several entry points to the application:
 
 #### Web
 
-Entry point for HTTP requests is *public/index.php*. Your apache/nginx configuration should point to the *public* folder.
+Entry point for HTTP requests is `public/index.php`. Your apache/nginx configuration should point to the `public` folder.
 
 #### Console
 
@@ -92,13 +93,13 @@ List currently registered commands:
 php cordo list
 ```
 
-Global commands should be registered in *./cordo* file by adding them to the application object:
+Global commands should be registered in `./cordo` file by adding them to the application object:
 
 ``` php
 $application->add(new SecurityCheckerCommand(new SecurityChecker()));
 ```
 
-Feature commands should be registered in *app/[PackageName]/UI/Console/commands.php* file.
+Feature commands should be registered in `app/[PackageName]/UI/Console/commands.php` file.
 
 ``` php
 return [
@@ -125,9 +126,9 @@ Bernard supports several different drivers:
 - Amazon SQS
 - Queue Interop
 
-This framework is configured with Redis Extention driver by default. Driver declaration is placed in *bootstrap/queue_factory.php* and can be changed there.
+This framework is configured with Redis Extention driver by default. Driver declaration is placed in `bootstrap/queue_factory.php` and can be changed there.
 
-If you want to make your Command to be queued just make it implementing *League\Tactician\Bernard\QueueableCommand* interface or extend *System\Application\Queue\AbstractMessage* class.
+If you want to make your Command to be queued just make it implementing `League\Tactician\Bernard\QueueableCommand` interface or just extend `System\Application\Queue\AbstractMessage` class.
 
 To launch background process that will process queued commands run in the console:
 
@@ -137,9 +138,9 @@ php queue-worker &
 
 ### Registering new package
 
-This framework uses package by feature approach. It means that you organize your code in packages placed in *app/* folder.
+This framework uses package by feature approach. It means that you organize your code in packages placed in `app/` folder.
 
-Just add your package folder name to the *app/Loader.php*:
+Just add your package folder name to the `app/Loader.php`:
 
 ``` php
 protected static $register = [
@@ -221,28 +222,28 @@ This structure represents the *Domain Driven Design* model, which consists of la
 If you want to quickly boilerplate your new module there's a command for that:
 
 ``` bash
-php cordo system:module-builder <module_name> <module_archive>
+php cordo system:module-builder <module_name> <module_archive_file>
 ```
 
-you can find pre-prepared archive in app/resources/module folder with typical module structure for CRUD operations. Of course you create and use your own boilerplates.
+you can find pre-prepared archive in `app/resources/module` folder with typical module structure for CRUD operations. Of course you create and use your own boilerplates.
 
 ### Routes
 
-Route definitons should be placed in *app/[PackageName]/UI/Http/routes.php* file.
+Route definitons should be placed in `app/[PackageName]/UI/Http/routes.php`.
 
-Routing is done with use of [FastRoute](https://github.com/nikic/FastRoute) but modified allowing to use per route *Middlewares*.
+Routing is done with use of [FastRoute](https://github.com/nikic/FastRoute) but modified allowing to use per route `Middlewares`.
 
 Perferable way to generate API documentation is [ApiDoc](http://apidocjs.com) but that can be changed according to individual preferences.
 
 ### Dependency Injection Container
 
-DI Conteriner definitions should be placed in *app/[PackageName]/Application/definitions.php* file.
+DI Conteriner definitions should be placed in `app/[PackageName]/Application/definitions.php`.
 
 Cordo uses [PHP-ID](http://php-di.org/) for DI Container, if you need to find out more check the [documentation](http://php-di.org/doc/).
 
 ### Config
 
-Global config files should be located at *config/* dir, while feature configs location should be: *app/[packageName]/Application/config/*
+Global config files should be located at *config/* dir, while feature configs location should be: `app/[packageName]/Application/config/`
 
 Config files should return PHP associative arrays. Multidimensional arrays are supproted.
 
@@ -254,13 +255,13 @@ where users is the name of the config file and the following segments are array 
 
 ### Database
 
-Database configuration is located at *bootstrap/db.php* file. Framework uses [Doctrine](https://www.doctrine-project.org/) for database storage and object mapping.
+Database configuration is located at `bootstrap/db.php` file. Framework uses [Doctrine](https://www.doctrine-project.org/) for database storage and object mapping.
 
 According to the CQRS approach preferable way is to use [Doctrine ORM](https://www.doctrine-project.org/projects/orm.html) for storing and [Doctrine DBAL](https://www.doctrine-project.org/projects/dbal.html) for querying.
 
 Doctine is preconfigured to support [UUID](https://github.com/ramsey/uuid-doctrine).
 
-Also [XML Mapping](https://www.doctrine-project.org/projects/doctrine-orm/en/2.6/reference/xml-mapping.html) is supported so you can map your Domain Models directly with database tables. You should place your mappings in *app/[PackageName]/Infractructure/Doctrine/ORM/Metadata/*.
+Also [XML Mapping](https://www.doctrine-project.org/projects/doctrine-orm/en/2.6/reference/xml-mapping.html) is supported so you can map your Domain Models directly with database tables. You should place your mappings in `app/[PackageName]/Infractructure/Doctrine/ORM/Metadata/`.
 
 When you have your mappings ready you can create/update/drop schema directly from composer:
 
@@ -274,9 +275,9 @@ composer schema-drop
 
 Cordo uses [Tactician](https://tactician.thephpleague.com/) command bus for implementing command pattern.
 
-Your Command -> Handler mappings should be placed in: *app/[PackageName]/Application/handlers.php* file.
+Your Command -> Handler mappings should be placed in: `app/[PackageName]/Application/handlers.php` file.
 
-Command bus is configured to lock each handler in seperate transaction, it also supports events, queues, command logging. Check *bootstrap/command_bus.php* and [Tactician](https://tactician.thephpleague.com/) documentation for details.
+Command bus is configured to lock each handler in seperate transaction, it also supports events, queues, command logging. Check `bootstrap/command_bus.php` and [Tactician](https://tactician.thephpleague.com/) documentation for details.
 
 ### Events
 
@@ -291,7 +292,7 @@ Here is how you can emit an event:
 $emitter->emit('users.created', new UserCreated($command->email()));
 ```
 
-Define your listeners in *app/[PackageName]/Application/events.php* file just like in Users module:
+Define your listeners in `app/[PackageName]/Application/events.php` file just like in Users module:
 
 ``` php
 $emitter->addListener(
@@ -305,13 +306,21 @@ $emitter->addListener(
 
 To better understand how to deal with events check Users module how welcome message is being sent for newly created users.
 
+### ACL
+
+For the purpose of Authorization [Zend ACL](https://docs.zendframework.com/zend-permissions-acl/usage/) has been used. ACL roles, resources, permissions cen be defined seperately in each package in `app/[PackageName]/Application/acl.php`.
+
+In `Auth` package that is shipped with this framework there are CRUD actions prepared for users ACL rules.
+
+There is also a `Middeware` for authorizing access to API endpoints in `app/Auth/UI/Http/Middleware/AclMiddleware.php`. You can pass privilage name in constructor or leave empty then it will simply map http request method (GET, POST, PUT, DELETE) as acl privilage.
+
 ### Errors
 
-By default all the errors are logged to the *storage/logs/error.log* file.
+By default all the errors are logged to the `storage/logs/error.log` file.
 
-Additionally in **dev** environment errors will be prompth to the screen in pretty format using [Whoops](https://github.com/filp/whoops). Errors in console are also pretty formated. In **production** environment errors stack traces will be emailed to the addresses defined in *config/error.php*.
+Additionally in `dev` environment errors will be prompth to the screen in pretty format using [Whoops](https://github.com/filp/whoops). Errors in console are also pretty formated. In `production` environment errors stack traces will be emailed to the addresses defined in `config/error.php`.
 
-If you'd like to change any of that bevavior you can to it in: *bootstrap/error.php* file.
+If you'd like to change any of that bevavior you can to it in: `bootstrap/error.php` file.
 
 ## Security
 

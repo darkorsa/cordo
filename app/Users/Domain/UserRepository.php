@@ -4,6 +4,8 @@ namespace App\Users\Domain;
 
 interface UserRepository
 {
+    public function find(string $id): User;
+
     public function add(User $user) : void;
 
     public function update(User $user) : void;

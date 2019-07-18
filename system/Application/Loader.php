@@ -4,21 +4,29 @@ namespace System\Application;
 
 use Noodlehaus\Config;
 use System\UI\Http\Router;
+use Zend\Permissions\Acl\Acl;
 use League\Event\EmitterInterface;
 use Psr\Container\ContainerInterface;
 use System\Application\Config\Parser;
 use Symfony\Component\Console\Application;
+use Zend\Permissions\Acl\Resource\GenericResource as Resource;
 
 class Loader
 {
     protected static $register = [];
-    
+
+    public static function getModules(): array
+    {
+        return static::$register;
+    }
+
     public static function loadRoutes(Router $router, ContainerInterface $container): void
     {
         foreach (static::$register as $module) {
             $routesPath = static::routesPath($module);
 
             if (file_exists($routesPath)) {
+                $resource = strtolower($module);
                 include_once $routesPath;
             }
         }
@@ -107,6 +115,20 @@ class Loader
         return $paths;
     }
 
+    public static function loadResources(Acl $acl): void
+    {
+        foreach (static::$register as $module) {
+            $resourcesPath = static::resourcesPath($module);
+
+            $resource = strtolower($module);
+            if (file_exists($resourcesPath)) {
+                include_once $resourcesPath;
+                continue;
+            }
+            $acl->addResource(new Resource($resource));
+        }
+    }
+
     protected static function routesPath(string $module): string
     {
         return app_path().$module.'/UI/Http/routes.php';
@@ -140,5 +162,10 @@ class Loader
     protected static function entitiesPath(string $module): string
     {
         return app_path().$module.'/Infrastructure/Persistance/Doctrine/ORM/Metadata';
+    }
+
+    protected static function resourcesPath(string $module): string
+    {
+        return app_path().$module.'/Application/acl.php';
     }
 }

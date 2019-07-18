@@ -15,6 +15,11 @@ class UserDoctrineRepository implements UserRepository
         $this->entityManager = $entityManager;
     }
 
+    public function find(string $id): User
+    {
+        return $this->entityManager->find(User::class, $id);
+    }
+
     public function add(User $user): void
     {
         $this->entityManager->persist($user);

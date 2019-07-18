@@ -29,3 +29,33 @@ $router->addRoute(
         die;
     }
 );
+
+$router->addRoute(
+    'GET',
+    "/{$resource}/acl/users",
+    'App\Auth\UI\Http\Controller\UserAclQueriesController@index'
+);
+
+$router->addRoute(
+    'GET',
+    "/{$resource}/acl/users/{id:[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12}}",
+    'App\Auth\UI\Http\Controller\UserAclQueriesController@get'
+);
+
+$router->addRoute(
+    'POST',
+    "/{$resource}/acl/users",
+    'App\Auth\UI\Http\Controller\UserAclCommandsController@create'
+);
+
+$router->addRoute(
+    'PUT',
+    "/{$resource}/acl/users/{id:[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12}}",
+    'App\Auth\UI\Http\Controller\UserAclCommandsController@update'
+);
+
+$router->addRoute(
+    'DELETE',
+    "/{$resource}/acl/users/{id:[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12}}",
+    'App\Auth\UI\Http\Controller\UserAclCommandsController@delete'
+);

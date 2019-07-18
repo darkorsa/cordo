@@ -9,7 +9,7 @@ use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
-class OAuth implements MiddlewareInterface
+class OAuthMiddleware implements MiddlewareInterface
 {
     private $container;
 
