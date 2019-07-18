@@ -22,10 +22,7 @@ Type::addType('uuid_binary_ordered_time', 'Ramsey\Uuid\Doctrine\UuidBinaryOrdere
 $cacheDir = storage_path() . 'cache/doctrine';
 
 $config = Setup::createXMLMetadataConfiguration($paths, $isDevMode, $cacheDir);
-
-$isDevMode
-    ? $config->setAutoGenerateProxyClasses(true)
-    : $config->setAutoGenerateProxyClasses(false);
+$config->setAutoGenerateProxyClasses($isDevMode);
 
 $entityManager = EntityManager::create($dbParams, $config);
 $entityManager

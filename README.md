@@ -1,15 +1,18 @@
 # cordo
 
-Cordo is a microframework designed to efficienly develop REST APIs based on layered architecture and using principles such as:
+Cordo is a microframework designed for efficient development of REST APIs based on layered architecture and using principles such as:
 
-- Domain Driven Design
+- DDD (Domain Driven Design)
 - CQRS (Command Query Responsibility Segregation)
 - Event Dispatcher
 - Queues (Redis, RabbitMQ, Amazon SQS)
 - OAuth2
 - Package by feature
+- Zero config approach
 
-Framework is compliant with PSRs: PSR-1, PSR-2, PSR-3, PSR-4, PSR-7, PSR-11, PSR-15, PSR-18
+It's compliant with PSRs: PSR-1, PSR-2, PSR-3, PSR-4, PSR-7, PSR-11, PSR-15, PSR-18
+
+**Note:** Cordo is still in development. All the basic features are implemented but tests are still missing. Please keep that in mind.
 
 ## Requirements
 
@@ -20,13 +23,52 @@ Framework is compliant with PSRs: PSR-1, PSR-2, PSR-3, PSR-4, PSR-7, PSR-11, PSR
 
 ## Install
 
-Just clone this repository into your new project folder
+Just clone this repository into your new project folder.
 
 ``` bash
-$ git clone git@github.com:darkorsa/cordos.git .
+$ git clone git@github.com:darkorsa/cordo.git .
 ```
 
+If you would like to utilize of UUIDs you might find usefull to create some db functions helping translating UUIDs between strigs and binaries.
+
+``` bash
+composer sql-import resources/database/sql/uuid.sql
+```
+
+If you plan to use OAuth2 authorization run:
+
+``` bash
+composer sql-import resources/database/sql/oauth.sql
+```
+
+it will create all the neccessary db tables. Endpoints for oAuth are already there located in *app/Auth/UI/Http/routes.php*, the default ClientID is *Cordo*.
+
 ## How things work
+
+Cordo does not reinvent the wheel. It is basically a set of popular PHP libraries brought together and configured in order to create a simple framework that is in compliance with good programming practices for modern PHP.
+
+Some of the used libraries:
+
+- [Doctrine](https://www.doctrine-project.org/)
+- [OAuth2](https://bshaffer.github.io/oauth2-server-php-docs/)
+- [Fast Route](https://github.com/nikic/FastRoute)
+- [Guzzle](http://docs.guzzlephp.org/en/stable/)
+- [Tactician](https://tactician.thephpleague.com/)
+- [Fractal](https://fractal.thephpleague.com/)
+- [Monolog](https://github.com/Seldaek/monolog)
+- [PHP-DI](http://php-di.org/)
+- [Bernard](https://bernard.readthedocs.io/)
+- [Whoops](http://filp.github.io/whoops/)
+- [Relay](https://relayphp.com/)
+- [Symfony Console](https://symfony.com/doc/current/components/console.html)
+- [Sumfony Dotenv](https://symfony.com/doc/current/components/dotenv.html)
+- [Zend Mail](https://framework.zend.com/manual/2.1/en/modules/zend.mail.introduction.html)
+
+This documentation does not focus on describing in detail how to deal with Routes, Command Bus, DI Container, querying DB, etc., for that use the documentation of the relevant library.
+
+You are also encouraged to check for yourself how things work under the hood, check the *system* folder where abstract classes and interfaces are located.
+
+Cordo is shipped with one previously prepared module: *Users*. It presents how the code should be organized within all the layers and utilizes of *Events* and *Queues*.
 
 ### Entry points
 
@@ -56,7 +98,7 @@ Global commands should be registered in *./cordo* file by adding them to the app
 $application->add(new SecurityCheckerCommand(new SecurityChecker()));
 ```
 
-Feature commands should be registered in *app/[packageName]/UI/Console/commands.php* file.
+Feature commands should be registered in *app/[PackageName]/UI/Console/commands.php* file.
 
 ``` php
 return [
@@ -67,7 +109,7 @@ return [
 
 #### Queues
 
-For background processing [Bernard](https://bernard.readthedocs.io/) is used.
+For background processing [Bernard](https://bernard.readthedocs.io/) library is used.
 
 Bernard supports several different drivers:
 
@@ -85,7 +127,7 @@ Bernard supports several different drivers:
 
 This framework is configured with Redis Extention driver by default. Driver declaration is placed in *bootstrap/queue_factory.php* and can be changed there.
 
-If you want to make your Command to be queued just make it implement *League\Tactician\Bernard\QueueableCommand* interface.
+If you want to make your Command to be queued just make it implementing *League\Tactician\Bernard\QueueableCommand* interface or extend *System\Application\Queue\AbstractMessage* class.
 
 To launch background process that will process queued commands run in the console:
 
@@ -101,17 +143,17 @@ Just add your package folder name to the *app/Loader.php*:
 
 ``` php
 protected static $register = [
-        'Auth',
-        'Users',
-        // add you packages here
-    ];
+    'Auth',
+    'Users',
+    // add you packages here
+];
 ```
 
 Once you package is registered, framework will have access to defined routes, DI container definitions, configs, commands, etc.
 
 ### Package structure
 
-Framework comes with Users package shipped by default with implemented basic CRUD actions.
+Users package is shipped by default with implemented basic CRUD actions.
 
 Here's how the code is organised:
 
@@ -176,9 +218,17 @@ app/Users/
 
 This structure represents the *Domain Driven Design* model, which consists of layers: **User Interface**, **Application**, **Domain** and **Infrastructure**.
 
+If you want to quickly boilerplate your new module there's a command for that:
+
+``` bash
+php cordo system:module-builder <module_name> <module_archive>
+```
+
+you can find pre-prepared archive in app/resources/module folder with typical module structure for CRUD operations. Of course you create and use your own boilerplates.
+
 ### Routes
 
-Route definitons should be placed in *app/[packageName]/UI/Http/routes.php* file.
+Route definitons should be placed in *app/[PackageName]/UI/Http/routes.php* file.
 
 Routing is done with use of [FastRoute](https://github.com/nikic/FastRoute) but modified allowing to use per route *Middlewares*.
 
@@ -186,9 +236,9 @@ Perferable way to generate API documentation is [ApiDoc](http://apidocjs.com) bu
 
 ### Dependency Injection Container
 
-DI Conteriner definitions should be placed in *app/[packageName]/Application/definitions.php* file.
+DI Conteriner definitions should be placed in *app/[PackageName]/Application/definitions.php* file.
 
-Framework uses [PHP-ID](http://php-di.org/) for DI Container, if you need to find out more check the [documentation](http://php-di.org/doc/).
+Cordo uses [PHP-ID](http://php-di.org/) for DI Container, if you need to find out more check the [documentation](http://php-di.org/doc/).
 
 ### Config
 
@@ -204,6 +254,76 @@ where users is the name of the config file and the following segments are array 
 
 ### Database
 
+Database configuration is located at *bootstrap/db.php* file. Framework uses [Doctrine](https://www.doctrine-project.org/) for database storage and object mapping.
+
+According to the CQRS approach preferable way is to use [Doctrine ORM](https://www.doctrine-project.org/projects/orm.html) for storing and [Doctrine DBAL](https://www.doctrine-project.org/projects/dbal.html) for querying.
+
+Doctine is preconfigured to support [UUID](https://github.com/ramsey/uuid-doctrine).
+
+Also [XML Mapping](https://www.doctrine-project.org/projects/doctrine-orm/en/2.6/reference/xml-mapping.html) is supported so you can map your Domain Models directly with database tables. You should place your mappings in *app/[PackageName]/Infractructure/Doctrine/ORM/Metadata/*.
+
+When you have your mappings ready you can create/update/drop schema directly from composer:
+
+``` php
+composer schema-create
+composer schema-update
+composer schema-drop
+```
+
 ### Command bus
 
+Cordo uses [Tactician](https://tactician.thephpleague.com/) command bus for implementing command pattern.
+
+Your Command -> Handler mappings should be placed in: *app/[PackageName]/Application/handlers.php* file.
+
+Command bus is configured to lock each handler in seperate transaction, it also supports events, queues, command logging. Check *bootstrap/command_bus.php* and [Tactician](https://tactician.thephpleague.com/) documentation for details.
+
 ### Events
+
+In contrast to the Command -> Handler mapping where for one *Command* there can be one and only one *Handler* you can have several listeners for a single emmited event.
+
+Here is how you can emit an event:
+
+``` php
+/**
+ * @var League\Event\EmitterInterface
+ */
+$emitter->emit('users.created', new UserCreated($command->email()));
+```
+
+Define your listeners in *app/[PackageName]/Application/events.php* file just like in Users module:
+
+``` php
+$emitter->addListener(
+    'users.created',
+    static function ($event, UserCreated $userCreated) use ($container) {
+        $listener = new UserCreatedListener($container);
+        $listener->handle($userCreated);
+    }
+);
+```
+
+To better understand how to deal with events check Users module how welcome message is being sent for newly created users.
+
+### Errors
+
+By default all the errors are logged to the *storage/logs/error.log* file.
+
+Additionally in **dev** environment errors will be prompth to the screen in pretty format using [Whoops](https://github.com/filp/whoops). Errors in console are also pretty formated. In **production** environment errors stack traces will be emailed to the addresses defined in *config/error.php*.
+
+If you'd like to change any of that bevavior you can to it in: *bootstrap/error.php* file.
+
+## Security
+
+If you discover any security related issues, please email dkorsak@gmail.com instead of using the issue tracker.
+
+## Credits
+
+- [Dariusz Korsak][link-author]
+- [All Contributors][link-contributors]
+
+## License
+
+The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
+
+
