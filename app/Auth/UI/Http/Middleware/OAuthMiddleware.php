@@ -9,7 +9,7 @@ use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
-class OAuth implements MiddlewareInterface
+class OAuthMiddleware implements MiddlewareInterface
 {
     private $container;
 
@@ -20,12 +20,12 @@ class OAuth implements MiddlewareInterface
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        if (!$this->container->get('oauth_server')->verifyResourceRequest(Request::createFromGlobals())) {
+        $tokenData = $this->container->get('oauth_server')->getAccessTokenData(Request::createFromGlobals());
+
+        if (!is_array($tokenData) || !array_key_exists('user_id', $tokenData)) {
             $this->container->get('oauth_server')->getResponse()->send();
             die;
         }
-
-        $tokenData = $this->container->get('oauth_server')->getAccessTokenData(Request::createFromGlobals());
 
         $request = $request->withAttribute('user_id', $tokenData['user_id']);
 

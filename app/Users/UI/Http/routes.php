@@ -1,6 +1,7 @@
 <?php
 
-use App\Auth\UI\Http\Middleware\OAuth;
+use App\Auth\UI\Http\Middleware\OAuthMiddleware;
+use App\Auth\UI\Http\Middleware\AclMiddleware;
 
 /**
  * @api {get} /users Get users list
@@ -37,8 +38,9 @@ use App\Auth\UI\Http\Middleware\OAuth;
  */
 $router->addRoute(
     'GET',
-    '/users',
-    'App\Users\UI\Http\Controller\UserQueriesController@index'
+    "/{$resource}",
+    'App\Users\UI\Http\Controller\UserQueriesController@index',
+    [new AclMiddleware($container)]
 );
 
 /**
@@ -75,12 +77,12 @@ $router->addRoute(
  */
 $router->addRoute(
     'GET',
-    '/users/{id:[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12}}',
+    "/{$resource}/{id:[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12}}",
     'App\Users\UI\Http\Controller\UserQueriesController@get'
 );
 
 /**
- * @api {put} /users Create new user
+ * @api {post} /users Create new user
  * @apiName CreateUser
  * @apiGroup Users
  *
@@ -107,13 +109,13 @@ $router->addRoute(
  * }
  */
 $router->addRoute(
-    'PUT',
-    '/users',
+    'POST',
+    "/{$resource}",
     'App\Users\UI\Http\Controller\UserCommandsController@create'
 );
 
 /**
- * @api {post} /users Update user
+ * @api {put} /users Update user
  * @apiName UpdateUser
  * @apiGroup Users
  *
@@ -140,10 +142,10 @@ $router->addRoute(
  * }
  */
 $router->addRoute(
-    'POST',
-    '/users',
+    'PUT',
+    "/{$resource}",
     'App\Users\UI\Http\Controller\UserCommandsController@update',
-    [new OAuth($container)]
+    [new OAuthMiddleware($container)]
 );
 
 /**
@@ -165,7 +167,7 @@ $router->addRoute(
  */
 $router->addRoute(
     'DELETE',
-    '/users',
+    "/{$resource}",
     'App\Users\UI\Http\Controller\UserCommandsController@delete',
-    [new OAuth($container)]
+    [new OAuthMiddleware($container)]
 );
