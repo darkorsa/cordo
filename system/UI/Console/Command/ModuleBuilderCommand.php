@@ -65,7 +65,7 @@ class ModuleBuilderCommand extends Command
     protected function buildModule(string $moduleName, string $resourcePath): void
     {
         $modulePath = app_path().$moduleName;
-        
+
         $this->createModuleDir($modulePath);
 
         $this->extractArchive($resourcePath, $modulePath);
@@ -126,7 +126,6 @@ class ModuleBuilderCommand extends Command
         $iterator = new RecursiveIteratorIterator($directory);
 
         foreach ($iterator as $fn) {
-
             $replacements = $this->getReplacements($moduleName);
 
             $fileContent = str_replace(

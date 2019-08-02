@@ -55,7 +55,7 @@ class AclMiddleware implements MiddlewareInterface
             $resource = strstr($resource, '/', true);
         }
 
-        return $resource;
+        return (string) $resource;
     }
 
     private function getUserRole(ServerRequestInterface $request): UserRole

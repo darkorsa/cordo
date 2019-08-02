@@ -6,11 +6,15 @@ use DateTime;
 
 class AclView
 {
-    protected $id;
+    private $id;
 
-    protected $userId;
+    private $userId;
 
-    protected $privileges;
+    private $privileges;
+
+    private $createdAt;
+
+    private $updatedAt;
 
     public function __construct(
         string $id,

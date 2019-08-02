@@ -43,12 +43,12 @@ class AclService
     {
         try {
             $userPrivileges = $this->getOneByUserId($userId);
-        } catch(ResourceNotFoundException $exteption) {
+        } catch (ResourceNotFoundException $exteption) {
             return;
         }
 
-        foreach ($userPrivileges as $resource => $privileges) {
-            $acl->allow($role, $resource, $privileges);
+        foreach ($userPrivileges->privileges() as $resource => $privileges) {
+            $acl->allow((string) $role, $resource, $privileges);
         }
     }
 }
