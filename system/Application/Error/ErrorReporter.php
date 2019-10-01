@@ -9,6 +9,14 @@ class ErrorReporter implements ErrorReporterInterface
 {
     private $handlers = [];
 
+    private const ERRORS_TO_HANDLE = [
+        E_ERROR,
+        E_PARSE,
+        E_COMPILE_ERROR,
+        E_CORE_ERROR,
+        E_USER_ERROR
+    ];
+
     public function report(Throwable $exception): void
     {
         foreach ($this->handlers as $handler) {
@@ -37,9 +45,10 @@ class ErrorReporter implements ErrorReporterInterface
 
     public function fatalErrorShutdownHandler(): void
     {
-        $last_error = error_get_last();
-        if ($last_error['type'] === E_ERROR) {
-            $this->errorHandler(E_ERROR, $last_error['message'], $last_error['file'], $last_error['line']);
+        $lastError = error_get_last();
+
+        if ($lastError && in_array($lastError['type'], self::ERRORS_TO_HANDLE)) {
+            $this->errorHandler($lastError['type'], $lastError['message'], $lastError['file'], $lastError['line']);
         }
     }
 

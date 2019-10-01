@@ -3,7 +3,7 @@
     "description": "Microframework designed to efficienly develop REST APIs based on layered architecture and using CQRS, DDD, Events, Queues, etc.",
     "license": "MIT",
     "require": {
-        "ext-redis": "^4.1",
+        "ext-redis": "^5.0",
         "beberlei/assert": "^2.6",
         "bernard/bernard": "^1.0@dev",
         "bshaffer/oauth2-server-php": "^1.10",
