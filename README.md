@@ -12,11 +12,11 @@ Cordo is a microframework designed for efficient development of REST APIs based 
 
 It's compliant with PSRs: `PSR-1`, `PSR-2`, `PSR-3`, `PSR-4`, `PSR-7`, `PSR-11`, `PSR-15`, `PSR-18`
 
-**Note:** Cordo is still in development. All the basic features are implemented but tests are still missing. Please keep that in mind.
+**Note:** Cordo is still in development. Some of the basic features are implemented but tests are still missing. Please keep that in mind.
 
 ## Requirements
 
-- PHP 7.3 or newer
+- PHP 7.2 or newer
 - Apache/Nginx
 - MySql 5.7
 - PHP Redis extension (default driver for queues)
@@ -43,6 +43,10 @@ composer sql-import resources/database/sql/oauth.sql
 
 it will create all the neccessary db tables. Endpoints for oAuth are already there located in `app/Auth/UI/Http/routes.php`, the default ClientID is *Cordo*.
 
+## Still missing
+- Internationalization
+- Simple HTML template system
+
 ## How things work
 
 Cordo does not reinvent the wheel. It is basically a set of popular PHP libraries put together and configured in order to create a simple framework that is in compliance with good programming practices for modern PHP.
@@ -67,7 +71,7 @@ Some of the used libraries:
 
 This documentation does not focus on describing in detail how to deal with Routes, Command Bus, DI Container, querying DB, etc., for that use the documentation of the relevant library.
 
-You are also encouraged to check for yourself how things work under the hood, check the `system` folder where abstract classes and interfaces are located.
+You are also encouraged to find for yourself how things work under the hood, check the `system` folder where abstract classes and interfaces are located.
 
 Cordo is shipped with one previously prepared module: `Users`. It presents how the code should be organized within all the layers and utilizes of `Events` and `Queues`.
 
@@ -229,7 +233,7 @@ you can find pre-prepared archive in `app/resources/module` folder with typical 
 
 ### Routes
 
-Route definitons should be placed in `app/[PackageName]/UI/Http/routes.php`.
+Route definitons are located at `app/[PackageName]/UI/Http/routes.php`.
 
 Routing is done with use of [FastRoute](https://github.com/nikic/FastRoute) but modified allowing to use per route `Middlewares`.
 
@@ -261,7 +265,7 @@ According to the CQRS approach preferable way is to use [Doctrine ORM](https://w
 
 Doctine is preconfigured to support [UUID](https://github.com/ramsey/uuid-doctrine).
 
-Also [XML Mapping](https://www.doctrine-project.org/projects/doctrine-orm/en/2.6/reference/xml-mapping.html) is supported so you can map your Domain Models directly with database tables. You should place your mappings in `app/[PackageName]/Infractructure/Doctrine/ORM/Metadata/`.
+[XML Mapping](https://www.doctrine-project.org/projects/doctrine-orm/en/2.6/reference/xml-mapping.html) also is supported so you can map your Domain Models directly with database tables. You should place your mappings in `app/[PackageName]/Infractructure/Doctrine/ORM/Metadata/`.
 
 When you have your mappings ready you can create/update/drop schema directly from composer:
 
@@ -292,7 +296,7 @@ Here is how you can emit an event:
 $emitter->emit('users.created', new UserCreated($command->email()));
 ```
 
-Define your listeners in `app/[PackageName]/Application/events.php` file just like in Users module:
+Define your listeners in `app/[PackageName]/Application/events.php` file (see example in Users module):
 
 ``` php
 $emitter->addListener(

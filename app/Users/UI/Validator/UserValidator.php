@@ -11,8 +11,11 @@ use System\Application\Exception\ResourceNotFoundException;
 
 trait UserValidator
 {
-    private function validate(array $params, bool $requirePassword = false): ValidationResult
-    {
+    private function validate(
+        array $params,
+        ?bool $updateMode = false,
+        ?bool $requirePassword = true
+    ): ValidationResult {
         $service = $this->container->get(UserService::class);
 
         $validator = new Validator();
@@ -22,8 +25,11 @@ trait UserValidator
         $validator->required('email')
             ->lessThan(User::EMAIL_MAX_LENGTH)
             ->email()
-            ->callback(static function ($value) use ($service) {
+            ->callback(static function ($value) use ($service, $updateMode) {
                 try {
+                    if ($updateMode) {
+                        return true;
+                    }
                     $service->getOneByEmail($value);
                     throw new InvalidValueException('Email address us not unique', 'Unique::EMAIL_NOT_UNIQUE');
                 } catch (ResourceNotFoundException $exception) {

@@ -19,9 +19,9 @@ class UserCommandsController extends BaseController
 
     public function createAction(ServerRequestInterface $request): ResponseInterface
     {
-        $params = (array) $request->getParsedBody();
+        $params = $request->getParsedBody();
 
-        $result = $this->validate($params, true);
+        $result = $this->validate($params);
 
         if (!$result->isValid()) {
             return $this->respondBadRequestError($result->getMessages());
@@ -46,10 +46,9 @@ class UserCommandsController extends BaseController
     public function updateAction(ServerRequestInterface $request): ResponseInterface
     {
         $userId = $request->getAttribute('user_id');
+        $params = $request->getParsedBody();
 
-        $params = (array) $request->getParsedBody();
-
-        $result = $this->validate($params);
+        $result = $this->validate($params, true);
 
         if (!$result->isValid()) {
             return $this->respondBadRequestError($result->getMessages());

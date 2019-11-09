@@ -62,6 +62,6 @@ class AclMiddleware implements MiddlewareInterface
     {
         return $request->getAttribute('user_id')
             ? new UserRole(UserRole::LOGGED())
-            : new UserRole(UserRole::UNLOGGED());
+            : new UserRole(UserRole::GUEST());
     }
 }

@@ -34,7 +34,7 @@ class UserAclCommandsController extends BaseController
         $user = $this->container->get(UserService::class)->getOneById($params->id_user);
 
         $command = new CreateUserAcl(
-            (string) Uuid::uuid4(),
+            Uuid::uuid4()->toString(),
             $user,
             (array) $params->privileges,
             new DateTime(),

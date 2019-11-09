@@ -1,4 +1,5 @@
 --ignore-dir=vendor
 --ignore-dir=build
 --ignore-dir=example
+--ignore-dir=storage
 --ignore-file=match:/[.]md$/

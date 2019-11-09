@@ -145,7 +145,7 @@ $router->addRoute(
     'PUT',
     "/{$resource}",
     'App\Users\UI\Http\Controller\UserCommandsController@update',
-    [new OAuthMiddleware($container)]
+    [new OAuthMiddleware($container), new AclMiddleware($container)]
 );
 
 /**
