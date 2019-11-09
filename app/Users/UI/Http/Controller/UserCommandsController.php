@@ -61,7 +61,7 @@ class UserCommandsController extends BaseController
         $command = new UpdateUser(
             $user->id(),
             (string) $params->email,
-            $user->password(),
+            (string) $params->password,
             $user->isActive(),
             $user->createdAt(),
             new DateTime()
@@ -81,7 +81,7 @@ class UserCommandsController extends BaseController
         $command = new DeleteUser(
             $user->id(),
             $user->email(),
-            $user->password(),
+            'iirevelant',
             $user->isActive(),
             $user->createdAt(),
             $user->updatedAt()

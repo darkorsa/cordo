@@ -13,15 +13,13 @@ trait UserValidator
 {
     private function validate(
         array $params,
-        ?bool $updateMode = false,
-        ?bool $requirePassword = true
+        ?bool $updateMode = false
     ): ValidationResult {
         $service = $this->container->get(UserService::class);
 
         $validator = new Validator();
-        if ($requirePassword) {
-            $validator->required('password')->lengthBetween(User::PASSWORD_MIN_LENGTH, User::PASSWORD_MAX_LENGTH);
-        }
+        $validator->required('password')->lengthBetween(User::PASSWORD_MIN_LENGTH, User::PASSWORD_MAX_LENGTH);
+
         $validator->required('email')
             ->lessThan(User::EMAIL_MAX_LENGTH)
             ->email()

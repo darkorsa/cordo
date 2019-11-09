@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Users\Domain;
 
@@ -40,11 +42,13 @@ class User
         // email
         Assert::that($email)
             ->notEmpty()
-            ->maxLength(self::EMAIL_MAX_LENGTH)
+            ->maxLength(static::EMAIL_MAX_LENGTH)
             ->email();
         // passowrd
         Assert::that($password)
-            ->notEmpty();
+            ->notEmpty()
+            ->minLength(static::PASSWORD_MIN_LENGTH)
+            ->maxLength(static::PASSWORD_MAX_LENGTH);
         // isActive
         Assert::that($isActive)
             ->integer()
@@ -52,9 +56,14 @@ class User
 
         $this->id = $id;
         $this->email = $email;
-        $this->password = $password;
+        $this->password = $this->hashPassword($password);
         $this->isActive = $isActive;
         $this->createdAt = $createdAt;
         $this->updatedAt = $updatedAt;
+    }
+
+    private function hashPassword(string $password): string
+    {
+        return password_hash($password, PASSWORD_ARGON2ID);
     }
 }

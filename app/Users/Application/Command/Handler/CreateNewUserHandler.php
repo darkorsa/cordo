@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Users\Application\Command\Handler;
 
@@ -25,7 +27,7 @@ class CreateNewUserHandler
         $user = new User(
             $command->id(),
             $command->email(),
-            $this->hashPassword($command->password()),
+            $command->password(),
             $command->isActive(),
             $command->createdAt(),
             $command->updatedAt()
@@ -34,10 +36,5 @@ class CreateNewUserHandler
         $this->users->add($user);
 
         $this->emitter->emit('users.created', new UserCreated($command->email()));
-    }
-
-    private function hashPassword(string $password): string
-    {
-        return password_hash($password, PASSWORD_ARGON2ID);
     }
 }
