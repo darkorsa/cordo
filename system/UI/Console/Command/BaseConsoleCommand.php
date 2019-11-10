@@ -10,11 +10,11 @@ abstract class BaseConsoleCommand extends Command
     protected $container;
 
     protected $commandBus;
-    
+
     public function __construct(ContainerInterface $container)
     {
-        $this->container            = $container;
-        $this->commandBus           = $container->get('command_bus');
+        $this->container = $container;
+        $this->commandBus = $container->get('command_bus');
 
         parent::__construct();
     }

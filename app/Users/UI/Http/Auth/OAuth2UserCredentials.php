@@ -8,12 +8,12 @@ use OAuth2\Storage\UserCredentialsInterface;
 class OAuth2UserCredentials implements UserCredentialsInterface
 {
     private $connection;
-    
+
     public function __construct(Connection $connection)
     {
         $this->connection = $connection;
     }
-    
+
     public function checkUserCredentials($username, $password)
     {
         $queryBuilder = $this->connection->createQueryBuilder();
@@ -44,7 +44,7 @@ class OAuth2UserCredentials implements UserCredentialsInterface
             ->setParameter('email', $username);
 
         $userId = $this->connection->fetchColumn($queryBuilder->getSQL(), $queryBuilder->getParameters());
-        
+
         return ['user_id' => $userId];
     }
 }

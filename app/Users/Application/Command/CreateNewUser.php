@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Users\Application\Command;
 
@@ -7,7 +9,7 @@ use DateTime;
 class CreateNewUser
 {
     protected $id;
-    
+
     protected $email;
 
     protected $password;
@@ -39,12 +41,12 @@ class CreateNewUser
         return $this->id;
     }
 
-    public function email() : string
+    public function email(): string
     {
         return $this->email;
     }
 
-    public function password() : string
+    public function password(): string
     {
         return $this->password;
     }

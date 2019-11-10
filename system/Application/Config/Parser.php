@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace System\Application\Config;
 
@@ -10,7 +12,7 @@ class Parser extends \Noodlehaus\Parser\Php
     public function parseFile($filename): array
     {
         $data = [];
-        
+
         // Run the fileEval the string, if it throws an exception, rethrow it
         try {
             $data[basename($filename, ".php")] = require $filename;

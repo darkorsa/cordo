@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Users\Application\Query;
 
@@ -17,14 +19,14 @@ class UserFilter
         return $this;
     }
 
-    public function setOffset(int $offset) : UserFilter
+    public function setOffset(int $offset): UserFilter
     {
         $this->offset = $offset;
 
         return $this;
     }
 
-    public function setLimit(int $limit) : UserFilter
+    public function setLimit(int $limit): UserFilter
     {
         $this->limit = $limit;
 

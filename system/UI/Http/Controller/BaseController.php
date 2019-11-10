@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace System\UI\Http\Controller;
 
@@ -88,7 +90,7 @@ abstract class BaseController
     protected function respond($response, array $headers = [])
     {
         $body = [
-            'response' => $response
+            'response' => $response,
         ];
 
         return new Response($this->statusCode, $headers, (string) json_encode($body));
@@ -96,5 +98,6 @@ abstract class BaseController
 
     protected function registerTransformers(): void
     {
+        // implement where needed
     }
 }

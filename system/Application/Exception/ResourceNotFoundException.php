@@ -6,5 +6,5 @@ use Exception;
 
 class ResourceNotFoundException extends Exception
 {
-    
+    // Not foud exception
 }

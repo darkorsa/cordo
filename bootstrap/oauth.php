@@ -12,9 +12,9 @@ $config = $container->get('config');
 $storage = new Pdo([
     'dsn' => 'mysql:dbname=' . getenv('DB_DATABASE') . ';host=' . getenv('DB_HOST'),
     'username' => getenv('DB_USERNAME'),
-    'password' => getenv('DB_PASSWORD')
+    'password' => getenv('DB_PASSWORD'),
 ]);
-      
+
 $tokenLifetime = $config->get('auth.expire');
 
 $server = new Server($storage, [
@@ -26,7 +26,7 @@ $credentials = $container->get(OAuth2UserCredentials::class);
 $server->addGrantType(new ClientCredentials($storage));
 $server->addGrantType(new UserCredentials($credentials));
 $server->addGrantType(new RefreshToken($storage, [
-    'always_issue_new_refresh_token' => $config->get('auth.always_issue_new_refresh_token')
+    'always_issue_new_refresh_token' => $config->get('auth.always_issue_new_refresh_token'),
 ]));
 
 return $server;

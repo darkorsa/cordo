@@ -7,7 +7,7 @@ use Psr\Http\Message\ResponseInterface;
 class JsonResponse implements \System\UI\ResponseInterface
 {
     private $response;
-    
+
     public function __construct(ResponseInterface $response)
     {
         $this->response = $response;
@@ -22,7 +22,7 @@ class JsonResponse implements \System\UI\ResponseInterface
 
         // additional header
         foreach ($this->response->getHeaders() as $key => $val) {
-            header("{$key}:{".current($val)."}");
+            header("{$key}:{" . current($val) . "}");
         }
 
         echo $this->response->getBody();

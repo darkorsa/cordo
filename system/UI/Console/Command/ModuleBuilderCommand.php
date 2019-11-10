@@ -87,7 +87,7 @@ class ModuleBuilderCommand extends Command
     {
         $this->output->writeln('Extracting archive...');
 
-        $zip = new ZipArchive;
+        $zip = new ZipArchive();
         if ($zip->open($resourcePath) === true) {
             $zip->extractTo($modulePath);
             $zip->close();
@@ -104,16 +104,16 @@ class ModuleBuilderCommand extends Command
         $directory = new RecursiveDirectoryIterator($modulePath, FilesystemIterator::SKIP_DOTS);
         $iterator = new RecursiveIteratorIterator($directory);
 
-        foreach ($iterator as $fn) {
+        foreach ($iterator as $file) {
             $replacements = $this->getReplacements($moduleName);
 
             $renamed = str_replace(
                 array_keys($replacements),
                 array_values($replacements),
-                $fn->getPathname()
+                $file->getPathname()
             );
 
-            rename($fn->getPathname(), $renamed);
+            rename($file->getPathname(), $renamed);
         }
     }
 
@@ -124,16 +124,16 @@ class ModuleBuilderCommand extends Command
         $directory = new RecursiveDirectoryIterator($modulePath, FilesystemIterator::SKIP_DOTS);
         $iterator = new RecursiveIteratorIterator($directory);
 
-        foreach ($iterator as $fn) {
+        foreach ($iterator as $file) {
             $replacements = $this->getReplacements($moduleName);
 
             $fileContent = str_replace(
                 array_keys($replacements),
                 array_values($replacements),
-                (string) file_get_contents($fn->getPathname())
+                (string) file_get_contents($file->getPathname())
             );
 
-            file_put_contents($fn->getPathname(), $fileContent);
+            file_put_contents($file->getPathname(), $fileContent);
         }
     }
 

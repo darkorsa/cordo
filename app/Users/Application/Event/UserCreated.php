@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Users\Application\Event;
 
@@ -13,7 +15,7 @@ class UserCreated extends AbstractEvent
         $this->email = $email;
     }
 
-    public function email() : string
+    public function email(): string
     {
         return $this->email;
     }

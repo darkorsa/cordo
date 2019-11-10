@@ -13,9 +13,9 @@ class ParsePutRequest implements MiddlewareInterface
     {
         $contentType = $request->getHeader('content-type');
         if ($request->getMethod() === 'PUT' && in_array('application/x-www-form-urlencoded', $contentType, true)) {
-                $body = [];
-                mb_parse_str((string)$request->getBody(), $body);
-                $request = $request->withParsedBody($body);
+            $body = [];
+            mb_parse_str((string) $request->getBody(), $body);
+            $request = $request->withParsedBody($body);
         }
 
         return $handler->handle($request);

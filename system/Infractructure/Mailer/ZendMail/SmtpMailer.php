@@ -1,11 +1,12 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace System\Infractructure\Mailer\ZendMail;
 
 use Zend\Mail\Message;
 use Zend\Mail\Transport\Smtp;
 use Zend\Mail\Transport\SmtpOptions;
-use System\Infractructure\Mailer\ZendMail\MailerInterface;
 
 class SmtpMailer implements MailerInterface
 {
@@ -28,7 +29,7 @@ class SmtpMailer implements MailerInterface
     public function send(Message $message): void
     {
         $transport = new Smtp();
-        $options   = new SmtpOptions(array(
+        $options   = new SmtpOptions([
             'host'              => $this->host,
             'port'              => $this->port,
             'connection_class'  => 'login',
@@ -36,7 +37,7 @@ class SmtpMailer implements MailerInterface
                 'username' => $this->username,
                 'password' => $this->password,
             ],
-        ));
+        ]);
 
         $transport->setOptions($options);
         $transport->send($message);

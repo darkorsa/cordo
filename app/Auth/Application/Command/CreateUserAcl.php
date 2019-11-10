@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Auth\Application\Command;
 
@@ -36,12 +38,12 @@ class CreateUserAcl
         return $this->id;
     }
 
-    public function userId() : string
+    public function userId(): string
     {
         return $this->user->id();
     }
 
-    public function privileges() : array
+    public function privileges(): array
     {
         return $this->privileges;
     }

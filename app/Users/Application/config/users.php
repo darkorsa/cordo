@@ -7,5 +7,5 @@ return [
         'update',
         'delete',
         'get',
-    ]
+    ],
 ];

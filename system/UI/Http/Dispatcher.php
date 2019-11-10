@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace System\UI\Http;
 
@@ -36,13 +38,13 @@ class Dispatcher
             case self::OPTIONS_METHOD:
                 return new Response(200);
             case FRDispatcher::FOUND:
-                list($state, $handler, $vars) = $routeInfo;
+                [$state, $handler, $vars] = $routeInfo;
 
                 if (is_callable($handler)) {
                     return $handler($request, $this->container, $vars);
                 }
 
-                list($class, $method) = explode('@', $handler, 2);
+                [$class, $method] = explode('@', $handler, 2);
 
                 $controller = $this->container->get($class);
 

@@ -13,5 +13,5 @@ return [
     CreateNewUser::class            => CreateNewUserHandler::class,
     UpdateUser::class               => UpdateUserHandler::class,
     DeleteUser::class               => DeleteUserHandler::class,
-    SendUserWelcomeMessage::class   => SendUserWelcomeMessageHandler::class
+    SendUserWelcomeMessage::class   => SendUserWelcomeMessageHandler::class,
 ];

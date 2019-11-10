@@ -9,12 +9,12 @@ use Psr\Container\ContainerInterface;
 abstract class AbstractListener implements ListenerInterface
 {
     protected $commandBus;
-    
+
     public function __construct(ContainerInterface $container)
     {
         $this->commandBus = $container->get('command_bus');
     }
-    
+
     /**
      * @inheritdoc
      */

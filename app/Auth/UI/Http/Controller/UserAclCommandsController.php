@@ -99,15 +99,15 @@ class UserAclCommandsController extends BaseController
     {
         $service = $this->container->get(AclService::class);
 
-        $validator = new Validator;
+        $validator = new Validator();
         $validator->required('privileges')->isArray();
         $validator->required('id_user')
             ->uuid(Uuid::UUID_TYPE_RANDOM)
-            ->callback(function ($value) use ($service) {
+            ->callback(static function ($value) use ($service) {
                 try {
                     $service->getOneByUserId($value);
                     throw new InvalidValueException('Acl definitions are unique per user', 'Unique::USER_NOT_UNIQUE');
-                } catch (ResourceNotFoundException $ex) {
+                } catch (ResourceNotFoundException $exeption) {
                     return true;
                 }
             });
@@ -117,7 +117,7 @@ class UserAclCommandsController extends BaseController
 
     private function validateUpdate(array $params): ValidationResult
     {
-        $validator = new Validator;
+        $validator = new Validator();
         $validator->required('privileges')->isArray();
 
         return $validator->validate($params);

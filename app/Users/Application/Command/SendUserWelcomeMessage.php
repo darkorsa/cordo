@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Users\Application\Command;
 
@@ -13,7 +15,7 @@ class SendUserWelcomeMessage extends AbstractMessage
         $this->email = $email;
     }
 
-    public function getEmail() : string
+    public function getEmail(): string
     {
         return $this->email;
     }

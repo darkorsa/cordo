@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Auth\Infrastructure\Persistance\Doctrine\Query;
 
@@ -7,7 +9,6 @@ use App\Auth\Application\Query\AclQuery;
 use App\Auth\Application\Query\AclFilter;
 use Doctrine\Common\Collections\ArrayCollection;
 use System\Infractructure\Persistance\Doctrine\Query\BaseQuery;
-use App\Auth\Infrastructure\Persistance\Doctrine\Query\AclDoctrineFilter;
 
 class AclDoctrineQuery extends BaseQuery implements AclQuery
 {

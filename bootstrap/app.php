@@ -14,7 +14,9 @@ $dotenv->load(root_path() . '.env');
 // Errors
 $errorReporter = require __DIR__ . '/error.php';
 
-// DI container Psr\Container\ContainerInterface
+/**
+ * @var $container Psr\Container\ContainerInterface
+ */
 $containerBuilder = new ContainerBuilder();
 $containerBuilder->addDefinitions(Loader::loadDefinitions());
 

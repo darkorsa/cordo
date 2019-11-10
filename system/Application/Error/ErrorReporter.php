@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace System\Application\Error;
 
@@ -14,7 +16,7 @@ class ErrorReporter implements ErrorReporterInterface
         E_PARSE,
         E_COMPILE_ERROR,
         E_CORE_ERROR,
-        E_USER_ERROR
+        E_USER_ERROR,
     ];
 
     public function report(Throwable $exception): void

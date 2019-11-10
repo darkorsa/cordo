@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace System\Infractructure\Mailer\ZendMail;
 
@@ -10,13 +12,13 @@ use Zend\Mail\Transport\InMemory as InMemoryTransport;
 class LogMailer implements MailerInterface
 {
     private $logger;
-    
+
     public function __construct(string $logPath)
     {
         $this->logger = new Logger('maillog');
         $this->logger->pushHandler(new StreamHandler($logPath));
     }
-    
+
     public function send(Message $message): void
     {
         $transport = new InMemoryTransport();

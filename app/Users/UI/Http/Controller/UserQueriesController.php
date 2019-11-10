@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Users\UI\Http\Controller;
 
@@ -23,7 +25,7 @@ class UserQueriesController extends BaseController
             ->setActive(true)
             ->setOffset($offset)
             ->setLimit($limit);
-        
+
         $service = $this->container->get(UserService::class);
 
         $data = $this->transformerManager->transform($service->getCollection($userFilter), 'user');
@@ -31,7 +33,7 @@ class UserQueriesController extends BaseController
 
         return $this->respondWithData($data);
     }
-    
+
     public function getAction(ServerRequestInterface $request, $params): ResponseInterface
     {
         $service = $this->container->get(UserService::class);

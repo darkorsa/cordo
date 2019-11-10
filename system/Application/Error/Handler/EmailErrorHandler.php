@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace System\Application\Error\Handler;
 
@@ -41,8 +43,8 @@ class EmailErrorHandler implements ErrorHandlerInterface
             }
         }
         $message->addFrom($this->config->from)
-                ->setSubject('Critical Error')
-                ->setBody($messageText);
+            ->setSubject('Critical Error')
+            ->setBody($messageText);
 
         $this->mailer->send($message);
     }

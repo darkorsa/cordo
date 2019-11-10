@@ -26,7 +26,7 @@ class CreateNewUserConsoleCommand extends BaseConsoleCommand
             ->setDefinition(
                 new InputDefinition([
                     new InputArgument('email', InputArgument::REQUIRED),
-                    new InputArgument('password', InputArgument::REQUIRED)
+                    new InputArgument('password', InputArgument::REQUIRED),
                 ])
             );
     }

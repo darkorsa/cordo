@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Users\Infrastructure\Persistance\Doctrine\Query;
 
@@ -46,7 +48,6 @@ class UserDoctrineQuery extends BaseQuery implements UserQuery
             ->setParameter('email', $email);
 
         $userData = $this->assoc($queryBuilder, new UserDoctrineFilter($userFilter));
-
 
         return UserView::fromArray($userData);
     }
