@@ -105,7 +105,6 @@ class ModuleBuilderCommand extends Command
         $iterator = new RecursiveIteratorIterator($directory);
 
         foreach ($iterator as $fn) {
-
             $replacements = $this->getReplacements($moduleName);
 
             $renamed = str_replace(
