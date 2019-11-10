@@ -1,38 +1,36 @@
 <?php
 
-define("ROOT_DIR", __DIR__.'/../');
-
 function root_path(): string
 {
-    return ROOT_DIR;
+    return __DIR__ . '/../';
 }
 
 function app_path(): string
 {
-    return ROOT_DIR . 'app/';
+    return __DIR__ . '/../app/';
 }
 
 function config_path(): string
 {
-    return ROOT_DIR . 'config/';
+    return __DIR__ . '/../config/';
 }
 
 function system_path(): string
 {
-    return ROOT_DIR . 'system/';
+    return __DIR__ . '/../system/';
 }
 
 function resources_path(): string
 {
-    return ROOT_DIR . 'resources/';
+    return __DIR__ . '/../resources/';
 }
 
 function storage_path(): string
 {
-    return ROOT_DIR . 'storage/';
+    return __DIR__ . '/../storage/';
 }
 
 function vendor_path(): string
 {
-    return ROOT_DIR . 'vendor/';
+    return __DIR__ . '/../vendor/';
 }

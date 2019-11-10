@@ -4,9 +4,10 @@ use App\Loader;
 use Doctrine\DBAL\Types\Type;
 use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
+use System\SharedKernel\Enum\Env;
 
 $paths = Loader::loadEntities();
-$isDevMode = getenv('APP_ENV') === ENV_LOCAL;
+$isDevMode = getenv('APP_ENV') === Env::DEV();
 
 // the connection configuration
 $dbParams = [

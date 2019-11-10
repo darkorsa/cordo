@@ -1,10 +1,8 @@
 <?php
 
-define('ENV_LOCAL', 'dev');
-define('ENV_PRODUCTION', 'production');
-
 use App\Loader;
 use DI\ContainerBuilder;
+use System\SharedKernel\Enum\Env;
 use Symfony\Component\Dotenv\Dotenv;
 use System\Infractructure\Mailer\ZendMail\MailerFactory;
 
@@ -20,7 +18,7 @@ $errorReporter = require __DIR__ . '/error.php';
 $containerBuilder = new ContainerBuilder();
 $containerBuilder->addDefinitions(Loader::loadDefinitions());
 
-if (getenv('APP_ENV') === ENV_PRODUCTION) {
+if (getenv('APP_ENV') === Env::PRODUCTION()) {
     $containerBuilder->enableCompilation(storage_path() . 'cache');
 }
 
