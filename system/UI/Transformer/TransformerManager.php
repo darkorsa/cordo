@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace System\UI\Transformer;
 
@@ -29,10 +31,10 @@ class TransformerManager implements TransformerManagerInterface
         if (empty($result)) {
             return $result;
         }
-        
+
         $fractal = new Manager();
-        $fractal->setSerializer(new JsonApiSerializer(getenv('APP_URL')));
-    
+        $fractal->setSerializer(new JsonApiSerializer((string) getenv('APP_URL')));
+
         return $fractal->createData($this->resource($result, $index))->toArray();
     }
 

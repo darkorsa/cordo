@@ -64,6 +64,10 @@ class User
 
     private function hashPassword(string $password): string
     {
-        return password_hash($password, PASSWORD_ARGON2ID);
+        if (defined('PASSWORD_ARGON2ID')) {
+            return (string) password_hash($password, PASSWORD_ARGON2ID);
+        }
+
+        return (string) password_hash($password, PASSWORD_DEFAULT);
     }
 }

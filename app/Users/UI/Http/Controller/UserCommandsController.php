@@ -19,7 +19,7 @@ class UserCommandsController extends BaseController
 
     public function createAction(ServerRequestInterface $request): ResponseInterface
     {
-        $params = $request->getParsedBody();
+        $params = (array) $request->getParsedBody();
 
         $result = $this->validate($params);
 
@@ -30,7 +30,7 @@ class UserCommandsController extends BaseController
         $params = (object) $params;
 
         $command = new CreateNewUser(
-            (string) Uuid::uuid4(),
+            Uuid::uuid4()->toString(),
             (string) $params->email,
             (string) $params->password,
             (int) false,
@@ -46,7 +46,7 @@ class UserCommandsController extends BaseController
     public function updateAction(ServerRequestInterface $request): ResponseInterface
     {
         $userId = $request->getAttribute('user_id');
-        $params = $request->getParsedBody();
+        $params = (array) $request->getParsedBody();
 
         $result = $this->validate($params, true);
 

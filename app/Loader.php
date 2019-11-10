@@ -1,10 +1,12 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App;
 
-use System\Application\Loader as BaseLoader;
+use System\Application\Service\Loader\ModulesLoader;
 
-class Loader extends BaseLoader
+class Loader extends ModulesLoader
 {
     /**
      * Modules register

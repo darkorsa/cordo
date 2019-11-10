@@ -13,7 +13,7 @@ trait UserValidator
 {
     private function validate(
         array $params,
-        ?bool $updateMode = false
+        bool $updateMode = false
     ): ValidationResult {
         $service = $this->container->get(UserService::class);
 

@@ -4,7 +4,7 @@ namespace App\Auth\SharedKernel\Enum;
 
 use MyCLabs\Enum\Enum;
 
-class UserRole extends Enum
+class SystemRole extends Enum
 {
     private const GUEST = 'guest';
 

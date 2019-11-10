@@ -39,14 +39,14 @@ class ModuleBuilderCommand extends Command
 
         $moduleName     = $this->fixModuleName($params->module_name);
         $moduleArchive  = $params->module_archive;
-        $resourcePath   = resources_path().'module/'.$moduleArchive;
+        $resourcePath   = resources_path() . 'module/' . $moduleArchive;
 
         if (!file_exists($resourcePath)) {
             $output->writeln("<error>Cannot find archive in location: {$resourcePath}</error>");
             exit;
         }
 
-        if (file_exists(app_path().$moduleName)) {
+        if (file_exists(app_path() . $moduleName)) {
             $output->writeln("<error>Module {$moduleName} already exists</error>");
             exit;
         }
@@ -64,7 +64,7 @@ class ModuleBuilderCommand extends Command
 
     protected function buildModule(string $moduleName, string $resourcePath): void
     {
-        $modulePath = app_path().$moduleName;
+        $modulePath = app_path() . $moduleName;
 
         $this->createModuleDir($modulePath);
 
@@ -93,7 +93,7 @@ class ModuleBuilderCommand extends Command
             $zip->close();
             $this->output->writeln('Extraction complete');
         } else {
-            $this->output->writeln('<error>Could not extract archive from path: '.$resourcePath.'</error>');
+            $this->output->writeln('<error>Could not extract archive from path: ' . $resourcePath . '</error>');
         }
     }
 
@@ -131,7 +131,7 @@ class ModuleBuilderCommand extends Command
             $fileContent = str_replace(
                 array_keys($replacements),
                 array_values($replacements),
-                file_get_contents($fn->getPathname())
+                (string) file_get_contents($fn->getPathname())
             );
 
             file_put_contents($fn->getPathname(), $fileContent);
@@ -151,7 +151,7 @@ class ModuleBuilderCommand extends Command
     protected function fixModuleName(string $moduleName): string
     {
         if (substr($moduleName, -1) !== 's') {
-            return $moduleName.'s';
+            return $moduleName . 's';
         }
 
         return $moduleName;
@@ -161,5 +161,4 @@ class ModuleBuilderCommand extends Command
     {
         return substr($moduleName, -1) === 's' ? substr($moduleName, 0, -1) : $moduleName;
     }
-
 }

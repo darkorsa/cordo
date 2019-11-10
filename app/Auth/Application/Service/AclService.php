@@ -1,11 +1,13 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Auth\Application\Service;
 
 use Zend\Permissions\Acl\Acl;
 use App\Auth\Application\Query\AclView;
 use App\Auth\Application\Query\AclQuery;
-use App\Auth\SharedKernel\Enum\UserRole;
+use App\Auth\SharedKernel\Enum\SystemRole;
 use App\Auth\Application\Query\AclFilter;
 use Doctrine\Common\Collections\ArrayCollection;
 use System\Application\Exception\ResourceNotFoundException;
@@ -39,7 +41,7 @@ class AclService
         return $this->aclQuery->count($aclFilter);
     }
 
-    public function setUserAclPrivileges(UserRole $role, string $userId, Acl $acl): void
+    public function setUserAclPrivileges(SystemRole $role, string $userId, Acl $acl): void
     {
         try {
             $userPrivileges = $this->getOneByUserId($userId);

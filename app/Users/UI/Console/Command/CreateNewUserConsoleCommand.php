@@ -49,7 +49,7 @@ class CreateNewUserConsoleCommand extends BaseConsoleCommand
         $params = (object) $params;
 
         $command = new CreateNewUser(
-            (string) Uuid::uuid4(),
+            Uuid::uuid4()->toString(),
             (string) $params->email,
             (string) $params->password,
             (int) false,

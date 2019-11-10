@@ -1,6 +1,8 @@
 <?php
 
-namespace System\Application;
+declare(strict_types=1);
+
+namespace System\Application\Service\Loader;
 
 use Noodlehaus\Config;
 use System\UI\Http\Router;
@@ -11,7 +13,7 @@ use System\Application\Config\Parser;
 use Symfony\Component\Console\Application;
 use Zend\Permissions\Acl\Resource\GenericResource as Resource;
 
-class Loader
+class ModulesLoader
 {
     protected static $register = [];
 
@@ -23,12 +25,14 @@ class Loader
     public static function loadRoutes(Router $router, ContainerInterface $container): void
     {
         foreach (static::$register as $module) {
-            $routesPath = static::routesPath($module);
+            $className = "App\\{$module}\UI\Http\Route\\{$module}RoutesLoader";
 
-            if (file_exists($routesPath)) {
-                $resource = strtolower($module);
-                include_once $routesPath;
+            if (!class_exists($className)) {
+                continue;
             }
+
+            $routesLoader = new $className($router, $container, strtolower($module));
+            $routesLoader->load();
         }
     }
 
@@ -115,57 +119,47 @@ class Loader
         return $paths;
     }
 
-    public static function loadResources(Acl $acl): void
+    public static function loadAclData(Acl $acl): void
     {
         foreach (static::$register as $module) {
-            $resourcesPath = static::resourcesPath($module);
+            $className = "App\\{$module}\Application\Service\\{$module}AclLoader";
 
-            $resource = strtolower($module);
-            if (file_exists($resourcesPath)) {
-                include_once $resourcesPath;
+            if (!class_exists($className)) {
                 continue;
             }
-            $acl->addResource(new Resource($resource));
-        }
-    }
 
-    protected static function routesPath(string $module): string
-    {
-        return app_path().$module.'/UI/Http/routes.php';
+            $aclLoader = new $className($acl, strtolower($module));
+            $aclLoader->load();
+        }
     }
 
     protected static function commandsPath(string $module): string
     {
-        return app_path().$module.'/UI/Console/commands.php';
+        return app_path() . $module . '/UI/Console/commands.php';
     }
 
     protected static function definitionsPath(string $module): string
     {
-        return app_path().$module.'/Application/definitions.php';
+        return app_path() . $module . '/Application/definitions.php';
     }
 
     protected static function configsPath(string $module): string
     {
-        return app_path().$module.'/Application/config';
+        return app_path() . $module . '/Application/config';
     }
 
     protected static function handlersMapPath(string $module): string
     {
-        return app_path().$module.'/Application/handlers.php';
+        return app_path() . $module . '/Application/handlers.php';
     }
 
     protected static function eventsPath(string $module): string
     {
-        return app_path().$module.'/Application/events.php';
+        return app_path() . $module . '/Application/events.php';
     }
 
     protected static function entitiesPath(string $module): string
     {
-        return app_path().$module.'/Infrastructure/Persistance/Doctrine/ORM/Metadata';
-    }
-
-    protected static function resourcesPath(string $module): string
-    {
-        return app_path().$module.'/Application/acl.php';
+        return app_path() . $module . '/Infrastructure/Persistance/Doctrine/ORM/Metadata';
     }
 }

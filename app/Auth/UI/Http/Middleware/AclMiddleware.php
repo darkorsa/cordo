@@ -5,7 +5,7 @@ namespace App\Auth\UI\Http\Middleware;
 use GuzzleHttp\Psr7\Response;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
-use App\Auth\SharedKernel\Enum\UserRole;
+use App\Auth\SharedKernel\Enum\SystemRole;
 use Psr\Http\Server\MiddlewareInterface;
 use App\Auth\Application\Service\AclService;
 use Psr\Http\Message\ServerRequestInterface;
@@ -35,7 +35,7 @@ class AclMiddleware implements MiddlewareInterface
         $resource = $this->getResourceFromUriPath($request->getUri()->getPath());
         $priviledge = $this->privilage ?: strtolower($request->getMethod());
 
-        $role = $this->getUserRole($request);
+        $role = $this->getSystemRole($request);
         if ($request->getAttribute('user_id')) {
             $this->service->setUserAclPrivileges($role, $request->getAttribute('user_id'), $this->acl);
         }
@@ -58,10 +58,10 @@ class AclMiddleware implements MiddlewareInterface
         return (string) $resource;
     }
 
-    private function getUserRole(ServerRequestInterface $request): UserRole
+    private function getSystemRole(ServerRequestInterface $request): SystemRole
     {
         return $request->getAttribute('user_id')
-            ? new UserRole(UserRole::LOGGED())
-            : new UserRole(UserRole::GUEST());
+            ? new SystemRole(SystemRole::LOGGED())
+            : new SystemRole(SystemRole::GUEST());
     }
 }
