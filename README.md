@@ -7,8 +7,9 @@ Cordo is a microframework designed for efficient development of REST APIs based 
 - Event Dispatcher
 - Queues (Redis, RabbitMQ, Amazon SQS)
 - OAuth2
+- UUIDs
 - Package by feature
-- Zero config approach
+- Minimal config approach
 
 It's compliant with PSRs: `PSR-1`, `PSR-2`, `PSR-3`, `PSR-4`, `PSR-7`, `PSR-11`, `PSR-15`, `PSR-18`
 
@@ -41,11 +42,11 @@ If you plan to use OAuth2 authorization run:
 composer sql-import resources/database/sql/oauth.sql
 ```
 
-it will create all the neccessary db tables. Endpoints for oAuth are already there located in `app/Auth/UI/Http/routes.php`, the default ClientID is *Cordo*.
+it will create all the neccessary db tables. Endpoints for oAuth are already there located in `app/Auth/UI/Http/Route/AuthRoutes.php`, the default ClientID is *Cordo*.
 
 ## Still missing
 - Internationalization
-- Some simple HTML template engine
+- Lightweight HTML template engine
 - Routes grouping
 
 ## How things work
@@ -111,34 +112,6 @@ return [
     YourConsoleCommand::class,
     AnotherConsoleCommand::class
 ];
-```
-
-#### Queues
-
-For background processing [Bernard](https://bernard.readthedocs.io/) library is used.
-
-Bernard supports several different drivers:
-
-- Google AppEngine
-- Doctrine DBAL
-- Flatfile
-- IronMQ
-- MongoDB
-- Pheanstalk
-- PhpAmqp / RabbitMQ
-- Redis Extension
-- Predis
-- Amazon SQS
-- Queue Interop
-
-This framework is configured with Redis Extention driver by default. Driver declaration is placed in `bootstrap/queue_factory.php` and can be changed there.
-
-If you want to make your Command to be queued just make it implementing `League\Tactician\Bernard\QueueableCommand` interface or just extend `System\Application\Queue\AbstractMessage` class.
-
-To launch background process that will process queued commands run in the console:
-
-``` shell
-php queue-worker &
 ```
 
 ### Registering new package
@@ -314,6 +287,34 @@ $emitter->addListener(
         $listener->handle($userCreated);
     }
 );
+```
+
+#### Queues
+
+For background processing [Bernard](https://bernard.readthedocs.io/) library is used.
+
+Bernard supports several different drivers:
+
+- Google AppEngine
+- Doctrine DBAL
+- Flatfile
+- IronMQ
+- MongoDB
+- Pheanstalk
+- PhpAmqp / RabbitMQ
+- Redis Extension
+- Predis
+- Amazon SQS
+- Queue Interop
+
+This framework is configured with Redis Extention driver by default. Driver declaration is placed in `bootstrap/queue_factory.php` and can be changed there.
+
+If you want to make your Command to be queued just make it implementing `League\Tactician\Bernard\QueueableCommand` interface or just extend `System\Application\Queue\AbstractMessage` class.
+
+To launch background process that will process queued commands run in the console:
+
+``` shell
+php queue-worker &
 ```
 
 To better understand how to deal with events check Users module how welcome message is being sent for newly created users.
