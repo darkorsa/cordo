@@ -1,6 +1,6 @@
 <?php
 
-use App\Loader;
+use App\Register;
 use DI\ContainerBuilder;
 use System\SharedKernel\Enum\Env;
 use Symfony\Component\Dotenv\Dotenv;
@@ -16,7 +16,7 @@ $errorReporter = require __DIR__ . '/error.php';
  * @var $container Psr\Container\ContainerInterface
  */
 $containerBuilder = new ContainerBuilder();
-$containerBuilder->addDefinitions(Loader::loadDefinitions());
+$containerBuilder->addDefinitions(Register::registerDefinitions());
 
 if (getenv('APP_ENV') === Env::PRODUCTION()) {
     $containerBuilder->enableCompilation(storage_path() . 'cache');
@@ -26,7 +26,7 @@ $container = $containerBuilder->build();
 $container->set('error_reporter', $errorReporter);
 
 // Configs
-Loader::loadConfigs($container->get('config'));
+Register::registerConfigs($container->get('config'));
 
 // Acl
 $acl = require __DIR__ . '/acl.php';

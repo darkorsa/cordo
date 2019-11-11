@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Auth\UI\Http\Route;
 
-use System\Application\Service\Loader\BaseRoutesLoader;
+use System\Application\Service\Register\RoutesRegister;
 
-class AclRoutesLoader extends BaseRoutesLoader
+class AclRoutes extends RoutesRegister
 {
-    public function load(): void
+    public function register(): void
     {
         $this->addAclUsers();
         $this->addAclUser();

@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace System\Application\Service\Loader;
+namespace System\Application\Service\Register;
 
 use System\UI\Http\Router;
 use Psr\Container\ContainerInterface;
 
-abstract class BaseRoutesLoader
+abstract class RoutesRegister
 {
     protected const UUID_PATTERN = '{id:[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12}}';
 
@@ -24,5 +24,5 @@ abstract class BaseRoutesLoader
         $this->resource = $resource;
     }
 
-    abstract public function load(): void;
+    abstract public function register(): void;
 }

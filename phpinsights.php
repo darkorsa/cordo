@@ -46,7 +46,6 @@ return [
     'remove' => [
         PHP_CodeSniffer\Standards\PSR1\Sniffs\Files\SideEffectsSniff::class,
         PHP_CodeSniffer\Standards\Generic\Sniffs\Formatting\SpaceAfterNotSniff::class,
-        //NunoMaduro\PhpInsights\Domain\Insights\ForbiddenDefineGlobalConstants::class,
         NunoMaduro\PhpInsights\Domain\Sniffs\ForbiddenSetterSniff::class,
         NunoMaduro\PhpInsights\Domain\Insights\ForbiddenDefineFunctions::class,
         NunoMaduro\PhpInsights\Domain\Insights\ForbiddenNormalClasses::class,
@@ -65,6 +64,7 @@ return [
         SlevomatCodingStandard\Sniffs\PHP\UselessParenthesesSniff::class,
         SlevomatCodingStandard\Sniffs\Commenting\DocCommentSpacingSniff::class,
         SlevomatCodingStandard\Sniffs\Functions\UnusedParameterSniff::class,
+        SlevomatCodingStandard\Sniffs\Variables\UnusedVariableSniff::class,
     ],
 
     'config' => [

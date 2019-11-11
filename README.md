@@ -45,7 +45,8 @@ it will create all the neccessary db tables. Endpoints for oAuth are already the
 
 ## Still missing
 - Internationalization
-- Simple HTML template system
+- Some simple HTML template engine
+- Routes grouping
 
 ## How things work
 
@@ -144,7 +145,7 @@ php queue-worker &
 
 This framework uses package by feature approach. It means that you organize your code in packages placed in `app/` folder.
 
-Just add your package folder name to the `app/Loader.php`:
+Just add your package folder name to the `app/Register.php`:
 
 ``` php
 protected static $register = [
@@ -164,7 +165,10 @@ Here's how the code is organised:
 
 ``` bash
 app/Users/
+.
 ├── Application
+│   ├── Acl
+│   │   └── UsersAcl.php
 │   ├── Command
 │   │   ├── CreateNewUser.php
 │   │   ├── DeleteUser.php
@@ -178,6 +182,8 @@ app/Users/
 │   ├── Event
 │   │   ├── Listener
 │   │   │   └── UserCreatedListener.php
+│   │   ├── Register
+│   │   │   └── UsersListeners.php
 │   │   └── UserCreated.php
 │   ├── Query
 │   │   ├── UserFilter.php
@@ -188,7 +194,6 @@ app/Users/
 │   ├── config
 │   │   └── users.php
 │   ├── definitions.php
-│   ├── events.php
 │   └── handlers.php
 ├── Domain
 │   ├── User.php
@@ -214,7 +219,8 @@ app/Users/
     │   ├── Controller
     │   │   ├── UserCommandsController.php
     │   │   └── UserQueriesController.php
-    │   └── routes.php
+    │   └── Route
+    │       └── UsersRoutes.php
     ├── Transformer
     │   └── UserTransformer.php
     └── Validator
@@ -233,7 +239,7 @@ you can find pre-prepared archive in `app/resources/module` folder with typical 
 
 ### Routes
 
-Route definitons are located at `app/[PackageName]/UI/Http/routes.php`.
+Route definitons should be located at `app/[PackageName]/UI/Http/Route/[PackageName]Routes.php` file. Routes loader class should inherit from abstract class `System\Application\Service\Register\RoutesRegister`.
 
 Routing is done with use of [FastRoute](https://github.com/nikic/FastRoute) but modified allowing to use per route `Middlewares`.
 
@@ -287,6 +293,8 @@ Command bus is configured to lock each handler in seperate transaction, it also 
 
 In contrast to the Command -> Handler mapping where for one *Command* there can be one and only one *Handler* you can have several listeners for a single emmited event.
 
+Your listeners definitions should be located at: `app/[PackageName]/Event/Loader/[PackageName]Listeners.php`. Events loaders class should extend `System\Application\Service\Register\ListenersRegister`.
+
 Here is how you can emit an event:
 
 ``` php
@@ -312,7 +320,7 @@ To better understand how to deal with events check Users module how welcome mess
 
 ### ACL
 
-For the purpose of Authorization [Zend ACL](https://docs.zendframework.com/zend-permissions-acl/usage/) has been used. ACL roles, resources, permissions cen be defined seperately in each package in `app/[PackageName]/Application/acl.php`.
+For the purpose of Authorization [Zend ACL](https://docs.zendframework.com/zend-permissions-acl/usage/) has been used. ACL roles, resources, permissions cen be defined seperately in each package in `app/[PackageName]/Application/Acl/[PackageName]Acl.php` which should extend `System\Application\Service\Register\AclRegister`.
 
 In `Auth` package that is shipped with this framework there are CRUD actions prepared for users ACL rules.
 

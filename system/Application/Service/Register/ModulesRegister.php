@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace System\Application\Service\Loader;
+namespace System\Application\Service\Register;
 
 use Noodlehaus\Config;
 use System\UI\Http\Router;
@@ -11,9 +11,8 @@ use League\Event\EmitterInterface;
 use Psr\Container\ContainerInterface;
 use System\Application\Config\Parser;
 use Symfony\Component\Console\Application;
-use Zend\Permissions\Acl\Resource\GenericResource as Resource;
 
-class ModulesLoader
+class ModulesRegister
 {
     protected static $register = [];
 
@@ -22,21 +21,21 @@ class ModulesLoader
         return static::$register;
     }
 
-    public static function loadRoutes(Router $router, ContainerInterface $container): void
+    public static function registerRoutes(Router $router, ContainerInterface $container): void
     {
         foreach (static::$register as $module) {
-            $className = "App\\{$module}\UI\Http\Route\\{$module}RoutesLoader";
+            $className = "App\\{$module}\UI\Http\Route\\{$module}Routes";
 
             if (!class_exists($className)) {
                 continue;
             }
 
-            $routesLoader = new $className($router, $container, strtolower($module));
-            $routesLoader->load();
+            $routesRegister = new $className($router, $container, strtolower($module));
+            $routesRegister->register();
         }
     }
 
-    public static function loadCommands(Application $application, ContainerInterface $container): void
+    public static function registerCommands(Application $application, ContainerInterface $container): void
     {
         foreach (static::$register as $module) {
             $commandsPath = static::commandsPath($module);
@@ -53,7 +52,7 @@ class ModulesLoader
         }
     }
 
-    public static function loadDefinitions(): array
+    public static function registerDefinitions(): array
     {
         $definitions = include_once root_path() . 'bootstrap/definitions.php';
 
@@ -68,7 +67,7 @@ class ModulesLoader
         return $definitions;
     }
 
-    public static function loadConfigs(Config $config): void
+    public static function registerConfigs(Config $config): void
     {
         foreach (static::$register as $module) {
             $configsPath = static::configsPath($module);
@@ -80,7 +79,7 @@ class ModulesLoader
         }
     }
 
-    public static function loadHandlersMap(): array
+    public static function registerHandlersMap(): array
     {
         $handlersMap = [];
         foreach (static::$register as $module) {
@@ -94,18 +93,21 @@ class ModulesLoader
         return $handlersMap;
     }
 
-    public static function loadListeners(EmitterInterface $emitter, ContainerInterface $container): void
+    public static function registerListeners(EmitterInterface $emitter, ContainerInterface $container): void
     {
         foreach (static::$register as $module) {
-            $eventsPath = static::eventsPath($module);
+            $className = "App\\{$module}\Application\Event\Register\\{$module}Listeners";
 
-            if (file_exists($eventsPath)) {
-                include_once $eventsPath;
+            if (!class_exists($className)) {
+                continue;
             }
+
+            $eventsRegister = new $className($emitter, $container, strtolower($module));
+            $eventsRegister->register();
         }
     }
 
-    public static function loadEntities(): array
+    public static function registerEntities(): array
     {
         $paths = [];
         foreach (static::$register as $module) {
@@ -119,17 +121,17 @@ class ModulesLoader
         return $paths;
     }
 
-    public static function loadAclData(Acl $acl): void
+    public static function registerAclData(Acl $acl): void
     {
         foreach (static::$register as $module) {
-            $className = "App\\{$module}\Application\Service\\{$module}AclLoader";
+            $className = "App\\{$module}\Application\Acl\\{$module}Acl";
 
             if (!class_exists($className)) {
                 continue;
             }
 
-            $aclLoader = new $className($acl, strtolower($module));
-            $aclLoader->load();
+            $aclRegister = new $className($acl, strtolower($module));
+            $aclRegister->register();
         }
     }
 
@@ -151,11 +153,6 @@ class ModulesLoader
     protected static function handlersMapPath(string $module): string
     {
         return app_path() . $module . '/Application/handlers.php';
-    }
-
-    protected static function eventsPath(string $module): string
-    {
-        return app_path() . $module . '/Application/events.php';
     }
 
     protected static function entitiesPath(string $module): string

@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace App\Users\Application\Service;
+namespace App\Users\Application\Acl;
 
 use App\Auth\SharedKernel\Enum\SystemRole;
-use System\Application\Service\Loader\BaseAclLoader;
+use System\Application\Service\Register\AclRegister;
 use Zend\Permissions\Acl\Resource\GenericResource as Resource;
 
-class UsersAclLoader extends BaseAclLoader
+class UsersAcl extends AclRegister
 {
-    public function load(): void
+    public function register(): void
     {
         $this->acl->addResource(new Resource($this->resource))
             ->allow(SystemRole::GUEST(), $this->resource)

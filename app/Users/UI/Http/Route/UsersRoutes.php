@@ -6,11 +6,11 @@ namespace App\Users\UI\Http\Route;
 
 use App\Auth\UI\Http\Middleware\OAuthMiddleware;
 use App\Auth\UI\Http\Middleware\AclMiddleware;
-use System\Application\Service\Loader\BaseRoutesLoader;
+use System\Application\Service\Register\RoutesRegister;
 
-class UsersRoutesLoader extends BaseRoutesLoader
+class UsersRoutes extends RoutesRegister
 {
-    public function load(): void
+    public function register(): void
     {
         $this->addGetUsers();
         $this->addGetUser();

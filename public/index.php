@@ -4,18 +4,18 @@
  * Handling HTTP request
  */
 
-use App\Loader;
+use App\Register;
 use System\UI\Http\Dispatcher;
 use System\UI\Http\Response\JsonResponse;
 use System\UI\Http\Middleware\ParsePutRequest;
 
-require __DIR__.'/../bootstrap/autoload.php';
+require __DIR__ . '/../bootstrap/autoload.php';
 
 // bootstapping
-$container = require_once __DIR__.'/../bootstrap/app.php';
+$container = require_once __DIR__ . '/../bootstrap/app.php';
 
 // oauth
-$oauthServer = require_once __DIR__.'/../bootstrap/oauth.php';
+$oauthServer = require_once __DIR__ . '/../bootstrap/oauth.php';
 $container->set('oauth_server', $oauthServer);
 
 // router
@@ -23,7 +23,7 @@ $router = $container->get('router');
 $router->addMiddleware(new ParsePutRequest());
 
 // load routes
-Loader::loadRoutes($router, $container);
+Register::registerRoutes($router, $container);
 
 // dispatch request
 $dispatcher = new Dispatcher(FastRoute\simpleDispatcher($router->routes()), $container);

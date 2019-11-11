@@ -1,6 +1,6 @@
 <?php
 
-use App\Loader;
+use App\Register;
 use Monolog\Logger;
 use League\Tactician\CommandBus;
 use Monolog\Handler\StreamHandler;
@@ -19,15 +19,15 @@ use League\Tactician\Handler\CommandNameExtractor\ClassNameExtractor;
 
 $commandHandlerMiddleware = new CommandHandlerMiddleware(
     new ClassNameExtractor(),
-    new ContainerLocator($container, Loader::loadHandlersMap()),
+    new ContainerLocator($container, Register::registerHandlersMap()),
     new HandleInflector()
 );
 
 $emitter = $container->get('emitter');
-Loader::loadListeners($emitter, $container);
+Register::registerListeners($emitter, $container);
 
 $commandLogger = new Logger('command');
-$commandLogger->pushHandler(new StreamHandler(storage_path().'logs/command.log', Logger::DEBUG));
+$commandLogger->pushHandler(new StreamHandler(storage_path() . 'logs/command.log', Logger::DEBUG));
 
 // Queues
 $queueFactory = require 'queue_factory.php';

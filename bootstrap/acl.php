@@ -1,6 +1,6 @@
 <?php
 
-use App\Loader;
+use App\Register;
 use Zend\Permissions\Acl\Acl;
 use App\Auth\SharedKernel\Enum\SystemRole;
 use Zend\Permissions\Acl\Role\GenericRole as Role;
@@ -10,6 +10,6 @@ $acl = new Acl();
 $acl->addRole(new Role(SystemRole::GUEST()))
     ->addRole(new Role(SystemRole::LOGGED()));
 
-Loader::loadAclData($acl);
+Register::registerAclData($acl);
 
 return $acl;

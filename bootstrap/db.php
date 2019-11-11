@@ -1,12 +1,12 @@
 <?php
 
-use App\Loader;
+use App\Register;
 use Doctrine\DBAL\Types\Type;
 use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
 use System\SharedKernel\Enum\Env;
 
-$paths = Loader::loadEntities();
+$paths = Register::registerEntities();
 $isDevMode = getenv('APP_ENV') === Env::DEV();
 
 // the connection configuration

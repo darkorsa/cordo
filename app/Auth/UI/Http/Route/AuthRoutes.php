@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace App\Auth\UI\Http\Route;
 
 use OAuth2\Request;
-use System\Application\Service\Loader\BaseRoutesLoader;
+use System\Application\Service\Register\RoutesRegister;
 
-class AuthRoutesLoader extends BaseRoutesLoader
+class AuthRoutes extends RoutesRegister
 {
-    public function load(): void
+    public function register(): void
     {
         $this->addOauthToken();
         $this->addOauthTokenRefresh();
@@ -51,7 +51,7 @@ class AuthRoutesLoader extends BaseRoutesLoader
 
     private function addAclRoutes(): void
     {
-        $aclRoutesLoader = new AclRoutesLoader($this->router, $this->container, $this->resource);
-        $aclRoutesLoader->load();
+        $aclRoutesLoader = new AclRoutes($this->router, $this->container, $this->resource);
+        $aclRoutesLoader->register();
     }
 }

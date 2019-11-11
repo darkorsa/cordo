@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace System\Application\Service\Loader;
+namespace System\Application\Service\Register;
 
 use Zend\Permissions\Acl\Acl;
 
-abstract class BaseAclLoader
+abstract class AclRegister
 {
     protected $acl;
 
@@ -18,5 +18,5 @@ abstract class BaseAclLoader
         $this->resource = $resource;
     }
 
-    abstract public function load(): void;
+    abstract public function register(): void;
 }
