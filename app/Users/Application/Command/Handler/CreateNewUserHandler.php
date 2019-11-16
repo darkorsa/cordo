@@ -9,25 +9,33 @@ use League\Event\EmitterInterface;
 use App\Users\Domain\UserRepository;
 use App\Users\Application\Event\UserCreated;
 use App\Users\Application\Command\CreateNewUser;
+use App\Auth\Application\Service\AuthServiceInterface;
 
 class CreateNewUserHandler
 {
+    private $authService;
+
     private $users;
 
     private $emitter;
 
-    public function __construct(UserRepository $users, EmitterInterface $emitter)
+    public function __construct(AuthServiceInterface $authService, UserRepository $users, EmitterInterface $emitter)
     {
+        $this->authService = $authService;
         $this->users = $users;
         $this->emitter = $emitter;
     }
 
     public function handle(CreateNewUser $command): void
     {
+        User::assertPasswordIsValid($command->password());
+
+        $password = $this->authService->hashPassword($command->password());
+
         $user = new User(
             $command->id(),
             $command->email(),
-            $command->password(),
+            $password,
             $command->isActive(),
             $command->createdAt(),
             $command->updatedAt()

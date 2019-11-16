@@ -35,7 +35,7 @@ class CreateNewUserConsoleCommand extends BaseConsoleCommand
     {
         $params = $input->getArguments();
 
-        $result = $this->validate($params);
+        $result = $this->validateNewUser($params);
 
         if (!$result->isValid()) {
             array_map(static function ($message) use ($output) {

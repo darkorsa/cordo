@@ -44,11 +44,14 @@ class User
             ->notEmpty()
             ->maxLength(static::EMAIL_MAX_LENGTH)
             ->email();
-        // passowrd
-        Assert::that($password)
-            ->notEmpty()
-            ->minLength(static::PASSWORD_MIN_LENGTH)
-            ->maxLength(static::PASSWORD_MAX_LENGTH);
+        // password
+        Assert::that($password)->satisfy(static function ($password) {
+            $info = password_get_info($password);
+            if (!in_array($info['algoName'], ['argon2i', 'argon2id'])) {
+                return false;
+            }
+            return true;
+        });
         // isActive
         Assert::that($isActive)
             ->integer()
@@ -56,18 +59,17 @@ class User
 
         $this->id = $id;
         $this->email = $email;
-        $this->password = $this->hashPassword($password);
+        $this->password = $password;
         $this->isActive = $isActive;
         $this->createdAt = $createdAt;
         $this->updatedAt = $updatedAt;
     }
 
-    private function hashPassword(string $password): string
+    public static function assertPasswordIsValid(string $password): void
     {
-        if (defined('PASSWORD_ARGON2ID')) {
-            return (string) password_hash($password, PASSWORD_ARGON2ID);
-        }
-
-        return (string) password_hash($password, PASSWORD_DEFAULT);
+        Assert::that($password)
+            ->notEmpty()
+            ->minLength(static::PASSWORD_MIN_LENGTH)
+            ->maxLength(static::PASSWORD_MAX_LENGTH);
     }
 }

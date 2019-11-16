@@ -5,7 +5,7 @@ namespace App\Users\UI\Validator;
 use App\Users\Domain\User;
 use Particle\Validator\Validator;
 use Particle\Validator\ValidationResult;
-use App\Users\Application\Service\UserService;
+use App\Users\Application\Service\UserQueryService;
 use Particle\Validator\Exception\InvalidValueException;
 use System\Application\Exception\ResourceNotFoundException;
 
@@ -13,12 +13,15 @@ trait UserValidator
 {
     private function validate(
         array $params,
-        bool $updateMode = false
+        bool $validatePassword,
+        bool $updateMode
     ): ValidationResult {
-        $service = $this->container->get(UserService::class);
+        $service = $this->container->get(UserQueryService::class);
 
         $validator = new Validator();
-        $validator->required('password')->lengthBetween(User::PASSWORD_MIN_LENGTH, User::PASSWORD_MAX_LENGTH);
+        if ($validatePassword) {
+            $validator->required('password')->lengthBetween(User::PASSWORD_MIN_LENGTH, User::PASSWORD_MAX_LENGTH);
+        }
 
         $validator->required('email')
             ->lessThan(User::EMAIL_MAX_LENGTH)
@@ -36,5 +39,15 @@ trait UserValidator
             });
 
         return $validator->validate($params);
+    }
+
+    private function validateNewUser(array $params): ValidationResult
+    {
+        return $this->validate($params, true, false);
+    }
+
+    private function validateUserUpdate(array $params): ValidationResult
+    {
+        return $this->validate($params, false, true);
     }
 }

@@ -9,7 +9,7 @@ use App\Users\Application\Query\UserFilter;
 use Psr\Http\Message\ServerRequestInterface;
 use App\Users\UI\Transformer\UserTransformer;
 use System\UI\Http\Controller\BaseController;
-use App\Users\Application\Service\UserService;
+use App\Users\Application\Service\UserQueryService;
 
 class UserQueriesController extends BaseController
 {
@@ -26,7 +26,7 @@ class UserQueriesController extends BaseController
             ->setOffset($offset)
             ->setLimit($limit);
 
-        $service = $this->container->get(UserService::class);
+        $service = $this->container->get(UserQueryService::class);
 
         $data = $this->transformerManager->transform($service->getCollection($userFilter), 'user');
         $data['total'] = $service->getCount($userFilter);
@@ -36,7 +36,7 @@ class UserQueriesController extends BaseController
 
     public function getAction(ServerRequestInterface $request, $params): ResponseInterface
     {
-        $service = $this->container->get(UserService::class);
+        $service = $this->container->get(UserQueryService::class);
 
         $userFilter = new UserFilter();
         $userFilter->setActive(true);

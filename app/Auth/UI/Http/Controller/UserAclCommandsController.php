@@ -10,7 +10,7 @@ use Particle\Validator\ValidationResult;
 use App\Auth\Application\Service\AclService;
 use Psr\Http\Message\ServerRequestInterface;
 use System\UI\Http\Controller\BaseController;
-use App\Users\Application\Service\UserService;
+use App\Users\Application\Service\UserQueryService;
 use App\Auth\Application\Command\CreateUserAcl;
 use App\Auth\Application\Command\DeleteUserAcl;
 use App\Auth\Application\Command\UpdateUserAcl;
@@ -31,7 +31,7 @@ class UserAclCommandsController extends BaseController
 
         $params = (object) $params;
 
-        $user = $this->container->get(UserService::class)->getOneById($params->id_user);
+        $user = $this->container->get(UserQueryService::class)->getOneById($params->id_user);
 
         $command = new CreateUserAcl(
             Uuid::uuid4()->toString(),
@@ -59,7 +59,7 @@ class UserAclCommandsController extends BaseController
 
         $params = (object) $params;
 
-        $user   = $this->container->get(UserService::class)->getOneById($params->id_user);
+        $user   = $this->container->get(UserQueryService::class)->getOneById($params->id_user);
         $acl    = $this->container->get(AclService::class)->getOneByUserId($params->id_user);
 
         $command = new UpdateUserAcl(
@@ -79,7 +79,7 @@ class UserAclCommandsController extends BaseController
     {
         $userId = $urlParams['id'];
 
-        $user   = $this->container->get(UserService::class)->getOneById($userId);
+        $user   = $this->container->get(UserQueryService::class)->getOneById($userId);
         $acl    = $this->container->get(AclService::class)->getOneByUserId($userId);
 
         $command = new DeleteUserAcl(

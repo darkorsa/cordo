@@ -9,7 +9,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use App\Users\Application\Command\DeleteUser;
 use App\Users\Application\Command\UpdateUser;
 use System\UI\Http\Controller\BaseController;
-use App\Users\Application\Service\UserService;
+use App\Users\Application\Service\UserQueryService;
 use App\Users\Application\Command\CreateNewUser;
 use App\Users\UI\Validator\UserValidator;
 
@@ -21,7 +21,7 @@ class UserCommandsController extends BaseController
     {
         $params = (array) $request->getParsedBody();
 
-        $result = $this->validate($params);
+        $result = $this->validateNewUser($params);
 
         if (!$result->isValid()) {
             return $this->respondBadRequestError($result->getMessages());
@@ -48,20 +48,20 @@ class UserCommandsController extends BaseController
         $userId = $request->getAttribute('user_id');
         $params = (array) $request->getParsedBody();
 
-        $result = $this->validate($params, true);
+        $result = $this->validateUserUpdate($params);
 
         if (!$result->isValid()) {
             return $this->respondBadRequestError($result->getMessages());
         }
 
-        $user = $this->container->get(UserService::class)->getOneById($userId);
+        $user = $this->container->get(UserQueryService::class)->getOneById($userId);
 
         $params = (object) $params;
 
         $command = new UpdateUser(
             $user->id(),
             (string) $params->email,
-            (string) $params->password,
+            $user->password(),
             $user->isActive(),
             $user->createdAt(),
             new DateTime()
@@ -76,12 +76,12 @@ class UserCommandsController extends BaseController
     {
         $userId = $request->getAttribute('user_id');
 
-        $user = $this->container->get(UserService::class)->getOneById($userId);
+        $user = $this->container->get(UserQueryService::class)->getOneById($userId);
 
         $command = new DeleteUser(
             $user->id(),
             $user->email(),
-            'iirevelant',
+            $user->password(),
             $user->isActive(),
             $user->createdAt(),
             $user->updatedAt()

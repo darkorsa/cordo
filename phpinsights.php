@@ -33,7 +33,7 @@ return [
     'ide' => 'vscode',
 
     'exclude' => [
-        'system/Application/Service/Loader/ModulesLoader.php',
+        'system/Application/Service/Register/ModulesRegister.php',
     ],
 
 

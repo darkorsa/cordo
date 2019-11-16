@@ -9,7 +9,7 @@ use App\Users\Application\Query\UserQuery;
 use App\Users\Application\Query\UserFilter;
 use Doctrine\Common\Collections\ArrayCollection;
 
-class UserService
+class UserQueryService
 {
     private $userQuery;
 
