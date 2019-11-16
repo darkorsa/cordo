@@ -2,9 +2,9 @@
 
 use App\Register;
 use Monolog\Logger;
+use Bernard\Producer;
 use League\Tactician\CommandBus;
 use Monolog\Handler\StreamHandler;
-use System\Application\Queue\Producer;
 use League\Tactician\Logger\LoggerMiddleware;
 use System\Application\Queue\QueueMiddleware;
 use League\Tactician\Plugins\LockingMiddleware;
