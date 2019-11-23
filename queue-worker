@@ -1,7 +1,10 @@
 #!/usr/bin/env php
 <?php
 
+use Monolog\Logger;
 use Bernard\Consumer;
+use Bernard\Producer;
+use Monolog\Handler\StreamHandler;
 use Bernard\Router\ClassNameRouter;
 use Bernard\Router\ContainerReceiverResolver;
 use System\Application\Event\EventDispatcherAdapter;
@@ -9,42 +12,48 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
 use App\Users\Application\Command\SendUserWelcomeMessage;
 use App\Users\Application\Command\Handler\SendUserWelcomeMessageHandler;
 
-require __DIR__.'/bootstrap/autoload.php';
+require __DIR__ . '/bootstrap/autoload.php';
 
 $isConsole = true;
 
 // bootstapping
-$container      = require __DIR__.'/bootstrap/app.php';
-$queueFactory   = require __DIR__.'/bootstrap/queue_factory.php';
+$container      = require __DIR__ . '/bootstrap/app.php';
+$queueFactory   = require __DIR__ . '/bootstrap/queue_factory.php';
+
+$eventDispatcher = new EventDispatcherAdapter(new EventDispatcher());
+$producer = new Producer($queueFactory, new EventDispatcher());
+
+$logger = new Logger('errorlog');
+$logger->pushHandler(new StreamHandler(storage_path() . 'logs/error.log', Logger::DEBUG));
 
 $router = new ClassNameRouter([
     SendUserWelcomeMessage::class => SendUserWelcomeMessageHandler::class,
 ], new ContainerReceiverResolver($container));
 
-$eventDispatcher = new EventDispatcherAdapter(new EventDispatcher());
-
 $eventDispatcher->addListener(
     Bernard\BernardEvents::INVOKE,
     function (Bernard\Event\EnvelopeEvent $envelopeEvent) {
-        echo PHP_EOL . 'Processing: ' . $envelopeEvent->getEnvelope()->getClass();
+        // log job invoked 
     }
 );
 $eventDispatcher->addListener(
     Bernard\BernardEvents::ACKNOWLEDGE,
     function (Bernard\Event\EnvelopeEvent $envelopeEvent) {
-        echo PHP_EOL . 'Processed: ' . $envelopeEvent->getEnvelope()->getClass();
+        // log job processed
     }
 );
 $eventDispatcher->addListener(
     Bernard\BernardEvents::REJECT,
-    function (Bernard\Event\RejectEnvelopeEvent $envelopeEvent) use ($container) {
-        echo PHP_EOL . 'Failed: ' . $envelopeEvent->getEnvelope()->getMessage();
-        try {
-            throw new Exception($envelopeEvent->getEnvelope()->getMessage());
-        } catch (Exception $e) {
-            $container->get('error_reporter')->report($e);
+    function (Bernard\Event\RejectEnvelopeEvent $envelopeEvent) use ($logger, $producer) {
+        $message = $envelopeEvent->getEnvelope()->getMessage();
+
+        if ($message->fired() < 3) {
+            $message->fire();
+            $producer->produce($message, 'default');
+            return;
         }
 
+        $logger->error($envelopeEvent->getException());
     }
 );
 
