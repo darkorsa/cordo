@@ -1,10 +1,13 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Users\Infrastructure\Persistance\Doctrine\ORM;
 
 use App\Users\Domain\User;
 use Doctrine\ORM\EntityManager;
 use App\Users\Domain\UserRepository;
+use System\Application\Exception\ResourceNotFoundException;
 
 class UserDoctrineRepository implements UserRepository
 {
@@ -17,7 +20,13 @@ class UserDoctrineRepository implements UserRepository
 
     public function find(string $id): User
     {
-        return $this->entityManager->find(User::class, $id);
+        $user = $this->entityManager->find(User::class, $id);
+
+        if (!$user) {
+            throw new ResourceNotFoundException();
+        }
+
+        return $user;
     }
 
     public function add(User $user): void
@@ -34,9 +43,7 @@ class UserDoctrineRepository implements UserRepository
 
     public function delete(User $user): void
     {
-        $entity = $this->entityManager->merge($user);
-
-        $this->entityManager->remove($entity);
+        $this->entityManager->remove($user);
         $this->entityManager->flush();
     }
 }

@@ -10,54 +10,54 @@ class AclRoutes extends RoutesRegister
 {
     public function register(): void
     {
-        $this->addAclUsers();
-        $this->addAclUser();
-        $this->addAclUserAddRules();
-        $this->addAclUserUpdateRules();
-        $this->addAclUserDeleteRules();
+        $this->aclUsers();
+        $this->aclUser();
+        $this->aclUserAddRules();
+        $this->aclUserUpdateRules();
+        $this->aclUserDeleteRules();
     }
 
-    private function addAclUsers(): void
+    private function aclUsers(): void
     {
         $this->router->addRoute(
             'GET',
-            "/{$this->resource}/acl/users",
+            "/{$this->resource}/acl",
             'App\Auth\UI\Http\Controller\UserAclQueriesController@index'
         );
     }
 
-    private function addAclUser(): void
+    private function aclUser(): void
     {
         $this->router->addRoute(
             'GET',
-            "/{$this->resource}/acl/users/" . static::UUID_PATTERN,
+            "/{$this->resource}/acl/" . static::UUID_PATTERN,
             'App\Auth\UI\Http\Controller\UserAclQueriesController@get'
         );
     }
 
-    private function addAclUserAddRules(): void
+    private function aclUserAddRules(): void
     {
         $this->router->addRoute(
             'POST',
-            "/{$this->resource}/acl/users",
+            "/{$this->resource}/acl",
             'App\Auth\UI\Http\Controller\UserAclCommandsController@create'
         );
     }
 
-    private function addAclUserUpdateRules(): void
+    private function aclUserUpdateRules(): void
     {
         $this->router->addRoute(
             'PUT',
-            "/{$this->resource}/acl/users/" . static::UUID_PATTERN,
+            "/{$this->resource}/acl/" . static::UUID_PATTERN,
             'App\Auth\UI\Http\Controller\UserAclCommandsController@update'
         );
     }
 
-    private function addAclUserDeleteRules(): void
+    private function aclUserDeleteRules(): void
     {
         $this->router->addRoute(
             'DELETE',
-            "/{$this->resource}/acl/users/" . static::UUID_PATTERN,
+            "/{$this->resource}/acl/" . static::UUID_PATTERN,
             'App\Auth\UI\Http\Controller\UserAclCommandsController@delete'
         );
     }

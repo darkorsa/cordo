@@ -49,7 +49,7 @@ class UserAclCommandsController extends BaseController
     public function updateAction(ServerRequestInterface $request, array $urlParams): ResponseInterface
     {
         $params = (array) $request->getParsedBody();
-        $params['id_user'] = $urlParams['id'];
+        $params['id'] = $urlParams['id'];
 
         $result = $this->validateUpdate($params);
 
@@ -59,8 +59,8 @@ class UserAclCommandsController extends BaseController
 
         $params = (object) $params;
 
-        $user   = $this->container->get(UserQueryService::class)->getOneById($params->id_user);
-        $acl    = $this->container->get(AclService::class)->getOneByUserId($params->id_user);
+        $acl    = $this->container->get(AclService::class)->getOneById($params->id);
+        $user   = $this->container->get(UserQueryService::class)->getOneById($acl->userId());
 
         $command = new UpdateUserAcl(
             $acl->id(),
@@ -77,18 +77,9 @@ class UserAclCommandsController extends BaseController
 
     public function deleteAction(ServerRequestInterface $request, array $urlParams): ResponseInterface
     {
-        $userId = $urlParams['id'];
+        $id = $urlParams['id'];
 
-        $user   = $this->container->get(UserQueryService::class)->getOneById($userId);
-        $acl    = $this->container->get(AclService::class)->getOneByUserId($userId);
-
-        $command = new DeleteUserAcl(
-            $acl->id(),
-            $user,
-            $acl->privileges(),
-            $acl->createdAt(),
-            $acl->updatedAt()
-        );
+        $command = new DeleteUserAcl($id);
 
         $this->commandBus->handle($command);
 

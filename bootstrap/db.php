@@ -7,7 +7,7 @@ use Doctrine\ORM\EntityManager;
 use System\SharedKernel\Enum\Env;
 
 $paths = Register::registerEntities();
-$isDevMode = getenv('APP_ENV') === Env::DEV();
+$isDevMode = getenv('APP_ENV') == Env::DEV();
 
 // the connection configuration
 $dbParams = [
@@ -20,9 +20,9 @@ $dbParams = [
 
 Type::addType('uuid_binary_ordered_time', 'Ramsey\Uuid\Doctrine\UuidBinaryOrderedTimeType');
 
-$cacheDir = storage_path() . 'cache/doctrine';
+$proxyDir = storage_path() . 'cache/doctrine/';
 
-$config = Setup::createXMLMetadataConfiguration($paths, $isDevMode, $cacheDir);
+$config = Setup::createXMLMetadataConfiguration($paths, $isDevMode, $proxyDir);
 $config->setAutoGenerateProxyClasses($isDevMode);
 
 $entityManager = EntityManager::create($dbParams, $config);

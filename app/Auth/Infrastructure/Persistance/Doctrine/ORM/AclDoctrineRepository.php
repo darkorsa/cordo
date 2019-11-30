@@ -1,10 +1,13 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Auth\Infrastructure\Persistance\Doctrine\ORM;
 
 use App\Auth\Domain\Acl;
 use Doctrine\ORM\EntityManager;
 use App\Auth\Domain\AclRepository;
+use System\Application\Exception\ResourceNotFoundException;
 
 class AclDoctrineRepository implements AclRepository
 {
@@ -13,6 +16,17 @@ class AclDoctrineRepository implements AclRepository
     public function __construct(EntityManager $entityManager)
     {
         $this->entityManager = $entityManager;
+    }
+
+    public function find(string $id): Acl
+    {
+        $result = $this->entityManager->find(Acl::class, $id);
+
+        if (!$result) {
+            throw new ResourceNotFoundException();
+        }
+
+        return $result;
     }
 
     public function add(Acl $acl): void
@@ -29,9 +43,7 @@ class AclDoctrineRepository implements AclRepository
 
     public function delete(Acl $acl): void
     {
-        $entity = $this->entityManager->merge($acl);
-
-        $this->entityManager->remove($entity);
+        $this->entityManager->remove($acl);
         $this->entityManager->flush();
     }
 }

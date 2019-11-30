@@ -24,7 +24,6 @@ return [
     DeleteUserAclHandler::class => DI\create()
         ->constructor(
             DI\get(AclDoctrineRepository::class),
-            DI\get(UserDoctrineRepository::class),
             DI\get('emitter')
         ),
     AclService::class => DI\create()

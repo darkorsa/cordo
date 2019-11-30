@@ -1,8 +1,9 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Users\Application\Command\Handler;
 
-use App\Users\Domain\User;
 use League\Event\EmitterInterface;
 use App\Users\Domain\UserRepository;
 use App\Users\Application\Command\DeleteUser;
@@ -21,14 +22,7 @@ class DeleteUserHandler
 
     public function handle(DeleteUser $command): void
     {
-        $user = new User(
-            $command->id(),
-            $command->email(),
-            $command->password(),
-            $command->isActive(),
-            $command->createdAt(),
-            $command->updatedAt()
-        );
+        $user = $this->users->find($command->id());
 
         $this->users->delete($user);
     }

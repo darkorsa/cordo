@@ -78,14 +78,7 @@ class UserCommandsController extends BaseController
 
         $user = $this->container->get(UserQueryService::class)->getOneById($userId);
 
-        $command = new DeleteUser(
-            $user->id(),
-            $user->email(),
-            $user->password(),
-            $user->isActive(),
-            $user->createdAt(),
-            $user->updatedAt()
-        );
+        $command = new DeleteUser($user->id());
 
         $this->commandBus->handle($command);
 
