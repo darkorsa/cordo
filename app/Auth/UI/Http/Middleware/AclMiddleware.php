@@ -7,13 +7,13 @@ use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use App\Auth\SharedKernel\Enum\SystemRole;
 use Psr\Http\Server\MiddlewareInterface;
-use App\Auth\Application\Service\AclService;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Symfony\Component\HttpFoundation\Response as ResponseStatusCode;
 
 class AclMiddleware implements MiddlewareInterface
 {
+    private const HTTP_UNAUTHORIZED = 401;
+
     private $container;
 
     private $acl;
@@ -26,7 +26,7 @@ class AclMiddleware implements MiddlewareInterface
     {
         $this->container    = $container;
         $this->acl          = $container->get('acl');
-        $this->service      = $container->get(AclService::class);
+        $this->service      = $container->get('acl.query.service');
         $this->privilage    = $privilage;
     }
 
@@ -41,7 +41,7 @@ class AclMiddleware implements MiddlewareInterface
         }
 
         if (!$this->acl->isAllowed($role, $resource, $priviledge)) {
-            return new Response(ResponseStatusCode::HTTP_UNAUTHORIZED);
+            return new Response(self::HTTP_UNAUTHORIZED);
         }
 
         return $handler->handle($request);

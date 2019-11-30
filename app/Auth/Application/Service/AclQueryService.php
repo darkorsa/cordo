@@ -12,7 +12,7 @@ use App\Auth\Application\Query\AclFilter;
 use Doctrine\Common\Collections\ArrayCollection;
 use System\Application\Exception\ResourceNotFoundException;
 
-class AclService
+class AclQueryService
 {
     private $aclQuery;
 

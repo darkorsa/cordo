@@ -25,6 +25,6 @@ return [
             DI\get(UserDoctrineRepository::class),
             DI\get('emitter')
         ),
-    UserQueryService::class => DI\create()
+    'users.query.service'::class => DI\create(UserQueryService::class)
         ->constructor(DI\get(UserDoctrineQuery::class)),
 ];

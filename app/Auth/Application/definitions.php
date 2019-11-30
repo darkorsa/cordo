@@ -1,6 +1,6 @@
 <?php
 
-use App\Auth\Application\Service\AclService;
+use App\Auth\Application\Service\AclQueryService;
 use App\Auth\Application\Command\Handler\CreateUserAclHandler;
 use App\Auth\Application\Command\Handler\DeleteUserAclHandler;
 use App\Auth\Application\Command\Handler\UpdateUserAclHandler;
@@ -26,6 +26,6 @@ return [
             DI\get(AclDoctrineRepository::class),
             DI\get('emitter')
         ),
-    AclService::class => DI\create()
+    'acl.query.service' => DI\create(AclQueryService::class)
         ->constructor(DI\get(AclDoctrineQuery::class)),
 ];

@@ -5,7 +5,6 @@ namespace App\Users\UI\Validator;
 use App\Users\Domain\User;
 use Particle\Validator\Validator;
 use Particle\Validator\ValidationResult;
-use App\Users\Application\Service\UserQueryService;
 use Particle\Validator\Exception\InvalidValueException;
 use System\Application\Exception\ResourceNotFoundException;
 
@@ -16,7 +15,7 @@ trait UserValidator
         bool $validatePassword,
         bool $updateMode
     ): ValidationResult {
-        $service = $this->container->get(UserQueryService::class);
+        $service = $this->container->get('users.query.service');
 
         $validator = new Validator();
         if ($validatePassword) {

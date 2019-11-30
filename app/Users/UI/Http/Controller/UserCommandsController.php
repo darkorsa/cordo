@@ -9,7 +9,6 @@ use Psr\Http\Message\ServerRequestInterface;
 use App\Users\Application\Command\DeleteUser;
 use App\Users\Application\Command\UpdateUser;
 use System\UI\Http\Controller\BaseController;
-use App\Users\Application\Service\UserQueryService;
 use App\Users\Application\Command\CreateNewUser;
 use App\Users\UI\Validator\UserValidator;
 
@@ -54,7 +53,7 @@ class UserCommandsController extends BaseController
             return $this->respondBadRequestError($result->getMessages());
         }
 
-        $user = $this->container->get(UserQueryService::class)->getOneById($userId);
+        $user = $this->container->get('users.query.service')->getOneById($userId);
 
         $params = (object) $params;
 
@@ -76,7 +75,7 @@ class UserCommandsController extends BaseController
     {
         $userId = $request->getAttribute('user_id');
 
-        $user = $this->container->get(UserQueryService::class)->getOneById($userId);
+        $user = $this->container->get('users.query.service')->getOneById($userId);
 
         $command = new DeleteUser($user->id());
 

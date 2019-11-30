@@ -7,10 +7,8 @@ use Ramsey\Uuid\Uuid;
 use Particle\Validator\Validator;
 use Psr\Http\Message\ResponseInterface;
 use Particle\Validator\ValidationResult;
-use App\Auth\Application\Service\AclService;
 use Psr\Http\Message\ServerRequestInterface;
 use System\UI\Http\Controller\BaseController;
-use App\Users\Application\Service\UserQueryService;
 use App\Auth\Application\Command\CreateUserAcl;
 use App\Auth\Application\Command\DeleteUserAcl;
 use App\Auth\Application\Command\UpdateUserAcl;
@@ -31,7 +29,7 @@ class UserAclCommandsController extends BaseController
 
         $params = (object) $params;
 
-        $user = $this->container->get(UserQueryService::class)->getOneById($params->id_user);
+        $user = $this->container->get('users.query.service')->getOneById($params->id_user);
 
         $command = new CreateUserAcl(
             Uuid::uuid4()->toString(),
@@ -59,8 +57,8 @@ class UserAclCommandsController extends BaseController
 
         $params = (object) $params;
 
-        $acl    = $this->container->get(AclService::class)->getOneById($params->id);
-        $user   = $this->container->get(UserQueryService::class)->getOneById($acl->userId());
+        $acl    = $this->container->get('acl.query.service')->getOneById($params->id);
+        $user   = $this->container->get('users.query.service')->getOneById($acl->userId());
 
         $command = new UpdateUserAcl(
             $acl->id(),
@@ -88,7 +86,7 @@ class UserAclCommandsController extends BaseController
 
     private function validateCreate(array $params): ValidationResult
     {
-        $service = $this->container->get(AclService::class);
+        $service = $this->container->get('acl.query.service');
 
         $validator = new Validator();
         $validator->required('privileges')->isArray();

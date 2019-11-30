@@ -7,7 +7,6 @@ namespace App\Auth\UI\Http\Controller;
 use Psr\Http\Message\ResponseInterface;
 use App\Auth\Application\Query\AclFilter;
 use App\Auth\UI\Transformer\AclTransformer;
-use App\Auth\Application\Service\AclService;
 use Psr\Http\Message\ServerRequestInterface;
 use System\UI\Http\Controller\BaseController;
 
@@ -22,7 +21,7 @@ class UserAclQueriesController extends BaseController
             $aclFilter->setUserId($queryParams['id_user']);
         }
 
-        $service = $this->container->get(AclService::class);
+        $service = $this->container->get('acl.query.service');
 
         $data = $this->transformerManager->transform($service->getCollection($aclFilter), 'acl');
         $data['total'] = $service->getCount($aclFilter);
@@ -32,7 +31,7 @@ class UserAclQueriesController extends BaseController
 
     public function getAction(ServerRequestInterface $request, $params): ResponseInterface
     {
-        $service = $this->container->get(AclService::class);
+        $service = $this->container->get('acl.query.service');
 
         $result = $service->getOneById($params['id']);
 
