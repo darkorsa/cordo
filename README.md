@@ -5,6 +5,7 @@ Cordo is a microframework designed for efficient development of REST APIs based 
 - DDD (Domain Driven Design)
 - CQRS (Command Query Responsibility Segregation)
 - Event Dispatcher
+- Repository pattern
 - Queues (Redis, RabbitMQ, Amazon SQS)
 - OAuth2
 - UUIDs
@@ -47,7 +48,7 @@ it will create all the neccessary db tables. Endpoints for oAuth are already the
 ## Still missing
 - Internationalization
 - Lightweight HTML template engine
-- Routes grouping
+- Cache
 
 ## How things work
 
@@ -75,11 +76,11 @@ This documentation does not focus on describing in detail how to deal with Route
 
 You are also encouraged to find for yourself how things work under the hood, check the `system` folder where abstract classes and interfaces are located.
 
-Cordo is shipped with one previously prepared module: `Users`. It presents how the code should be organized within all the layers and utilizes of `Events` and `Queues`.
+Cordo is shipped with one previously prepared module: `Users`. It presents how the code can be organized within all the layers and utilizes of `Events` and `Queues`.
 
 ### Entry points
 
-There are several entry points to the application:
+Entry points to the application:
 
 #### Web
 
@@ -256,7 +257,7 @@ composer schema-drop
 
 ### Command bus
 
-Cordo uses [Tactician](https://tactician.thephpleague.com/) command bus for implementing command pattern.
+Cordo uses [Tactician](https://tactician.thephpleague.com/) command bus for implementing `Command Pattern`.
 
 Your Command -> Handler mappings should be placed in: `app/[PackageName]/Application/handlers.php` file.
 
@@ -334,10 +335,6 @@ By default all the errors are logged to the `storage/logs/error.log` file.
 Additionally in `dev` environment errors will be prompth to the screen in pretty format using [Whoops](https://github.com/filp/whoops). Errors in console are also pretty formated. In `production` environment errors stack traces will be emailed to the addresses defined in `config/error.php`.
 
 If you'd like to change any of that bevavior you can to it in: `bootstrap/error.php` file.
-
-## Security
-
-If you discover any security related issues, please email dkorsak@gmail.com instead of using the issue tracker.
 
 ## Credits
 
