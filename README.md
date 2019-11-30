@@ -2,6 +2,7 @@
 
 Cordo is a microframework designed for efficient development of REST APIs based on layered architecture and using principles such as:
 
+- Layered architecture
 - CQRS (Command Query Responsibility Segregation)
 - Event Dispatcher
 - Repository pattern
