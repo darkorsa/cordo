@@ -2,7 +2,6 @@
 
 Cordo is a microframework designed for efficient development of REST APIs based on layered architecture and using principles such as:
 
-- DDD (Domain Driven Design)
 - CQRS (Command Query Responsibility Segregation)
 - Event Dispatcher
 - Repository pattern
@@ -201,7 +200,7 @@ app/Users/
         └── UserValidator.php
 ```
 
-This structure represents the *Domain Driven Design* model, which consists of layers: **User Interface**, **Application**, **Domain** and **Infrastructure**.
+This structure consists of layers: **User Interface**, **Application**, **Domain** and **Infrastructure**.
 
 If you want to quickly boilerplate your new module there's a command for that:
 
