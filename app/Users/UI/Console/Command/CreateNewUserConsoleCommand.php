@@ -31,7 +31,7 @@ class CreateNewUserConsoleCommand extends BaseConsoleCommand
             );
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $params = $input->getArguments();
 
@@ -60,5 +60,7 @@ class CreateNewUserConsoleCommand extends BaseConsoleCommand
         $this->commandBus->handle($command);
 
         $output->writeln('<info>User successfully added!</info>');
+
+        return 0;
     }
 }

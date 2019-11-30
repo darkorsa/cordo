@@ -5,23 +5,23 @@
  * Handling console script execution
  */
 
-use App\Loader;
+use App\Register;
 use SensioLabs\Security\SecurityChecker;
 use Symfony\Component\Console\Application;
 use System\UI\Console\Command\ModuleBuilderCommand;
 use SensioLabs\Security\Command\SecurityCheckerCommand;
 
-require __DIR__.'/bootstrap/autoload.php';
+require __DIR__ . '/bootstrap/autoload.php';
 
 $isConsole = true;
 
 // bootstapping
-$container = require_once __DIR__.'/bootstrap/app.php';
+$container = require_once __DIR__ . '/bootstrap/app.php';
 
 $application = new Application();
 $application->add(new SecurityCheckerCommand(new SecurityChecker()));
 $application->add(new ModuleBuilderCommand());
 
-Loader::loadCommands($application, $container);
+Register::registerCommands($application, $container);
 
 $application->run();
