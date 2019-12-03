@@ -31,19 +31,25 @@ Just clone this repository into your new project folder.
 $ git clone git@github.com:darkorsa/cordo.git .
 ```
 
-If you would like to utilize of UUIDs you might find usefull to create some db functions helping translating UUIDs between strigs and binaries.
-
+Run:
 ``` bash
-composer sql-import resources/database/sql/uuid.sql
+$ composer install
 ```
 
-If you plan to use OAuth2 authorization run:
+Next copy `.env_example` file and rename it to `.env`. Then complete it with your configuration data.
+
+Final step is running console command:
 
 ``` bash
-composer sql-import resources/database/sql/oauth.sql
+$ php cordo system:init
 ```
 
-it will create all the neccessary db tables. Endpoints for oAuth are already there located in `app/Auth/UI/Http/Route/AuthRoutes.php`, the default ClientID is *Cordo*.
+It will create:
+- DB schema based on Doctrine XML metadata files
+- All the neccessary DB tables for OAuth2
+- Uuid DB helper functions
+
+After that you are good to go with Authentication, Acl and basic CRUD operations in Users module.
 
 ## Still missing
 - Internationalization
@@ -319,6 +325,14 @@ php queue-worker &
 ```
 
 To better understand how to deal with events check Users module how welcome message is being sent for newly created users.
+
+### OAuth2
+
+OAuth2 authorization method is ready to use. Endpoints for token generation and token refresh are located at `app/Auth/UI/Http/Route/AuthRoutes.php`. Default Client ID is *Cordo*.
+
+General OAuth2 configuration is performed in bootstrap file: `bootstrap/oauth.php`. 
+
+If you'd like change default credentials check behavior you can do it here: `app/Users/UI/Http/Auth/OAuth2UserCredentials.php`.
 
 ### ACL
 

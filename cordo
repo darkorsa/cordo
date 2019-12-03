@@ -8,7 +8,9 @@
 use App\Register;
 use SensioLabs\Security\SecurityChecker;
 use Symfony\Component\Console\Application;
+use System\UI\Console\Command\InitCommand;
 use System\UI\Console\Command\ModuleBuilderCommand;
+use Doctrine\DBAL\Tools\Console\Command\ImportCommand;
 use SensioLabs\Security\Command\SecurityCheckerCommand;
 
 require __DIR__ . '/bootstrap/autoload.php';
@@ -20,7 +22,9 @@ $container = require_once __DIR__ . '/bootstrap/app.php';
 
 $application = new Application();
 $application->add(new SecurityCheckerCommand(new SecurityChecker()));
+$application->add(new ImportCommand());
 $application->add(new ModuleBuilderCommand());
+$application->add(new InitCommand($container));
 
 Register::registerCommands($application, $container);
 

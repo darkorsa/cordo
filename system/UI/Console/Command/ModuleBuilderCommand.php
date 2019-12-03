@@ -22,8 +22,8 @@ class ModuleBuilderCommand extends Command
     protected function configure()
     {
         $this
-            ->setDescription('Builds new app module.')
-            ->setHelp('Creates file and dir structure for new module.')
+            ->setDescription('Builds a new app module.')
+            ->setHelp('Creates file and dir default structure for a new module.')
             ->setDefinition(
                 new InputDefinition([
                     new InputArgument('module_name', InputArgument::REQUIRED),

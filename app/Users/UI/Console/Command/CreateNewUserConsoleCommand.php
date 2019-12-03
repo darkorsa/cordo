@@ -59,7 +59,7 @@ class CreateNewUserConsoleCommand extends BaseConsoleCommand
 
         $this->commandBus->handle($command);
 
-        $output->writeln('<info>User successfully added!</info>');
+        $output->writeln('<info>User successfully created.</info>');
 
         return 0;
     }
