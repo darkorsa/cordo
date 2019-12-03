@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Users\Application\Event\Register;
 
-use App\Users\Application\Event\UserCreated;
+use App\Users\Domain\Event\UserCreated;
 use System\Application\Service\Register\ListenersRegister;
 use App\Users\Application\Event\Listener\UserCreatedListener;
 

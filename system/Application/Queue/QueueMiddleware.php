@@ -4,7 +4,6 @@ namespace System\Application\Queue;
 
 use Bernard\Producer;
 use League\Tactician\Middleware;
-use System\Application\Queue\AbstractMessage;
 
 /**
  * Sends the command to a remote location using message queues
@@ -35,7 +34,7 @@ final class QueueMiddleware implements Middleware
      */
     public function execute($command, callable $next)
     {
-        if ($command instanceof AbstractMessage) {
+        if ($command instanceof MessageInterface) {
             $command->fire();
             $this->producer->produce($command, $this->queue);
             return;

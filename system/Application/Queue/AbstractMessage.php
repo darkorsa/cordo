@@ -2,9 +2,7 @@
 
 namespace System\Application\Queue;
 
-use League\Tactician\Bernard\QueueableCommand;
-
-class AbstractMessage implements QueueableCommand
+class AbstractMessage implements MessageInterface
 {
     public $fired = 0;
 

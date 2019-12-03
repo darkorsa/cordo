@@ -7,7 +7,7 @@ namespace App\Users\Application\Command\Handler;
 use App\Users\Domain\User;
 use League\Event\EmitterInterface;
 use App\Users\Domain\UserRepository;
-use App\Users\Application\Event\UserCreated;
+use App\Users\Domain\Event\UserCreated;
 use App\Users\Application\Command\CreateNewUser;
 use App\Auth\Application\Service\AuthServiceInterface;
 
