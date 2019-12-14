@@ -10,8 +10,11 @@ abstract class AbstractListener implements ListenerInterface
 {
     protected $commandBus;
 
+    protected $container;
+
     public function __construct(ContainerInterface $container)
     {
+        $this->container = $container;
         $this->commandBus = $container->get('command_bus');
     }
 
