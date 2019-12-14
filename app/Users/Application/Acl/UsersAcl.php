@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Users\Application\Acl;
 
-use App\Auth\SharedKernel\Enum\SystemRole;
+use System\Module\Auth\SharedKernel\Enum\SystemRole;
 use System\Application\Service\Register\AclRegister;
 use Zend\Permissions\Acl\Resource\GenericResource as Resource;
 

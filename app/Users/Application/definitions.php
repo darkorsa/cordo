@@ -1,6 +1,6 @@
 <?php
 
-use App\Auth\Application\Service\AuthService;
+use System\Module\Auth\Application\Service\AuthService;
 use App\Users\Application\Service\UserQueryService;
 use App\Users\Application\Command\Handler\DeleteUserHandler;
 use App\Users\Application\Command\Handler\UpdateUserHandler;

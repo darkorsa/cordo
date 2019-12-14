@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Users\UI\Http\Route;
 
-use App\Auth\UI\Http\Middleware\OAuthMiddleware;
-use App\Auth\UI\Http\Middleware\AclMiddleware;
+use System\Module\Auth\UI\Http\Middleware\OAuthMiddleware;
+use System\Module\Auth\UI\Http\Middleware\AclMiddleware;
 use System\Application\Service\Register\RoutesRegister;
 
 class UsersRoutes extends RoutesRegister

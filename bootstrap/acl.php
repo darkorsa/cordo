@@ -2,7 +2,7 @@
 
 use App\Register;
 use Zend\Permissions\Acl\Acl;
-use App\Auth\SharedKernel\Enum\SystemRole;
+use System\Module\Auth\SharedKernel\Enum\SystemRole;
 use Zend\Permissions\Acl\Role\GenericRole as Role;
 
 $acl = new Acl();

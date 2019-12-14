@@ -9,7 +9,7 @@ use League\Event\EmitterInterface;
 use App\Users\Domain\UserRepository;
 use App\Users\Domain\Event\UserCreated;
 use App\Users\Application\Command\CreateNewUser;
-use App\Auth\Application\Service\AuthServiceInterface;
+use System\Module\Auth\Application\Service\AuthServiceInterface;
 
 class CreateNewUserHandler
 {
