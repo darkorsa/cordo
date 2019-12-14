@@ -14,7 +14,6 @@ class Register extends ModulesRegister
      * @var array
      */
     protected static $register = [
-        'Auth',
         'Users',
     ];
 }

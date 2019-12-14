@@ -129,7 +129,6 @@ Just add your package folder name to the `app/Register.php`:
 
 ``` php
 protected static $register = [
-    'Auth',
     'Users',
     // add you packages here
 ];
@@ -328,7 +327,7 @@ To better understand how to deal with events check Users module how welcome mess
 
 ### OAuth2
 
-OAuth2 authorization method is ready to use. Endpoints for token generation and token refresh are located at `app/Auth/UI/Http/Route/AuthRoutes.php`. Default Client ID is *Cordo*.
+OAuth2 authorization method is ready to use. Endpoints for token generation and token refresh are located at `system/Module/Auth/UI/Http/Route/AuthRoutes.php`. Default Client ID is *Cordo*.
 
 General OAuth2 configuration is performed in bootstrap file: `bootstrap/oauth.php`. 
 
@@ -340,7 +339,7 @@ For the purpose of Authorization [Zend ACL](https://docs.zendframework.com/zend-
 
 In `Auth` package that is shipped with this framework there are CRUD actions prepared for users ACL rules.
 
-There is also a `Middeware` for authorizing access to API endpoints in `app/Auth/UI/Http/Middleware/AclMiddleware.php`. You can pass privilage name in constructor or leave empty then it will simply map http request method (GET, POST, PUT, DELETE) as acl privilage.
+There is also a `Middeware` for authorizing access to API endpoints in `system/Module/Auth/UI/Http/Middleware/AclMiddleware.php`. You can pass privilage name in constructor or leave empty then it will simply map http request method (GET, POST, PUT, DELETE) as acl privilage.
 
 ### Errors
 
