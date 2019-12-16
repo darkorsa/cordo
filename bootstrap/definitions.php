@@ -2,6 +2,7 @@
 
 use Noodlehaus\Config;
 use League\Event\Emitter;
+use League\Plates\Engine;
 use System\UI\Http\Router;
 use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManager;
@@ -33,4 +34,5 @@ return [
     Connection::class => DI\factory(static function (ContainerInterface $container) {
         return $container->get('entity_manager')->getConnection();
     }),
+    Engine::class => DI\get('templates'),
 ];

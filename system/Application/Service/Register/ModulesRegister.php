@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace System\Application\Service\Register;
 
 use Noodlehaus\Config;
+use League\Plates\Engine;
 use System\UI\Http\Router;
 use Zend\Permissions\Acl\Acl;
+use System\UI\View\ViewFactory;
 use League\Event\EmitterInterface;
 use System\SharedKernel\Enum\Scope;
 use Psr\Container\ContainerInterface;
@@ -221,6 +223,27 @@ class ModulesRegister
         }
     }
 
+    public static function registerViews(Engine $templates): void
+    {
+        $registerViews = function (string $module, Scope $scope) use ($templates): void {
+            $viewsPath = self::viewsPath($module, $scope);
+
+            if (file_exists($viewsPath)) {
+                $templates->addFolder(strtolower($module), $viewsPath);
+            }
+        };
+
+        // system acl data
+        foreach (self::$systemModules as $module) {
+            $registerViews($module, Scope::SYSTEM());
+        }
+
+        // app acl data
+        foreach (static::$register as $module) {
+            $registerViews($module, Scope::APP());
+        }
+    }
+
     private static function routesClassname(string $module, Scope $scope)
     {
         return $scope == SCOPE::APP()
@@ -275,5 +298,12 @@ class ModulesRegister
         return $scope == SCOPE::APP()
             ? "App\\{$module}\Application\Acl\\{$module}Acl"
             : "System\Module\\{$module}\Application\Acl\\{$module}Acl";
+    }
+
+    private static function viewsPath(string $module, Scope $scope): string
+    {
+        return $scope == SCOPE::APP()
+            ? app_path() . $module . '/UI/views'
+            : system_path() . 'Module/' . $module . '/UI/views';
     }
 }

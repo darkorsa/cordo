@@ -3,6 +3,7 @@
 use App\Register;
 use Ramsey\Uuid\Uuid;
 use DI\ContainerBuilder;
+use League\Plates\Engine;
 use Ramsey\Uuid\FeatureSet;
 use Ramsey\Uuid\UuidFactory;
 use System\SharedKernel\Enum\Env;
@@ -61,5 +62,10 @@ $container->set('entity_manager', $entityManager);
 // Command bus
 $commandBus = require __DIR__ . '/command_bus.php';
 $container->set('command_bus', $commandBus);
+
+// Views
+$templates = new Engine();
+Register::registerViews($templates);
+$container->set('templates', $templates);
 
 return $container;
