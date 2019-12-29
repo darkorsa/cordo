@@ -13,19 +13,29 @@ class JsonResponse implements \System\UI\ResponseInterface
         $this->response = $response;
     }
 
-    public function send()
+    public function send(): void
     {
         http_response_code($this->response->getStatusCode());
 
         header("Content-Type:application/json");
         header("charset:utf-8");
 
-        // additional header
+        // additional headers
         foreach ($this->response->getHeaders() as $key => $val) {
             header("{$key}:{" . current($val) . "}");
         }
 
-        echo $this->response->getBody();
+        $body = $this->response->getBody();
+
+        echo $this->isJson($body) ? $body : json_encode($body);
+
         exit;
+    }
+
+    private function isJson(string $string): bool
+    {
+        json_decode($string);
+
+        return (json_last_error() == JSON_ERROR_NONE);
     }
 }
