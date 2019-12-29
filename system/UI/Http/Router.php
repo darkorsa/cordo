@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace System\UI\Http;
 
@@ -57,7 +59,7 @@ class Router
                 if (is_callable($route->handler)) {
                     $handlerCallable = $route->handler;
 
-                    return $handlerCallable();
+                    return $handlerCallable($request, $vars);
                 }
 
                 [$controller, $action] = explode('@', $route->handler);

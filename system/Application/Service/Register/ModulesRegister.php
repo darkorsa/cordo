@@ -20,6 +20,7 @@ class ModulesRegister
 
     private static $systemModules = [
         'Auth',
+        'Welcome',
     ];
 
     public static function registerRoutes(Router $router, ContainerInterface $container): void
