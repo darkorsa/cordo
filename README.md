@@ -25,7 +25,19 @@ It's compliant with PSRs: `PSR-1`, `PSR-2`, `PSR-3`, `PSR-4`, `PSR-7`, `PSR-11`,
 
 ## Install
 
-Just clone this repository into your new project folder.
+If you'd like to utilize the *Queues* functionality make sure that you have Redis server installed on your machine by typing in your shell:
+
+``` bash
+$ redis-cli ping
+```
+If Redis is properly installed it replies with *PONG*. Otherwise you should install it from [PECL](https://pecl.php.net/) repository:
+
+``` bash
+$ sudo pecl install redis
+$ sudo service php7.x-fpm restart
+```
+
+Next clone this repository into your new project folder.
 
 ``` bash
 $ git clone git@github.com:darkorsa/cordo.git .
@@ -53,8 +65,8 @@ After that you are good to go with Authentication, Acl and basic CRUD operations
 
 ## Still missing
 - Internationalization
-- Lightweight HTML template engine
 - Cache
+- Preloading
 
 ## How things work
 
@@ -68,13 +80,14 @@ Some of the used libraries:
 - [Guzzle](http://docs.guzzlephp.org/en/stable/)
 - [Tactician](https://tactician.thephpleague.com/)
 - [Fractal](https://fractal.thephpleague.com/)
+- [Plates](http://platesphp.com/)
 - [Monolog](https://github.com/Seldaek/monolog)
 - [PHP-DI](http://php-di.org/)
 - [Bernard](https://bernard.readthedocs.io/)
 - [Whoops](http://filp.github.io/whoops/)
 - [Relay](https://relayphp.com/)
 - [Symfony Console](https://symfony.com/doc/current/components/console.html)
-- [Sumfony Dotenv](https://symfony.com/doc/current/components/dotenv.html)
+- [Symfony Dotenv](https://symfony.com/doc/current/components/dotenv.html)
 - [Zend ACL](https://docs.zendframework.com/zend-permissions-acl/usage/)
 - [Zend Mail](https://framework.zend.com/manual/2.1/en/modules/zend.mail.introduction.html)
 

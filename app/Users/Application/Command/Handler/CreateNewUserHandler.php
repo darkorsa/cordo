@@ -43,6 +43,11 @@ class CreateNewUserHandler
 
         $this->users->add($user);
 
-        $this->emitter->emit('users.created', new UserCreated($command->email()));
+        /**
+         * This will emit an event that would be put on a queue.
+         * Make sure you have Redis server installed and queue worker running in background
+         * (see Queues section in README.md file)
+         */
+        // $this->emitter->emit('users.created', new UserCreated($command->email()));
     }
 }
