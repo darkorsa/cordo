@@ -8,7 +8,6 @@ use Noodlehaus\Config;
 use League\Plates\Engine;
 use System\UI\Http\Router;
 use Zend\Permissions\Acl\Acl;
-use System\UI\View\ViewFactory;
 use League\Event\EmitterInterface;
 use System\SharedKernel\Enum\Scope;
 use Psr\Container\ContainerInterface;

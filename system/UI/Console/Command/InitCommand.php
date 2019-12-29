@@ -4,12 +4,12 @@ namespace System\UI\Console\Command;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\SchemaTool;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\HelperSet;
 use Symfony\Component\Console\Input\ArrayInput;
 use System\UI\Console\Command\BaseConsoleCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Doctrine\DBAL\Tools\Console\Command\ImportCommand;
 use Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper;
 use Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper;
 
@@ -45,7 +45,7 @@ class InitCommand extends BaseConsoleCommand
         return 0;
     }
 
-    private function importOauthSql(ImportCommand $command, $output)
+    private function importOauthSql(Command $command, $output)
     {
         $arguments = [
             'command' => 'dbal:import',
@@ -55,7 +55,7 @@ class InitCommand extends BaseConsoleCommand
         return $command->run(new ArrayInput($arguments), $output);
     }
 
-    private function importUuidSql(ImportCommand $command, $output)
+    private function importUuidSql(Command $command, $output)
     {
         $arguments = [
             'command' => 'dbal:import',

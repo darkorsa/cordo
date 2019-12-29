@@ -2,7 +2,9 @@
 
 namespace System\UI\Console\Command;
 
+use Exception;
 use Psr\Container\ContainerInterface;
+use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Command\Command;
 
 abstract class BaseConsoleCommand extends Command
@@ -17,5 +19,16 @@ abstract class BaseConsoleCommand extends Command
         $this->commandBus = $container->get('command_bus');
 
         parent::__construct();
+    }
+
+    public function getApplication(): Application
+    {
+        $application = parent::getApplication();
+
+        if (!$application) {
+            throw new Exception('Application object hasn\'t been set');
+        }
+
+        return $application;
     }
 }
