@@ -174,20 +174,21 @@ app/Users/
 │   ├── Event
 │   │   ├── Listener
 │   │   │   └── UserCreatedListener.php
-│   │   ├── Register
-│   │   │   └── UsersListeners.php
-│   │   └── UserCreated.php
+│   │   └── Register
+│   │       └── UsersListeners.php
 │   ├── Query
 │   │   ├── UserFilter.php
 │   │   ├── UserQuery.php
 │   │   └── UserView.php
 │   ├── Service
-│   │   └── UserService.php
+│   │   └── UserQueryService.php
 │   ├── config
 │   │   └── users.php
 │   ├── definitions.php
 │   └── handlers.php
 ├── Domain
+│   ├── Event
+│   │   └── UserCreated.php
 │   ├── User.php
 │   └── UserRepository.php
 ├── Infrastructure
@@ -200,23 +201,30 @@ app/Users/
 │           └── Query
 │               ├── UserDoctrineFilter.php
 │               └── UserDoctrineQuery.php
-└── UI
-    ├── Console
-    │   ├── Command
-    │   │   └── CreateNewUserConsoleCommand.php
-    │   └── commands.php
-    ├── Http
-    │   ├── Auth
-    │   │   └── OAuth2UserCredentials.php
-    │   ├── Controller
-    │   │   ├── UserCommandsController.php
-    │   │   └── UserQueriesController.php
-    │   └── Route
-    │       └── UsersRoutes.php
-    ├── Transformer
-    │   └── UserTransformer.php
-    └── Validator
-        └── UserValidator.php
+├── UI
+│   ├── Console
+│   │   ├── Command
+│   │   │   └── CreateNewUserConsoleCommand.php
+│   │   └── commands.php
+│   ├── Http
+│   │   ├── Auth
+│   │   │   └── OAuth2UserCredentials.php
+│   │   ├── Controller
+│   │   │   ├── UserCommandsController.php
+│   │   │   └── UserQueriesController.php
+│   │   ├── Middleware
+│   │   │   └── OAuthMiddleware.php
+│   │   └── Route
+│   │       ├── OAuthRoutes.php
+│   │       └── UsersRoutes.php
+│   ├── Transformer
+│   │   └── UserTransformer.php
+│   ├── Validator
+│   │   └── UserValidator.php
+│   └── views
+│       └── mail
+│           └── new-user-welcome.php
+└── UsersInit.php
 ```
 
 This structure consists of layers: **User Interface**, **Application**, **Domain** and **Infrastructure**.
@@ -340,11 +348,11 @@ To better understand how to deal with events check Users module how welcome mess
 
 ### OAuth2
 
-OAuth2 authorization method is ready to use. Endpoints for token generation and token refresh are located at `system/Module/Auth/UI/Http/Route/AuthRoutes.php`. Default Client ID is *Cordo*.
+OAuth2 authorization is shipped with *Users* module and is ready to use. Endpoints for token generation and token refresh are located at `app/Users/UI/Http/Route/OAuthRoutes.php`. Default Client ID is *Cordo*.
 
-General OAuth2 configuration is performed in bootstrap file: `bootstrap/oauth.php`. 
+General OAuth2 configuration is performed during *Users* initialization at: `app/Users/UsersInit.php`. 
 
-If you'd like change default credentials check behavior you can do it here: `app/Users/UI/Http/Auth/OAuth2UserCredentials.php`.
+If you'd like to change default credentials check behavior you can do it here: `app/Users/UI/Http/Auth/OAuth2UserCredentials.php`.
 
 ### ACL
 
