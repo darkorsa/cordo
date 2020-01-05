@@ -6,6 +6,6 @@ require 'vendor/autoload.php';
 
 $isConsole = true;
 
-$container = require_once __DIR__.'/bootstrap/app.php';
+$container = require_once __DIR__ . '/bootstrap/app.php';
 
 return ConsoleRunner::createHelperSet($container->get('entity_manager'));
