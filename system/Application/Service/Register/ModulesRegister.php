@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace System\Application\Service\Register;
 
+use DI\Container;
 use Noodlehaus\Config;
 use League\Plates\Engine;
 use System\UI\Http\Router;
@@ -23,7 +24,7 @@ class ModulesRegister
         'Welcome',
     ];
 
-    public static function initModules(ContainerInterface $container, bool $isConsole): void
+    public static function initModules(Container $container, bool $isConsole): void
     {
         $initModule = function (string $module, Scope $scope) use ($container, $isConsole): void {
             $className = self::getModuleInitClassName($module, $scope);

@@ -2,25 +2,25 @@
 
 namespace App\Users;
 
+use DI\Container;
 use OAuth2\Server;
 use OAuth2\Storage\Pdo;
 use OAuth2\GrantType\RefreshToken;
 use OAuth2\GrantType\UserCredentials;
-use Psr\Container\ContainerInterface;
 use OAuth2\GrantType\ClientCredentials;
 use App\Users\UI\Http\Auth\OAuth2UserCredentials;
 use System\Application\Service\Register\ModuleInit;
 
 class UsersInit implements ModuleInit
 {
-    public static function init(ContainerInterface $container, bool $isConsole): void
+    public static function init(Container $container, bool $isConsole): void
     {
         if (!$isConsole) {
             self::initOAuthServer($container);
         }
     }
 
-    private static function initOAuthServer(ContainerInterface $container): void
+    private static function initOAuthServer(Container $container): void
     {
         $config = $container->get('config');
 
