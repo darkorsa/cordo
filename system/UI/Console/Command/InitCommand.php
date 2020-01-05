@@ -70,7 +70,7 @@ class InitCommand extends BaseConsoleCommand
         $tool = new SchemaTool($em);
         $classes = [
             $em->getClassMetadata('App\Users\Domain\User'),
-            $em->getClassMetadata('App\Auth\Domain\Acl')
+            $em->getClassMetadata('System\Module\Auth\Domain\Acl')
         ];
         $tool->createSchema($classes);
 

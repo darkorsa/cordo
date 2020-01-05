@@ -23,6 +23,29 @@ class ModulesRegister
         'Welcome',
     ];
 
+    public static function initModules(ContainerInterface $container, bool $isConsole): void
+    {
+        $initModule = function (string $module, Scope $scope) use ($container, $isConsole): void {
+            $className = self::getModuleInitClassName($module, $scope);
+
+            if (!class_exists($className)) {
+                return;
+            }
+
+            $className::init($container, $isConsole);
+        };
+
+        // init system modules
+        foreach (self::$systemModules as $module) {
+            $initModule($module, SCOPE::SYSTEM());
+        }
+
+        // init app modules
+        foreach (static::$register as $module) {
+            $initModule($module, SCOPE::APP());
+        }
+    }
+
     public static function registerRoutes(Router $router, ContainerInterface $container): void
     {
         $registerRoutes = function (string $module, Scope $scope) use ($router, $container): void {
@@ -244,7 +267,14 @@ class ModulesRegister
         }
     }
 
-    private static function routesClassname(string $module, Scope $scope)
+    private static function getModuleInitClassName(string $module, Scope $scope): string
+    {
+        return $scope == SCOPE::APP()
+            ? "App\\{$module}\\{$module}Init"
+            : "System\Module\\{$module}\\{$module}Init";
+    }
+
+    private static function routesClassname(string $module, Scope $scope): string
     {
         return $scope == SCOPE::APP()
             ? "App\\{$module}\UI\Http\Route\\{$module}Routes"

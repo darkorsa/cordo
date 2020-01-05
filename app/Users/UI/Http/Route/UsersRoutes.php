@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace App\Users\UI\Http\Route;
 
-use System\Module\Auth\UI\Http\Middleware\OAuthMiddleware;
-use System\Module\Auth\UI\Http\Middleware\AclMiddleware;
+use App\Users\UI\Http\Route\OAuthRoutes;
+use App\Users\UI\Http\Middleware\OAuthMiddleware;
 use System\Application\Service\Register\RoutesRegister;
+use System\Module\Auth\UI\Http\Middleware\AclMiddleware;
 
 class UsersRoutes extends RoutesRegister
 {
@@ -17,6 +18,9 @@ class UsersRoutes extends RoutesRegister
         $this->addCreateUser();
         $this->addUpdateUser();
         $this->addDeleteUser();
+
+        $oAuthRoutes = new OAuthRoutes($this->router, $this->container, $this->resource);
+        $oAuthRoutes->register();
     }
 
     private function addGetUsers(): void

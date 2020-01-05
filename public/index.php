@@ -14,9 +14,8 @@ require __DIR__ . '/../bootstrap/autoload.php';
 // bootstapping
 $container = require_once __DIR__ . '/../bootstrap/app.php';
 
-// oauth
-$oauthServer = require_once __DIR__ . '/../bootstrap/oauth.php';
-$container->set('oauth_server', $oauthServer);
+// init modules
+Register::initModules($container, false);
 
 // router
 $router = $container->get('router');

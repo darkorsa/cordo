@@ -20,6 +20,9 @@ $isConsole = true;
 // bootstapping
 $container = require_once __DIR__ . '/bootstrap/app.php';
 
+// init modules
+Register::initModules($container, $isConsole);
+
 $application = new Application();
 $application->add(new SecurityCheckerCommand(new SecurityChecker()));
 $application->add(new ImportCommand());

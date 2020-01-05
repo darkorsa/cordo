@@ -1,6 +1,6 @@
 <?php
 
-namespace System\Module\Auth\UI\Http\Middleware;
+namespace App\Users\UI\Http\Middleware;
 
 use OAuth2\Request;
 use Psr\Container\ContainerInterface;
