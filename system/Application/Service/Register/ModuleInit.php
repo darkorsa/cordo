@@ -6,5 +6,5 @@ use DI\Container;
 
 interface ModuleInit
 {
-    public static function init(Container $container, bool $isConsole): void;
+    public static function init(Container $container, bool $isRunningInConsole): void;
 }

@@ -15,13 +15,11 @@ use SensioLabs\Security\Command\SecurityCheckerCommand;
 
 require __DIR__ . '/bootstrap/autoload.php';
 
-$isConsole = true;
-
 // bootstapping
 $container = require_once __DIR__ . '/bootstrap/app.php';
 
 // init modules
-Register::initModules($container, $isConsole);
+Register::initModules($container, true);
 
 $application = new Application();
 $application->add(new SecurityCheckerCommand(new SecurityChecker()));

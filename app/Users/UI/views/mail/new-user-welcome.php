@@ -1,1 +1,1 @@
-Congratulations and welcome onboard!
+<p><?= $message; ?></p>

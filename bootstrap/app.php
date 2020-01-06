@@ -24,7 +24,6 @@ $uuidFactory->setTimeGenerator(new DefaultTimeGenerator(
     new PhpTimeConverter(),
     new SystemTimeProvider()
 ));
-
 Uuid::setFactory($uuidFactory);
 
 // Errors
@@ -67,5 +66,9 @@ $container->set('command_bus', $commandBus);
 $templates = new Engine();
 Register::registerViews($templates);
 $container->set('templates', $templates);
+
+// translations
+$translator = require __DIR__ . '/translations.php';
+$container->set('translator', $translator);
 
 return $container;

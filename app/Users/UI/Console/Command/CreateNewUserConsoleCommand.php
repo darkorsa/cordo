@@ -1,16 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Users\UI\Console\Command;
 
 use DateTime;
 use Ramsey\Uuid\Uuid;
+use App\Users\UI\Validator\UserValidator;
 use App\Users\Application\Command\CreateNewUser;
+use Symfony\Component\Console\Input\InputOption;
 use System\UI\Console\Command\BaseConsoleCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Output\OutputInterface;
-use App\Users\UI\Validator\UserValidator;
 
 class CreateNewUserConsoleCommand extends BaseConsoleCommand
 {
@@ -28,7 +31,8 @@ class CreateNewUserConsoleCommand extends BaseConsoleCommand
                     new InputArgument('email', InputArgument::REQUIRED),
                     new InputArgument('password', InputArgument::REQUIRED),
                 ])
-            );
+            )
+            ->addOption('lang', null, InputOption::VALUE_REQUIRED, 'Language');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int

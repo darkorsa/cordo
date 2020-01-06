@@ -9,11 +9,14 @@ use Noodlehaus\Config;
 use League\Plates\Engine;
 use System\UI\Http\Router;
 use Zend\Permissions\Acl\Acl;
+use RecursiveIteratorIterator;
+use RecursiveDirectoryIterator;
 use League\Event\EmitterInterface;
 use System\SharedKernel\Enum\Scope;
 use Psr\Container\ContainerInterface;
 use System\Application\Config\Parser;
 use Symfony\Component\Console\Application;
+use Symfony\Component\Translation\Translator;
 
 class ModulesRegister
 {
@@ -24,27 +27,19 @@ class ModulesRegister
         'Welcome',
     ];
 
-    public static function initModules(Container $container, bool $isConsole): void
+    public static function initModules(Container $container, bool $isRunningInConsole): void
     {
-        $initModule = function (string $module, Scope $scope) use ($container, $isConsole): void {
+        $initModule = function (string $module, Scope $scope) use ($container, $isRunningInConsole): void {
             $className = self::getModuleInitClassName($module, $scope);
 
             if (!class_exists($className)) {
                 return;
             }
 
-            $className::init($container, $isConsole);
+            $className::init($container, $isRunningInConsole);
         };
 
-        // init system modules
-        foreach (self::$systemModules as $module) {
-            $initModule($module, SCOPE::SYSTEM());
-        }
-
-        // init app modules
-        foreach (static::$register as $module) {
-            $initModule($module, SCOPE::APP());
-        }
+        self::call($initModule);
     }
 
     public static function registerRoutes(Router $router, ContainerInterface $container): void
@@ -60,15 +55,7 @@ class ModulesRegister
             $routesRegister->register();
         };
 
-        // register system routes
-        foreach (self::$systemModules as $module) {
-            $registerRoutes($module, SCOPE::SYSTEM());
-        }
-
-        // register app routes
-        foreach (static::$register as $module) {
-            $registerRoutes($module, SCOPE::APP());
-        }
+        self::call($registerRoutes);
     }
 
     public static function registerCommands(Application $application, ContainerInterface $container): void
@@ -87,15 +74,7 @@ class ModulesRegister
             }, $commands);
         };
 
-        // register system commands
-        foreach (self::$systemModules as $module) {
-            $registerCommands($module, SCOPE::SYSTEM());
-        }
-
-        // register app commands
-        foreach (static::$register as $module) {
-            $registerCommands($module, SCOPE::APP());
-        }
+        self::call($registerCommands);
     }
 
     public static function registerDefinitions(): array
@@ -136,15 +115,7 @@ class ModulesRegister
             }
         };
 
-        // register system configs
-        foreach (self::$systemModules as $module) {
-            $registerConfigs($module, SCOPE::SYSTEM());
-        }
-
-        // register app configs
-        foreach (static::$register as $module) {
-            $registerConfigs($module, Scope::APP());
-        }
+        self::call($registerConfigs);
     }
 
     public static function registerHandlersMap(): array
@@ -187,15 +158,7 @@ class ModulesRegister
             $eventsRegister->register();
         };
 
-        // system listeneres
-        foreach (self::$systemModules as $module) {
-            $registerListeners($module, Scope::SYSTEM());
-        }
-
-        // app listeneres
-        foreach (static::$register as $module) {
-            $registerListeners($module, Scope::APP());
-        }
+        self::call($registerListeners);
     }
 
     public static function registerEntities(): array
@@ -210,15 +173,7 @@ class ModulesRegister
             }
         };
 
-        // system entities
-        foreach (self::$systemModules as $module) {
-            $registerEntities($module, Scope::SYSTEM());
-        }
-
-        // app entities
-        foreach (static::$register as $module) {
-            $registerEntities($module, Scope::APP());
-        }
+        self::call($registerEntities);
 
         return $paths;
     }
@@ -236,15 +191,7 @@ class ModulesRegister
             $aclRegister->register();
         };
 
-        // system acl data
-        foreach (self::$systemModules as $module) {
-            $registerAcl($module, Scope::SYSTEM());
-        }
-
-        // app acl data
-        foreach (static::$register as $module) {
-            $registerAcl($module, Scope::APP());
-        }
+        self::call($registerAcl);
     }
 
     public static function registerViews(Engine $templates): void
@@ -257,14 +204,49 @@ class ModulesRegister
             }
         };
 
-        // system acl data
+        self::call($registerViews);
+    }
+
+    public static function registerTranslations(Translator $translator, ContainerInterface $container): void
+    {
+        $config = $container->get('config');
+
+        $registerTranslations = function (string $module, Scope $scope) use ($translator, $config): void {
+            $translationsPath = self::translationsPath($module, $scope);
+
+            if (file_exists($translationsPath)) {
+                $rii = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($translationsPath));
+
+                foreach ($rii as $file) {
+                    if ($file->isDir()) {
+                        continue;
+                    }
+
+                    if (preg_match('/([a-z0-9]+)\.([a-z]{2})\.yaml/', $file->getPathname(), $matches)) {
+                        $locale = $config->get('trans.locales')[$matches[2]] ?? null;
+                        if (!$locale) {
+                            continue;
+                        }
+
+                        $translator->addResource('yaml', $file->getPathname(), $locale, $matches[1]);
+                    }
+                }
+            }
+        };
+
+        self::call($registerTranslations);
+    }
+
+    private static function call(callable $function)
+    {
+        // system
         foreach (self::$systemModules as $module) {
-            $registerViews($module, Scope::SYSTEM());
+            $function($module, Scope::SYSTEM());
         }
 
-        // app acl data
+        // app
         foreach (static::$register as $module) {
-            $registerViews($module, Scope::APP());
+            $function($module, Scope::APP());
         }
     }
 
@@ -336,5 +318,12 @@ class ModulesRegister
         return $scope == SCOPE::APP()
             ? app_path() . $module . '/UI/views'
             : system_path() . 'Module/' . $module . '/UI/views';
+    }
+
+    private static function translationsPath(string $module, Scope $scope): string
+    {
+        return $scope == SCOPE::APP()
+            ? app_path() . $module . '/UI/trans'
+            : system_path() . 'Module/' . $module . '/UI/trans';
     }
 }

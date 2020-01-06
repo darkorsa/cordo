@@ -20,12 +20,12 @@ $errorReporter = new ErrorReporter();
 
 // default handler
 $logger = new Logger('errorlog');
-$logger->pushHandler(new StreamHandler(storage_path().'logs/error.log', Logger::DEBUG));
+$logger->pushHandler(new StreamHandler(storage_path() . 'logs/error.log', Logger::DEBUG));
 
 $errorReporter->pushHandler(new LoggerErrorHandler($logger));
 
 if ($debug) {
-    $prettyHandler = (isset($isConsole) && $isConsole)
+    $prettyHandler = defined('STDIN')
         ? new PlainTextHandler()
         : new PrettyPageHandler();
     $whoops = new Run();

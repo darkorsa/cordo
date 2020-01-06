@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace System\Infractructure\Mailer\ZendMail;
 
@@ -14,7 +16,7 @@ class MailerFactory
             case 'smtp':
                 return new SmtpMailer($config['host'], $config['port'], $config['username'], $config['password']);
             default:
-                throw new InvalidArgumentException("Unknown mailer driver: ".$config['driver']);
+                throw new InvalidArgumentException("Unknown mailer driver: " . $config['driver']);
         }
     }
 }

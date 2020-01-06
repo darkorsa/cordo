@@ -10,6 +10,7 @@ use League\Event\EmitterInterface;
 use Psr\Container\ContainerInterface;
 use System\Application\Config\Parser;
 use Psr\Http\Message\ServerRequestInterface;
+use Symfony\Component\Translation\Translator;
 use System\UI\Transformer\TransformerManager;
 use System\Application\Error\ErrorReporterInterface;
 use System\UI\Transformer\TransformerManagerInterface;
@@ -35,4 +36,5 @@ return [
         return $container->get('entity_manager')->getConnection();
     }),
     Engine::class => DI\get('templates'),
+    Translator::class => DI\get('translator'),
 ];

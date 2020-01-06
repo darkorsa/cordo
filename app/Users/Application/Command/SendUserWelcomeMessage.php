@@ -10,6 +10,8 @@ class SendUserWelcomeMessage extends AbstractMessage
 {
     private $email;
 
+    private $locale;
+
     public function setEmail(string $email)
     {
         $this->email = $email;
@@ -18,5 +20,15 @@ class SendUserWelcomeMessage extends AbstractMessage
     public function getEmail(): string
     {
         return $this->email;
+    }
+
+    public function setLocale(string $locale)
+    {
+        $this->locale = $locale;
+    }
+
+    public function getLocale(): string
+    {
+        return $this->locale;
     }
 }

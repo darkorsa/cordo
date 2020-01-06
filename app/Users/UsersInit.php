@@ -13,9 +13,9 @@ use System\Application\Service\Register\ModuleInit;
 
 class UsersInit implements ModuleInit
 {
-    public static function init(Container $container, bool $isConsole): void
+    public static function init(Container $container, bool $isRunningInConsole): void
     {
-        if (!$isConsole) {
+        if (!$isRunningInConsole) {
             self::initOAuthServer($container);
         }
     }

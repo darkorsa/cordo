@@ -14,6 +14,7 @@ class UserCreatedListener extends AbstractListener
     {
         $command = new SendUserWelcomeMessage();
         $command->setEmail($event->email());
+        $command->setLocale($this->container->get('translator')->getLocale());
 
         $this->commandBus->handle($command);
     }

@@ -14,8 +14,6 @@ use App\Users\Application\Command\Handler\SendUserWelcomeMessageHandler;
 
 require __DIR__ . '/bootstrap/autoload.php';
 
-$isConsole = true;
-
 // bootstapping
 $container      = require __DIR__ . '/bootstrap/app.php';
 $queueFactory   = require __DIR__ . '/bootstrap/queue_factory.php';
