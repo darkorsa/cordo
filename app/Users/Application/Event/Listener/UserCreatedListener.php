@@ -10,11 +10,17 @@ use App\Users\Application\Command\SendUserWelcomeMessage;
 
 class UserCreatedListener extends AbstractListener
 {
+    /**
+     * Handle event
+     *
+     * @param \App\Users\Domain\Event\UserCreated $event
+     * @return void
+     */
     public function handle(EventInterface $event): void
     {
         $command = new SendUserWelcomeMessage();
-        $command->setEmail($event->email());
-        $command->setLocale($this->container->get('translator')->getLocale());
+        $command->email = $event->email();
+        $command->locale = $this->container->get('translator')->getLocale();
 
         $this->commandBus->handle($command);
     }

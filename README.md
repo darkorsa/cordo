@@ -18,7 +18,7 @@ It's compliant with PSRs: `PSR-1`, `PSR-2`, `PSR-3`, `PSR-4`, `PSR-7`, `PSR-11`,
 
 ## Requirements
 
-- PHP 7.2 or newer
+- PHP 7.4.0 or newer
 - Apache/Nginx
 - MySql 5.7
 - PHP Redis extension (default driver for queues)

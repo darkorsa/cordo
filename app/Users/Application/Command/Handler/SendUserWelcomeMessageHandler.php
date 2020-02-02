@@ -29,12 +29,12 @@ class SendUserWelcomeMessageHandler extends AbstractReceiver
     public function handle(SendUserWelcomeMessage $command): void
     {
         $body = $this->templates->render('users::mail/new-user-welcome', [
-            'message' => $this->translator->trans('welcome.mail.message', [], 'mail', $command->getLocale())
+            'message' => $this->translator->trans('welcome.mail.message', [], 'mail', $command->locale)
         ]);
-        $subject = $this->translator->trans('welcome.mail.subject', [], 'mail', $command->getLocale());
+        $subject = $this->translator->trans('welcome.mail.subject', [], 'mail', $command->locale);
 
         $message = new Message();
-        $message->addTo($command->getEmail())
+        $message->addTo($command->email)
             ->addFrom('noreply@codeninjas.pl')
             ->setSubject($subject)
             ->setBody($body);
