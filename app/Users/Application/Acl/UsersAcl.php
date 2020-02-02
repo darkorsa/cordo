@@ -6,7 +6,7 @@ namespace App\Users\Application\Acl;
 
 use System\Module\Auth\SharedKernel\Enum\SystemRole;
 use System\Application\Service\Register\AclRegister;
-use Zend\Permissions\Acl\Resource\GenericResource as Resource;
+use Laminas\Permissions\Acl\Resource\GenericResource as Resource;
 
 class UsersAcl extends AclRegister
 {

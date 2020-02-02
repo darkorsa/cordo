@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace System\Infractructure\Mailer\ZendMail;
 
-use Zend\Mail\Message;
-use Zend\Mail\Transport\Smtp;
-use Zend\Mail\Transport\SmtpOptions;
+use Laminas\Mail\Message;
+use Laminas\Mail\Transport\Smtp;
+use Laminas\Mail\Transport\SmtpOptions;
 
 class SmtpMailer implements MailerInterface
 {

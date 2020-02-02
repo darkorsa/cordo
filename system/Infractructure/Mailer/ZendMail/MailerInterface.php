@@ -1,8 +1,10 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace System\Infractructure\Mailer\ZendMail;
 
-use Zend\Mail\Message;
+use Laminas\Mail\Message;
 
 interface MailerInterface
 {

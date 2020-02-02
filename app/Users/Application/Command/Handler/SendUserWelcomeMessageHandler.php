@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Users\Application\Command\Handler;
 
-use Zend\Mail\Message;
+use Laminas\Mail\Message;
 use League\Plates\Engine;
 use Symfony\Component\Translation\Translator;
 use System\Application\Queue\AbstractReceiver;

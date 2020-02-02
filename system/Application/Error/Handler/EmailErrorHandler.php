@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace System\Application\Error\Handler;
 
 use Throwable;
-use Zend\Mail\Message;
+use Laminas\Mail\Message;
 use System\Application\Error\ErrorHandlerInterface;
 use System\Infractructure\Mailer\ZendMail\MailerFactory;
 

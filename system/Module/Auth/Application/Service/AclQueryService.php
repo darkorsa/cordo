@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace System\Module\Auth\Application\Service;
 
-use Zend\Permissions\Acl\Acl;
+use Laminas\Permissions\Acl\Acl;
 use System\Module\Auth\Application\Query\AclView;
 use System\Module\Auth\Application\Query\AclQuery;
 use System\Module\Auth\SharedKernel\Enum\SystemRole;

@@ -8,7 +8,7 @@ use DI\Container;
 use Noodlehaus\Config;
 use League\Plates\Engine;
 use System\UI\Http\Router;
-use Zend\Permissions\Acl\Acl;
+use Laminas\Permissions\Acl\Acl;
 use RecursiveIteratorIterator;
 use RecursiveDirectoryIterator;
 use League\Event\EmitterInterface;

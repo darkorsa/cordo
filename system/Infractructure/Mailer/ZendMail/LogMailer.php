@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace System\Infractructure\Mailer\ZendMail;
 
 use Monolog\Logger;
-use Zend\Mail\Message;
+use Laminas\Mail\Message;
 use Monolog\Handler\StreamHandler;
-use Zend\Mail\Transport\InMemory as InMemoryTransport;
+use Laminas\Mail\Transport\InMemory as InMemoryTransport;
 
 class LogMailer implements MailerInterface
 {

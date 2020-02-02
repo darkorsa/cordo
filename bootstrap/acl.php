@@ -1,9 +1,9 @@
 <?php
 
 use App\Register;
-use Zend\Permissions\Acl\Acl;
+use Laminas\Permissions\Acl\Acl;
 use System\Module\Auth\SharedKernel\Enum\SystemRole;
-use Zend\Permissions\Acl\Role\GenericRole as Role;
+use Laminas\Permissions\Acl\Role\GenericRole as Role;
 
 $acl = new Acl();
 // add system roles

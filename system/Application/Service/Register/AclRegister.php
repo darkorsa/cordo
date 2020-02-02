@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace System\Application\Service\Register;
 
-use Zend\Permissions\Acl\Acl;
+use Laminas\Permissions\Acl\Acl;
 
 abstract class AclRegister
 {
