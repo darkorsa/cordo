@@ -21,7 +21,7 @@ class UpdateUserHandler
         $this->emitter = $emitter;
     }
 
-    public function handle(UpdateUser $command): void
+    public function __invoke(UpdateUser $command): void
     {
         $user = new User(
             $command->id(),

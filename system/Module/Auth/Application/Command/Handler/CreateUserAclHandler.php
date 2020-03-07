@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace System\Module\Auth\Application\Command\Handler;
 
@@ -23,7 +25,7 @@ class CreateUserAclHandler
         $this->emitter = $emitter;
     }
 
-    public function handle(CreateUserAcl $command): void
+    public function __invoke(CreateUserAcl $command): void
     {
         $user = $this->users->find($command->userId());
 

@@ -19,6 +19,14 @@ class LoggerErrorHandler implements ErrorHandlerInterface
 
     public function handle(Throwable $exception): void
     {
-        $this->logger->error($exception);
+        $message = sprintf(
+            'Error %s occurred in file %s on line %d. Stack trace: ' . PHP_EOL . ' %s',
+            $exception->getMessage(),
+            $exception->getFile(),
+            $exception->getLine(),
+            $exception->getTraceAsString()
+        );
+
+        $this->logger->error($message);
     }
 }

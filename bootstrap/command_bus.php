@@ -12,15 +12,15 @@ use League\Tactician\Container\ContainerLocator;
 use League\Tactician\CommandEvents\EventMiddleware;
 use League\Tactician\Handler\CommandHandlerMiddleware;
 use Symfony\Component\EventDispatcher\EventDispatcher;
-use System\Application\Command\Handler\HandleInflector;
 use League\Tactician\Doctrine\ORM\TransactionMiddleware;
 use League\Tactician\Logger\Formatter\ClassNameFormatter;
+use League\Tactician\Handler\MethodNameInflector\InvokeInflector;
 use League\Tactician\Handler\CommandNameExtractor\ClassNameExtractor;
 
 $commandHandlerMiddleware = new CommandHandlerMiddleware(
     new ClassNameExtractor(),
     new ContainerLocator($container, Register::registerHandlersMap()),
-    new HandleInflector()
+    new InvokeInflector()
 );
 
 $emitter = $container->get('emitter');

@@ -19,8 +19,17 @@ use System\Application\Error\Handler\PrettyErrorHandler;
 $errorReporter = new ErrorReporter();
 
 // default handler
+$formatter = new Monolog\Formatter\LineFormatter(
+    null, // Format of message in log, default [%datetime%] %channel%.%level_name%: %message% %context% %extra%\n
+    null, // Datetime format
+    true, // allowInlineLineBreaks option, default false
+    true  // ignoreEmptyContextAndExtra option, default false
+);
+$debugHandler = new StreamHandler(storage_path() . 'logs/error.log', Logger::DEBUG);
+$debugHandler->setFormatter($formatter);
+
 $logger = new Logger('errorlog');
-$logger->pushHandler(new StreamHandler(storage_path() . 'logs/error.log', Logger::DEBUG));
+$logger->pushHandler($debugHandler);
 
 $errorReporter->pushHandler(new LoggerErrorHandler($logger));
 

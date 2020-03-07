@@ -20,7 +20,7 @@ class DeleteUserHandler
         $this->emitter = $emitter;
     }
 
-    public function handle(DeleteUser $command): void
+    public function __invoke(DeleteUser $command): void
     {
         $user = $this->users->find($command->id());
 

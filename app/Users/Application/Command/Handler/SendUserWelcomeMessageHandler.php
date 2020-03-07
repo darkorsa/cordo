@@ -7,11 +7,10 @@ namespace App\Users\Application\Command\Handler;
 use Laminas\Mail\Message;
 use League\Plates\Engine;
 use Symfony\Component\Translation\Translator;
-use System\Application\Queue\AbstractReceiver;
 use App\Users\Application\Command\SendUserWelcomeMessage;
 use System\Infractructure\Mailer\ZendMail\MailerInterface;
 
-class SendUserWelcomeMessageHandler extends AbstractReceiver
+class SendUserWelcomeMessageHandler
 {
     private $mailer;
 
@@ -26,7 +25,7 @@ class SendUserWelcomeMessageHandler extends AbstractReceiver
         $this->translator = $translator;
     }
 
-    public function handle(SendUserWelcomeMessage $command): void
+    public function __invoke(SendUserWelcomeMessage $command): void
     {
         $body = $this->templates->render('users::mail/new-user-welcome', [
             'message' => $this->translator->trans('welcome.mail.message', [], 'mail', $command->locale)

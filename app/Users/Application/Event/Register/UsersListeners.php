@@ -15,8 +15,7 @@ class UsersListeners extends ListenersRegister
         $this->emitter->addListener(
             "{$this->resource}.created",
             function ($event, UserCreated $userCreated) {
-                $listener = new UserCreatedListener($this->container);
-                $listener->handle($userCreated);
+                (new UserCreatedListener($this->container))->handle($userCreated);
             }
         );
     }
