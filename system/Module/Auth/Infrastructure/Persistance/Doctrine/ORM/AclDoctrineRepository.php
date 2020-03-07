@@ -20,6 +20,9 @@ class AclDoctrineRepository implements AclRepository
 
     public function find(string $id): Acl
     {
+        /**
+         * @var \System\Module\Auth\Domain\Acl | null $result
+         */
         $result = $this->entityManager->find(Acl::class, $id);
 
         if (!$result) {

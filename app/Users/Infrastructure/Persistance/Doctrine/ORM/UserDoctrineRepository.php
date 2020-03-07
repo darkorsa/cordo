@@ -20,6 +20,9 @@ class UserDoctrineRepository implements UserRepository
 
     public function find(string $id): User
     {
+        /**
+         * @var \App\Users\Domain\User | null $user
+         */
         $user = $this->entityManager->find(User::class, $id);
 
         if (!$user) {

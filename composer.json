@@ -62,7 +62,7 @@
     },
     "scripts": {
         "test": "phpunit",
-        "analyse": "phpstan analyse system app tests --level max",
+        "analyse": "phpstan analyse -l max -c phpstan.neon system app tests",
         "insights": "phpinsights -v",
         "schema-create": "doctrine orm:schema-tool:create",
         "schema-drop": "doctrine orm:schema-tool:drop --force",
