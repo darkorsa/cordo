@@ -6,6 +6,8 @@ namespace System\Module\Auth\Domain;
 
 interface AclRepository
 {
+    public function find(string $id): Acl;
+
     public function add(Acl $acl): void;
 
     public function update(Acl $acl): void;

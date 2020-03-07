@@ -26,7 +26,7 @@ class CreateNewUserHandler
         $this->emitter = $emitter;
     }
 
-    public function handle(CreateNewUser $command): void
+    public function __invoke(CreateNewUser $command): void
     {
         User::assertPasswordIsValid($command->password());
 

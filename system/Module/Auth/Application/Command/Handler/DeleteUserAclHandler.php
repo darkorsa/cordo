@@ -20,7 +20,7 @@ class DeleteUserAclHandler
         $this->emitter = $emitter;
     }
 
-    public function handle(DeleteUserAcl $command): void
+    public function __invoke(DeleteUserAcl $command): void
     {
         $acl = $this->acl->find($command->id());
 
