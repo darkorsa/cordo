@@ -23,14 +23,13 @@ class ModulesRegister
     protected static $register = [];
 
     private static $systemModules = [
-        'Auth',
-        'Welcome',
+        'Welcome\Message',
     ];
 
     public static function initModules(Container $container, bool $isRunningInConsole): void
     {
-        $initModule = function (string $module, Scope $scope) use ($container, $isRunningInConsole): void {
-            $className = self::getModuleInitClassName($module, $scope);
+        $initModule = function (string $context, string $module, Scope $scope) use ($container, $isRunningInConsole): void {
+            $className = self::getModuleInitClassName($context, $module, $scope);
 
             if (!class_exists($className)) {
                 return;
@@ -44,8 +43,8 @@ class ModulesRegister
 
     public static function registerRoutes(Router $router, ContainerInterface $container): void
     {
-        $registerRoutes = function (string $module, Scope $scope) use ($router, $container): void {
-            $className = self::routesClassname($module, $scope);
+        $registerRoutes = function (string $context, string $module, Scope $scope) use ($router, $container): void {
+            $className = self::routesClassname($context, $module, $scope);
 
             if (!class_exists($className)) {
                 return;
@@ -60,8 +59,15 @@ class ModulesRegister
 
     public static function registerCommands(Application $application, ContainerInterface $container): void
     {
-        $registerCommands = function (string $module, Scope $scope) use ($application, $container): void {
-            $commandsPath = self::commandsPath($module, $scope);
+        $registerCommands = function (
+            string $context,
+            string $module,
+            Scope $scope
+        ) use (
+            $application,
+            $container
+        ): void {
+            $commandsPath = self::commandsPath($context, $module, $scope);
 
             if (!file_exists($commandsPath)) {
                 return;
@@ -79,8 +85,8 @@ class ModulesRegister
 
     public static function registerDefinitions(): array
     {
-        $getDefinitions = function (string $module, Scope $scope): array {
-            $definitionsPath = self::definitionsPath($module, $scope);
+        $getDefinitions = function (string $context, string $module, Scope $scope): array {
+            $definitionsPath = self::definitionsPath($context, $module, $scope);
 
             if (file_exists($definitionsPath)) {
                 return include_once $definitionsPath;
@@ -92,13 +98,15 @@ class ModulesRegister
         $definitions = include_once root_path() . 'bootstrap/definitions.php';
 
         // system definitions
-        foreach (self::$systemModules as $module) {
-            $definitions = array_merge($definitions, $getDefinitions($module, SCOPE::SYSTEM()));
+        foreach (self::$systemModules as $moduleInContext) {
+            [$context, $module] = explode('\\', $moduleInContext);
+            $definitions = array_merge($definitions, $getDefinitions($context, $module, SCOPE::SYSTEM()));
         }
 
         // app definitions
-        foreach (static::$register as $module) {
-            $definitions = array_merge($definitions, $getDefinitions($module, SCOPE::APP()));
+        foreach (static::$register as $moduleInContext) {
+            [$context, $module] = explode('\\', $moduleInContext);
+            $definitions = array_merge($definitions, $getDefinitions($context, $module, SCOPE::APP()));
         }
 
         return $definitions;
@@ -106,8 +114,8 @@ class ModulesRegister
 
     public static function registerConfigs(Config $config): void
     {
-        $registerConfigs = function (string $module, Scope $scope) use ($config): void {
-            $configsPath = self::configsPath($module, $scope);
+        $registerConfigs = function (string $context, string $module, Scope $scope) use ($config): void {
+            $configsPath = self::configsPath($context, $module, $scope);
 
             if (file_exists($configsPath)) {
                 $moduleConfig = new Config($configsPath, new Parser());
@@ -120,8 +128,8 @@ class ModulesRegister
 
     public static function registerHandlersMap(): array
     {
-        $getHandlers = function (string $module, Scope $scope): array {
-            $handlersMapPath = self::handlersMapPath($module, $scope);
+        $getHandlers = function (string $context, string $module, Scope $scope): array {
+            $handlersMapPath = self::handlersMapPath($context, $module, $scope);
 
             if (file_exists($handlersMapPath)) {
                 return include_once $handlersMapPath;
@@ -133,13 +141,15 @@ class ModulesRegister
         $handlersMap = [];
 
         // system handlers
-        foreach (self::$systemModules as $module) {
-            $handlersMap = array_merge($handlersMap, $getHandlers($module, SCOPE::SYSTEM()));
+        foreach (self::$systemModules as $moduleInContext) {
+            [$context, $module] = explode('\\', $moduleInContext);
+            $handlersMap = array_merge($handlersMap, $getHandlers($context, $module, SCOPE::SYSTEM()));
         }
 
         // app handlers
-        foreach (static::$register as $module) {
-            $handlersMap = array_merge($handlersMap, $getHandlers($module, SCOPE::APP()));
+        foreach (static::$register as $moduleInContext) {
+            [$context, $module] = explode('\\', $moduleInContext);
+            $handlersMap = array_merge($handlersMap, $getHandlers($context, $module, SCOPE::APP()));
         }
 
         return $handlersMap;
@@ -147,8 +157,8 @@ class ModulesRegister
 
     public static function registerListeners(EmitterInterface $emitter, ContainerInterface $container): void
     {
-        $registerListeners = function (string $module, Scope $scope) use ($emitter, $container): void {
-            $className = self::listenerClassname($module, $scope);
+        $registerListeners = function (string $context, string $module, Scope $scope) use ($emitter, $container): void {
+            $className = self::listenerClassname($context, $module, $scope);
 
             if (!class_exists($className)) {
                 return;
@@ -165,8 +175,8 @@ class ModulesRegister
     {
         $paths = [];
 
-        $registerEntities = function (string $module, Scope $scope) use (&$paths): void {
-            $entitiesPath = self::entitiesPath($module, $scope);
+        $registerEntities = function (string $context, string $module, Scope $scope) use (&$paths): void {
+            $entitiesPath = self::entitiesPath($context, $module, $scope);
 
             if (file_exists($entitiesPath)) {
                 $paths[] = $entitiesPath;
@@ -180,8 +190,8 @@ class ModulesRegister
 
     public static function registerAclData(Acl $acl): void
     {
-        $registerAcl = function (string $module, Scope $scope) use ($acl): void {
-            $className = self::aclClassname($module, $scope);
+        $registerAcl = function (string $context, string $module, Scope $scope) use ($acl): void {
+            $className = self::aclClassname($context, $module, $scope);
 
             if (!class_exists($className)) {
                 return;
@@ -196,8 +206,8 @@ class ModulesRegister
 
     public static function registerViews(Engine $templates): void
     {
-        $registerViews = function (string $module, Scope $scope) use ($templates): void {
-            $viewsPath = self::viewsPath($module, $scope);
+        $registerViews = function (string $context, string $module, Scope $scope) use ($templates): void {
+            $viewsPath = self::viewsPath($context, $module, $scope);
 
             if (file_exists($viewsPath)) {
                 $templates->addFolder(strtolower($module), $viewsPath);
@@ -211,8 +221,15 @@ class ModulesRegister
     {
         $config = $container->get('config');
 
-        $registerTranslations = function (string $module, Scope $scope) use ($translator, $config): void {
-            $translationsPath = self::translationsPath($module, $scope);
+        $registerTranslations = function (
+            string $context,
+            string $module,
+            Scope $scope
+        ) use (
+            $translator,
+            $config
+        ): void {
+            $translationsPath = self::translationsPath($context, $module, $scope);
 
             if (file_exists($translationsPath)) {
                 $rii = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($translationsPath));
@@ -240,90 +257,87 @@ class ModulesRegister
     private static function call(callable $function)
     {
         // system
-        foreach (self::$systemModules as $module) {
-            $function($module, Scope::SYSTEM());
+        foreach (self::$systemModules as $moduleInContext) {
+            [$context, $module] = explode('\\', $moduleInContext);
+
+            $function($context, $module, Scope::SYSTEM());
         }
 
         // app
-        foreach (static::$register as $module) {
-            $function($module, Scope::APP());
+        foreach (static::$register as $moduleInContext) {
+            [$context, $module] = explode('\\', $moduleInContext);
+
+            $function($context, $module, Scope::APP());
         }
     }
 
-    private static function getModuleInitClassName(string $module, Scope $scope): string
+    private static function getModuleNamespace(string $context, string $module, Scope $scope)
     {
         return $scope == SCOPE::APP()
-            ? "App\\{$module}\\{$module}Init"
-            : "System\Module\\{$module}\\{$module}Init";
+            ? "App\\{$context}\\{$module}"
+            : "System\Module\\{$context}\\{$module}";
     }
 
-    private static function routesClassname(string $module, Scope $scope): string
+    private static function getModulePath(string $context, string $module, Scope $scope)
     {
         return $scope == SCOPE::APP()
-            ? "App\\{$module}\UI\Http\Route\\{$module}Routes"
-            : "System\Module\\{$module}\UI\Http\Route\\{$module}Routes";
+            ? app_path() . $context . '/' . $module
+            : system_path() . 'Module/' . $context . '/' . $module;
     }
 
-    private static function commandsPath(string $module, Scope $scope): string
+    private static function getModuleInitClassName(string $context, string $module, Scope $scope): string
     {
-        return $scope == SCOPE::APP()
-            ? app_path() . $module . '/UI/Console/commands.php'
-            : system_path() . 'Module/' . $module . '/UI/Console/commands.php';
+        return self::getModuleNamespace($context, $module, $scope) . "\\{$module}Init";
     }
 
-    private static function definitionsPath(string $module, Scope $scope): string
+    private static function routesClassname(string $context, string $module, Scope $scope): string
     {
-        return $scope == SCOPE::APP()
-            ? app_path() . $module . '/Application/definitions.php'
-            : system_path() . 'Module/' . $module . '/Application/definitions.php';
+        return self::getModuleNamespace($context, $module, $scope) . "\UI\Http\Route\\{$module}Routes";
     }
 
-    protected static function configsPath(string $module, Scope $scope): string
+    private static function commandsPath(string $context, string $module, Scope $scope): string
     {
-        return $scope == SCOPE::APP()
-            ? app_path() . $module . '/Application/config'
-            : system_path() . 'Module/' . $module . '/Application/config';
+        return self::getModulePath($context, $module, $scope) . "/UI/Console/commands.php";
     }
 
-    private static function handlersMapPath(string $module, Scope $scope): string
+    private static function definitionsPath(string $context, string $module, Scope $scope): string
     {
-        return $scope == SCOPE::APP()
-            ? app_path() . $module . '/Application/handlers.php'
-            : system_path() . 'Module/' . $module . '/Application/handlers.php';
+        return self::getModulePath($context, $module, $scope) . "/Application/definitions.php";
     }
 
-    private static function listenerClassname(string $module, Scope $scope): string
+    protected static function configsPath(string $context, string $module, Scope $scope): string
     {
-        return $scope == SCOPE::APP()
-            ? "App\\{$module}\Application\Event\Register\\{$module}Listeners"
-            : "System\Module\\{$module}\Application\Event\Register\\{$module}Listeners";
+        return self::getModulePath($context, $module, $scope) . "/Application/config";
     }
 
-    private static function entitiesPath(string $module, Scope $scope): string
+    private static function handlersMapPath(string $context, string $module, Scope $scope): string
     {
-        return $scope == SCOPE::APP()
-            ? app_path() . $module . '/Infrastructure/Persistance/Doctrine/ORM/Metadata'
-            : system_path() . 'Module/' . $module . '/Infrastructure/Persistance/Doctrine/ORM/Metadata';
+        return self::getModulePath($context, $module, $scope) . "/Application/handlers.php";
     }
 
-    private static function aclClassname(string $module, Scope $scope): string
+    private static function listenerClassname(string $context, string $module, Scope $scope): string
     {
-        return $scope == SCOPE::APP()
-            ? "App\\{$module}\Application\Acl\\{$module}Acl"
-            : "System\Module\\{$module}\Application\Acl\\{$module}Acl";
+        return self::getModuleNamespace($context, $module, $scope) . "\Application\Event\Register\\{$module}Listeners";
     }
 
-    private static function viewsPath(string $module, Scope $scope): string
+    private static function entitiesPath(string $context, string $module, Scope $scope): string
     {
-        return $scope == SCOPE::APP()
-            ? app_path() . $module . '/UI/views'
-            : system_path() . 'Module/' . $module . '/UI/views';
+        return self::getModulePath($context, $module, $scope)
+            . "/Infrastructure/Persistance/Doctrine/ORM/Metadata";
     }
 
-    private static function translationsPath(string $module, Scope $scope): string
+    private static function aclClassname(string $context, string $module, Scope $scope): string
     {
-        return $scope == SCOPE::APP()
-            ? app_path() . $module . '/UI/trans'
-            : system_path() . 'Module/' . $module . '/UI/trans';
+        return self::getModuleNamespace($context, $module, $scope) . "\Application\Acl\\{$module}Acl";
+    }
+
+    private static function viewsPath(string $context, string $module, Scope $scope): string
+    {
+        return self::getModulePath($context, $module, $scope) . "/UI/views";
+    }
+
+    private static function translationsPath(string $context, string $module, Scope $scope): string
+    {
+        return self::getModulePath($context, $module, $scope) . "/UI/trans";
     }
 }

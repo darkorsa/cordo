@@ -9,8 +9,8 @@ use Bernard\Router\ClassNameRouter;
 use Bernard\Router\ContainerReceiverResolver;
 use System\Application\Event\EventDispatcherAdapter;
 use Symfony\Component\EventDispatcher\EventDispatcher;
-use App\Users\Application\Command\SendUserWelcomeMessage;
-use App\Users\Application\Command\Handler\SendUserWelcomeMessageHandler;
+use App\Backoffice\Users\Application\Command\SendUserWelcomeMessage;
+use App\Backoffice\Users\Application\Command\Handler\SendUserWelcomeMessageHandler;
 
 require __DIR__ . '/bootstrap/autoload.php';
 

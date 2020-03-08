@@ -1,0 +1,53 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Backoffice\Users\Application\Command\Handler;
+
+use App\Backoffice\Users\Domain\User;
+use League\Event\EmitterInterface;
+use App\Backoffice\Users\Domain\UserRepository;
+use App\Backoffice\Users\Domain\Event\UserCreated;
+use App\Backoffice\Users\Application\Command\CreateNewUser;
+use App\Backoffice\Auth\Application\Service\AuthServiceInterface;
+
+class CreateNewUserHandler
+{
+    private $authService;
+
+    private $users;
+
+    private $emitter;
+
+    public function __construct(AuthServiceInterface $authService, UserRepository $users, EmitterInterface $emitter)
+    {
+        $this->authService = $authService;
+        $this->users = $users;
+        $this->emitter = $emitter;
+    }
+
+    public function __invoke(CreateNewUser $command): void
+    {
+        User::assertPasswordIsValid($command->password());
+
+        $password = $this->authService->hashPassword($command->password());
+
+        $user = new User(
+            $command->id(),
+            $command->email(),
+            $password,
+            $command->isActive(),
+            $command->createdAt(),
+            $command->updatedAt()
+        );
+
+        $this->users->add($user);
+
+        /**
+         * This will emit an event that would be put on a queue.
+         * Make sure you have Redis server installed and queue worker running in background
+         * (see Queues section in README.md file)
+         */
+        // $this->emitter->emit('users.created', new UserCreated($command->email()));
+    }
+}

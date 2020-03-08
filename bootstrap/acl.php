@@ -2,7 +2,7 @@
 
 use App\Register;
 use Laminas\Permissions\Acl\Acl;
-use System\Module\Auth\SharedKernel\Enum\SystemRole;
+use System\SharedKernel\Enum\SystemRole;
 use Laminas\Permissions\Acl\Role\GenericRole as Role;
 
 $acl = new Acl();

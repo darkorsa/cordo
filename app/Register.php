@@ -14,6 +14,7 @@ class Register extends ModulesRegister
      * @var array
      */
     protected static $register = [
-        'Users',
+        'Backoffice\Users',
+        'Backoffice\Auth',
     ];
 }
