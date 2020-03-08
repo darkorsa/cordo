@@ -18,7 +18,7 @@ $dbParams = [
     'driver'    => 'pdo_mysql',
 ];
 
-Type::addType('uuid_binary_ordered_time', 'Ramsey\Uuid\Doctrine\UuidBinaryOrderedTimeType');
+Type::addType('uuid_binary_ordered_time', 'System\SharedKernel\Uuid\Doctrine\UuidBinaryOrderedTimeType');
 
 $proxyDir = storage_path() . 'cache/doctrine/';
 
