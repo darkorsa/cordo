@@ -15,6 +15,11 @@ class UserCreated extends AbstractEvent
         $this->email = $email;
     }
 
+    public function getName()
+    {
+        return 'users.created';
+    }
+
     public function email(): string
     {
         return $this->email;

@@ -29,11 +29,8 @@ class UserCommandsController extends BaseController
         $params = (object) $params;
 
         $command = new CreateNewUser(
-            Uuid::uuid4()->toString(),
             (string) $params->email,
             (string) $params->password,
-            (int) false,
-            new DateTime(),
             new DateTime()
         );
 
@@ -60,9 +57,7 @@ class UserCommandsController extends BaseController
         $command = new UpdateUser(
             $user->id(),
             (string) $params->email,
-            $user->password(),
-            $user->isActive(),
-            $user->createdAt(),
+            (bool) $params->active,
             new DateTime()
         );
 

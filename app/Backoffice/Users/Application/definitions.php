@@ -1,6 +1,5 @@
 <?php
 
-use App\Backoffice\Auth\Application\Service\AuthService;
 use App\Backoffice\Users\Application\Service\UserQueryService;
 use App\Backoffice\Users\Application\Command\Handler\DeleteUserHandler;
 use App\Backoffice\Users\Application\Command\Handler\UpdateUserHandler;
@@ -11,7 +10,6 @@ use App\Backoffice\Users\Infrastructure\Persistance\Doctrine\ORM\UserDoctrineRep
 return [
     CreateNewUserHandler::class => DI\create()
         ->constructor(
-            DI\get(AuthService::class),
             DI\get(UserDoctrineRepository::class),
             DI\get('emitter')
         ),

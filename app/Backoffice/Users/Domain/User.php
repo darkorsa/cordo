@@ -5,16 +5,11 @@ declare(strict_types=1);
 namespace App\Backoffice\Users\Domain;
 
 use DateTime;
-use Assert\Assert;
+use System\Domain\Aggregate\AggregateRoot;
+use App\Backoffice\Users\Domain\Event\UserCreated;
 
-class User
+class User extends AggregateRoot
 {
-    public const EMAIL_MAX_LENGTH = 50;
-
-    public const PASSWORD_MIN_LENGTH = 6;
-
-    public const PASSWORD_MAX_LENGTH = 18;
-
     private $id;
 
     private $email;
@@ -28,48 +23,58 @@ class User
     private $updatedAt;
 
     public function __construct(
-        string $id,
-        string $email,
-        string $password,
-        int $isActive,
+        UserId $id,
+        UserEmail $email,
+        UserPasswordHash $password,
+        UserActive $isActive,
         DateTime $createdAt,
         DateTime $updatedAt
     ) {
-        // id
-        Assert::that($id)
-            ->notEmpty()
-            ->uuid();
-        // email
-        Assert::that($email)
-            ->notEmpty()
-            ->maxLength(static::EMAIL_MAX_LENGTH)
-            ->email();
-        // password
-        Assert::that($password)->satisfy(static function ($password) {
-            $info = password_get_info($password);
-            if (!in_array($info['algoName'], ['argon2i', 'argon2id'])) {
-                return false;
-            }
-            return true;
-        });
-        // isActive
-        Assert::that($isActive)
-            ->integer()
-            ->between(0, 1);
-
-        $this->id = $id;
-        $this->email = $email;
-        $this->password = $password;
-        $this->isActive = $isActive;
+        $this->id = $id->value();
+        $this->email = $email->value();
+        $this->password = $password->value();
+        $this->isActive = $isActive->value();
         $this->createdAt = $createdAt;
         $this->updatedAt = $updatedAt;
     }
 
-    public static function assertPasswordIsValid(string $password): void
+    public function created()
     {
-        Assert::that($password)
-            ->notEmpty()
-            ->minLength(static::PASSWORD_MIN_LENGTH)
-            ->maxLength(static::PASSWORD_MAX_LENGTH);
+        /**
+         * This will emit an event that would be put on a queue.
+         * Make sure you have Redis server installed and queue worker running in background
+         * (see Queues section in README.md file)
+         */
+        $this->record(new UserCreated($this->email));
+    }
+
+    public function id(): string
+    {
+        return $this->id;
+    }
+
+    public function email(): string
+    {
+        return $this->email;
+    }
+
+    public function password(): string
+    {
+        return $this->password;
+    }
+
+    public function active(): bool
+    {
+        return (bool) $this->isActive;
+    }
+
+    public function createdAt(): DateTime
+    {
+        return $this->createdAt;
+    }
+
+    public function updatedAt(): DateTime
+    {
+        return $this->updatedAt;
     }
 }

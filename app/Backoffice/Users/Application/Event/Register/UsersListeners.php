@@ -13,8 +13,8 @@ class UsersListeners extends ListenersRegister
     public function register(): void
     {
         $this->emitter->addListener(
-            "{$this->resource}.created",
-            function ($event, UserCreated $userCreated) {
+            "users.created",
+            function (UserCreated $userCreated) {
                 (new UserCreatedListener($this->container))->handle($userCreated);
             }
         );

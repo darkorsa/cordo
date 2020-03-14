@@ -4,10 +4,14 @@ declare(strict_types=1);
 
 namespace App\Backoffice\Users\Application\Command\Handler;
 
-use App\Backoffice\Users\Domain\User;
 use League\Event\EmitterInterface;
+use App\Backoffice\Users\Domain\User;
+use App\Backoffice\Users\Domain\UserEmail;
+use App\Backoffice\Users\Domain\UserActive;
+use App\Backoffice\Users\Domain\UserPasswordHash;
 use App\Backoffice\Users\Domain\UserRepository;
 use App\Backoffice\Users\Application\Command\UpdateUser;
+use App\Backoffice\Users\Domain\UserId;
 
 class UpdateUserHandler
 {
@@ -23,12 +27,14 @@ class UpdateUserHandler
 
     public function __invoke(UpdateUser $command): void
     {
+        $user = $this->users->find($command->id());
+        
         $user = new User(
-            $command->id(),
-            $command->email(),
-            $command->password(),
-            $command->isActive(),
-            $command->createdAt(),
+            new UserId($command->id()),
+            new UserEmail($command->email()),
+            new UserPasswordHash($user->password()),
+            new UserActive($command->isActive()),
+            $user->createdAt(),
             $command->updatedAt()
         );
 

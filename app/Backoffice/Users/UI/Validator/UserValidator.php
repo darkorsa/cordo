@@ -2,9 +2,10 @@
 
 namespace App\Backoffice\Users\UI\Validator;
 
-use App\Backoffice\Users\Domain\User;
 use Particle\Validator\Validator;
 use Particle\Validator\ValidationResult;
+use App\Backoffice\Users\Domain\UserEmail;
+use App\Backoffice\Users\Domain\UserPassword;
 use Particle\Validator\Exception\InvalidValueException;
 use System\Application\Exception\ResourceNotFoundException;
 
@@ -19,11 +20,13 @@ trait UserValidator
 
         $validator = new Validator();
         if ($validatePassword) {
-            $validator->required('password')->lengthBetween(User::PASSWORD_MIN_LENGTH, User::PASSWORD_MAX_LENGTH);
+            $validator
+                ->required('password')
+                ->lengthBetween(UserPassword::PASSWORD_MIN_LENGTH, UserPassword::PASSWORD_MAX_LENGTH);
         }
 
         $validator->required('email')
-            ->lessThan(User::EMAIL_MAX_LENGTH)
+            ->lessThan(UserEmail::EMAIL_MAX_LENGTH)
             ->email()
             ->callback(static function ($value) use ($service, $updateMode) {
                 try {
