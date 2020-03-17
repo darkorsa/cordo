@@ -4,7 +4,7 @@ namespace App\Backoffice\Users\UI\Validator;
 
 use Particle\Validator\Rule\InArray;
 use App\Backoffice\Users\Domain\UserEmail;
-use System\UI\Http\Validator\AbstractValidator;
+use System\UI\Validator\AbstractValidator;
 
 class UpdateUserValidator extends AbstractValidator
 {

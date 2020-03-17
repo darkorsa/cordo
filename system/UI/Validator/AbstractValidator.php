@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace System\UI\Http\Validator;
+namespace System\UI\Validator;
 
 use Exception;
 use Particle\Validator\Validator;

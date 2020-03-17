@@ -4,7 +4,7 @@ namespace App\Backoffice\Users\UI\Validator;
 
 use App\Backoffice\Users\Domain\UserEmail;
 use App\Backoffice\Users\Domain\UserPassword;
-use System\UI\Http\Validator\AbstractValidator;
+use System\UI\Validator\AbstractValidator;
 
 class NewUserValidator extends AbstractValidator
 {
