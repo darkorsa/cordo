@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace System\UI\Http\Response;
 
 use Psr\Http\Message\ResponseInterface;
@@ -25,7 +27,7 @@ class JsonResponse implements \System\UI\ResponseInterface
             header("{$key}:{" . current($val) . "}");
         }
 
-        $body = $this->response->getBody();
+        $body = (string) $this->response->getBody();
 
         echo $this->isJson($body) ? $body : json_encode($body);
 

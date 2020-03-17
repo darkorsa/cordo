@@ -6,24 +6,26 @@ use DateTime;
 use Ramsey\Uuid\Uuid;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use System\UI\Http\Controller\BaseController;
+use App\Backoffice\Users\UI\Validator\NewUserValidator;
 use App\Backoffice\Users\Application\Command\DeleteUser;
 use App\Backoffice\Users\Application\Command\UpdateUser;
-use System\UI\Http\Controller\BaseController;
+use App\Backoffice\Users\UI\Validator\UpdateUserValidator;
 use App\Backoffice\Users\Application\Command\CreateNewUser;
-use App\Backoffice\Users\UI\Validator\UserValidator;
+use App\Backoffice\Users\UI\Validator\EmailExistsValidation;
 
 class UserCommandsController extends BaseController
 {
-    use UserValidator;
-
     public function createAction(ServerRequestInterface $request): ResponseInterface
     {
         $params = (array) $request->getParsedBody();
+        $service = $this->container->get('users.query.service');
 
-        $result = $this->validateNewUser($params);
+        $validator = new NewUserValidator($params);
+        $validator->addCallbackValidator('email', new EmailExistsValidation($service));
 
-        if (!$result->isValid()) {
-            return $this->respondBadRequestError($result->getMessages());
+        if (!$validator->isValid()) {
+            return $this->respondBadRequestError($validator->messages());
         }
 
         $params = (object) $params;
@@ -44,10 +46,10 @@ class UserCommandsController extends BaseController
         $userId = $request->getAttribute('user_id');
         $params = (array) $request->getParsedBody();
 
-        $result = $this->validateUserUpdate($params);
+        $validator = new UpdateUserValidator($params);
 
-        if (!$result->isValid()) {
-            return $this->respondBadRequestError($result->getMessages());
+        if (!$validator->isValid()) {
+            return $this->respondBadRequestError($validator->messages());
         }
 
         $user = $this->container->get('users.query.service')->getOneById($userId);

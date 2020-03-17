@@ -6,19 +6,18 @@ namespace App\Backoffice\Users\UI\Console\Command;
 
 use DateTime;
 use Ramsey\Uuid\Uuid;
-use App\Backoffice\Users\UI\Validator\UserValidator;
-use App\Backoffice\Users\Application\Command\CreateNewUser;
 use Symfony\Component\Console\Input\InputOption;
 use System\UI\Console\Command\BaseConsoleCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Output\OutputInterface;
+use App\Backoffice\Users\UI\Validator\NewUserValidator;
+use App\Backoffice\Users\Application\Command\CreateNewUser;
+use App\Backoffice\Users\UI\Validator\EmailExistsValidation;
 
 class CreateNewUserConsoleCommand extends BaseConsoleCommand
 {
-    use UserValidator;
-
     protected static $defaultName = 'users:create-user';
 
     protected function configure()
@@ -38,15 +37,17 @@ class CreateNewUserConsoleCommand extends BaseConsoleCommand
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $params = $input->getArguments();
+        $service = $this->container->get('users.query.service');
 
-        $result = $this->validateNewUser($params);
+        $validator = new NewUserValidator($params);
+        $validator->addCallbackValidator('email', new EmailExistsValidation($service));
 
-        if (!$result->isValid()) {
+        if (!$validator->isValid()) {
             array_map(static function ($message) use ($output) {
                 $output->write('<error>');
                 $output->writeln($message);
                 $output->write('</error>');
-            }, $result->getMessages());
+            }, $validator->messages());
             exit;
         }
 
