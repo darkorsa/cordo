@@ -15,11 +15,6 @@ function config_path(): string
     return __DIR__ . '/../config/';
 }
 
-function system_path(): string
-{
-    return __DIR__ . '/../system/';
-}
-
 function resources_path(): string
 {
     return __DIR__ . '/../resources/';

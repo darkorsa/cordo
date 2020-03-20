@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "41e6705ce5240d6ff4ce30b519b20010",
+    "content-hash": "abce06daff1beb4d61f87dad68aba03d",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -63,40 +63,40 @@
         },
         {
             "name": "bernard/bernard",
-            "version": "dev-master",
+            "version": "1.0.0-alpha9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bernardphp/bernard.git",
-                "reference": "fee41761e8a22dcec9e535d530ccf52204b64022"
+                "reference": "1144b4dd9b87f22091dfceabb91d74f295ade034"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bernardphp/bernard/zipball/fee41761e8a22dcec9e535d530ccf52204b64022",
-                "reference": "fee41761e8a22dcec9e535d530ccf52204b64022",
+                "url": "https://api.github.com/repos/bernardphp/bernard/zipball/1144b4dd9b87f22091dfceabb91d74f295ade034",
+                "reference": "1144b4dd9b87f22091dfceabb91d74f295ade034",
                 "shasum": ""
             },
             "require": {
-                "beberlei/assert": "^2.1 || ^3.0",
-                "bernard/normalt": "^1.0",
+                "beberlei/assert": "~2.1",
+                "bernard/normalt": "~1.0",
                 "php": "^5.6 || ^7.0",
-                "symfony/event-dispatcher": "^3.0 || ^4.0"
+                "symfony/event-dispatcher": "^2.7|^3.0|^4.0"
             },
             "require-dev": {
-                "aws/aws-sdk-php": "^3.0",
-                "doctrine/dbal": "^2.5",
-                "doctrine/instantiator": "^1.0.5",
-                "iron-io/iron_mq": "^4.0",
-                "leanphp/phpspec-code-coverage": "^3.0 || ^4.0",
-                "pda/pheanstalk": "^3.0",
-                "php-amqplib/php-amqplib": "^2.5",
-                "phpspec/phpspec": "^3.0 || ^4.0",
-                "phpunit/phpunit": "^5.7 || ^6.0 || ^7.0",
-                "predis/predis": "^1.0",
-                "psr/container": "^1.0",
-                "psr/log": "^1.0",
+                "aws/aws-sdk-php": "~2.4|~3.0",
+                "doctrine/dbal": "~2.3",
+                "iron-io/iron_mq": "~4.0",
+                "league/container": "~2.3",
+                "pda/pheanstalk": "~3.0",
+                "php-amqplib/php-amqplib": "~2.5",
+                "phpspec/phpspec": "^2.4",
+                "phpunit/phpunit": "^5.5|^6.0",
+                "pimple/pimple": "~1.0",
+                "predis/predis": "~0.8",
+                "psr/log": "~1.0",
                 "queue-interop/amqp-interop": "^0.6",
                 "queue-interop/queue-interop": "^0.6",
-                "symfony/console": "^3.0 || ^4.0"
+                "symfony/console": "^2.7|^3.0|^4.0",
+                "symfony/dependency-injection": "^2.7|^3.0|^4.0"
             },
             "suggest": {
                 "aws/aws-sdk-php": "Allow sending messages to AWS services like Simple Queue Service",
@@ -132,7 +132,7 @@
                 "message queue",
                 "queue"
             ],
-            "time": "2019-10-20T16:07:51+00:00"
+            "time": "2018-02-13T07:52:58+00:00"
         },
         {
             "name": "bernard/normalt",
@@ -267,6 +267,101 @@
             "homepage": "https://github.com/container-interop/container-interop",
             "abandoned": "psr/container",
             "time": "2017-02-14T19:40:03+00:00"
+        },
+        {
+            "name": "darkorsa/cordo-core",
+            "version": "0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/darkorsa/cordo-core.git",
+                "reference": "fd714e74cfa2219fe50da7233d2c5684d3de209f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/darkorsa/cordo-core/zipball/fd714e74cfa2219fe50da7233d2c5684d3de209f",
+                "reference": "fd714e74cfa2219fe50da7233d2c5684d3de209f",
+                "shasum": ""
+            },
+            "require": {
+                "beberlei/assert": "^2.6",
+                "bernard/bernard": "^1.0@dev",
+                "bshaffer/oauth2-server-php": "^1.10",
+                "doctrine/collections": "^1.6",
+                "doctrine/dbal": "^2.9",
+                "doctrine/orm": "~2.6.6",
+                "doctrine/persistence": "~1.2.0",
+                "ext-redis": "^5.0",
+                "filp/whoops": "^2.3",
+                "guzzlehttp/psr7": "^1.5",
+                "hassankhan/config": "^2.0",
+                "laminas/laminas-mail": "^2.10",
+                "laminas/laminas-permissions-acl": "^2.7",
+                "laminas/laminas-servicemanager": "^3.4",
+                "league/fractal": "^0.17.0",
+                "league/plates": "^3.3",
+                "league/tactician": "^1.0",
+                "league/tactician-bernard": "^0.6.0",
+                "league/tactician-command-events": "^0.6.0",
+                "league/tactician-container": "^2.0",
+                "league/tactician-doctrine": "^1.1",
+                "league/tactician-logger": "^0.10.0",
+                "monolog/monolog": "^1.24",
+                "myclabs/php-enum": "^1.7",
+                "nikic/fast-route": "^1.3",
+                "particle/validator": "^2.3",
+                "php-di/php-di": "^6.0",
+                "psr/http-server-middleware": "^1.0",
+                "ramsey/uuid": "^3.8",
+                "ramsey/uuid-doctrine": "^1.5",
+                "relay/relay": "2.x@dev",
+                "sensiolabs/security-checker": "^6.0",
+                "symfony/console": "^4.2",
+                "symfony/dotenv": "^4.2",
+                "symfony/property-access": "^4.2",
+                "symfony/translation": "^5.0",
+                "symfony/yaml": "^5.0"
+            },
+            "require-dev": {
+                "nunomaduro/phpinsights": "^1.7",
+                "phpstan/phpstan": "^0.11.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Cordo\\Core\\": "src"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "Tests\\": "tests"
+                }
+            },
+            "scripts": {
+                "test": [
+                    "phpunit"
+                ],
+                "analyse": [
+                    "phpstan analyse -l max -c phpstan.neon src tests"
+                ],
+                "insights": [
+                    "phpinsights -v"
+                ],
+                "check-style": [
+                    "phpcs -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 src/"
+                ],
+                "fix-style": [
+                    "phpcbf -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 src/"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "Core libraries for Cordo microframework",
+            "support": {
+                "source": "https://github.com/darkorsa/cordo-core/tree/master",
+                "issues": "https://github.com/darkorsa/cordo-core/issues"
+            },
+            "time": "2020-03-20T13:18:09+00:00"
         },
         {
             "name": "doctrine/annotations",
@@ -3263,7 +3358,7 @@
         },
         {
             "name": "relay/relay",
-            "version": "2.x-dev",
+            "version": "2.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/relayphp/Relay.Relay.git",
@@ -6928,12 +7023,9 @@
         }
     ],
     "aliases": [],
-    "minimum-stability": "stable",
-    "stability-flags": {
-        "bernard/bernard": 20,
-        "relay/relay": 20
-    },
-    "prefer-stable": false,
+    "minimum-stability": "dev",
+    "stability-flags": [],
+    "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
         "ext-redis": "^5.0"

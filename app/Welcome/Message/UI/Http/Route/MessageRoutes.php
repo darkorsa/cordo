@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Cordo\Core\Module\Welcome\Message\UI\Http\Route;
+namespace App\Welcome\Message\UI\Http\Route;
 
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\ServerRequestInterface;
