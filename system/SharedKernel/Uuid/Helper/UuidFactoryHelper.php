@@ -1,6 +1,6 @@
 <?php
 
-namespace System\SharedKernel\Uuid\Helper;
+namespace Cordo\Core\SharedKernel\Uuid\Helper;
 
 use Ramsey\Uuid\FeatureSet;
 use Ramsey\Uuid\UuidFactory;

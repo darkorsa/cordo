@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Backoffice\Auth\UI\Http\Route;
 
-use System\Application\Service\Register\RoutesRegister;
+use Cordo\Core\Application\Service\Register\RoutesRegister;
 
 class AuthRoutes extends RoutesRegister
 {

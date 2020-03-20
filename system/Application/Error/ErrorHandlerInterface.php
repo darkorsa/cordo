@@ -1,6 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace System\Application\Error;
+declare(strict_types=1);
+
+namespace Cordo\Core\Application\Error;
 
 use Throwable;
 

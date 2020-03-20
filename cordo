@@ -8,8 +8,8 @@
 use App\Register;
 use SensioLabs\Security\SecurityChecker;
 use Symfony\Component\Console\Application;
-use System\UI\Console\Command\InitCommand;
-use System\UI\Console\Command\ModuleBuilderCommand;
+use Cordo\Core\UI\Console\Command\InitCommand;
+use Cordo\Core\UI\Console\Command\ModuleBuilderCommand;
 use Doctrine\DBAL\Tools\Console\Command\ImportCommand;
 use SensioLabs\Security\Command\SecurityCheckerCommand;
 

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace System\Application\Error;
+namespace Cordo\Core\Application\Error;
 
 use Exception;
 use Throwable;

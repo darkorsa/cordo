@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Backoffice\Users\Application\Event\Register;
 
 use App\Backoffice\Users\Domain\Event\UserCreated;
-use System\Application\Service\Register\ListenersRegister;
+use Cordo\Core\Application\Service\Register\ListenersRegister;
 use App\Backoffice\Users\Application\Event\Listener\UserCreatedListener;
 
 class UsersListeners extends ListenersRegister

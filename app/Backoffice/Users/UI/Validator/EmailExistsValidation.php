@@ -4,7 +4,7 @@ namespace App\Backoffice\Users\UI\Validator;
 
 use App\Backoffice\Users\Application\Service\UserQueryService;
 use Particle\Validator\Exception\InvalidValueException;
-use System\Application\Exception\ResourceNotFoundException;
+use Cordo\Core\Application\Exception\ResourceNotFoundException;
 
 class EmailExistsValidation
 {

@@ -8,7 +8,7 @@ use Laminas\Mail\Message;
 use League\Plates\Engine;
 use Symfony\Component\Translation\Translator;
 use App\Backoffice\Users\Application\Command\SendUserWelcomeMessage;
-use System\Infractructure\Mailer\ZendMail\MailerInterface;
+use Cordo\Core\Infractructure\Mailer\ZendMail\MailerInterface;
 
 class SendUserWelcomeMessageHandler
 {

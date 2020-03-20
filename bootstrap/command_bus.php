@@ -6,7 +6,7 @@ use Bernard\Producer;
 use League\Tactician\CommandBus;
 use Monolog\Handler\StreamHandler;
 use League\Tactician\Logger\LoggerMiddleware;
-use System\Application\Queue\QueueMiddleware;
+use Cordo\Core\Application\Queue\QueueMiddleware;
 use League\Tactician\Plugins\LockingMiddleware;
 use League\Tactician\Container\ContainerLocator;
 use League\Tactician\CommandEvents\EventMiddleware;

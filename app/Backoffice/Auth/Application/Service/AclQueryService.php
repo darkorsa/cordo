@@ -7,10 +7,10 @@ namespace App\Backoffice\Auth\Application\Service;
 use Laminas\Permissions\Acl\Acl;
 use App\Backoffice\Auth\Application\Query\AclView;
 use App\Backoffice\Auth\Application\Query\AclQuery;
-use System\SharedKernel\Enum\SystemRole;
+use Cordo\Core\SharedKernel\Enum\SystemRole;
 use App\Backoffice\Auth\Application\Query\AclFilter;
 use Doctrine\Common\Collections\ArrayCollection;
-use System\Application\Exception\ResourceNotFoundException;
+use Cordo\Core\Application\Exception\ResourceNotFoundException;
 
 class AclQueryService
 {

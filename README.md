@@ -239,7 +239,7 @@ you can find pre-prepared archive in `app/resources/module` folder with typical 
 
 ### Routes
 
-Route definitons should be located at `app/[PackageName]/UI/Http/Route/[PackageName]Routes.php` file. Routes loader class should inherit from abstract class `System\Application\Service\Register\RoutesRegister`.
+Route definitons should be located at `app/[PackageName]/UI/Http/Route/[PackageName]Routes.php` file. Routes loader class should inherit from abstract class `Cordo\Core\Application\Service\Register\RoutesRegister`.
 
 Routing is done with use of [FastRoute](https://github.com/nikic/FastRoute) but modified allowing to use per route `Middlewares`.
 
@@ -293,7 +293,7 @@ Command bus is configured to lock each handler in seperate transaction, it also 
 
 In contrast to the Command -> Handler mapping where for one *Command* there can be one and only one *Handler* you can have several listeners for a single emmited event.
 
-Your listeners definitions should be located at: `app/[PackageName]/Event/Loader/[PackageName]Listeners.php`. Events loaders class should extend `System\Application\Service\Register\ListenersRegister`.
+Your listeners definitions should be located at: `app/[PackageName]/Event/Loader/[PackageName]Listeners.php`. Events loaders class should extend `Cordo\Core\Application\Service\Register\ListenersRegister`.
 
 Here is how you can emit an event:
 
@@ -336,7 +336,7 @@ Bernard supports several different drivers:
 
 This framework is configured with Redis Extention driver by default. Driver declaration is placed in `bootstrap/queue_factory.php` and can be changed there.
 
-If you want to make your Command to be queued just make it implementing `League\Tactician\Bernard\QueueableCommand` interface or just extend `System\Application\Queue\AbstractMessage` class.
+If you want to make your Command to be queued just make it implementing `League\Tactician\Bernard\QueueableCommand` interface or just extend `Cordo\Core\Application\Queue\AbstractMessage` class.
 
 To launch background process that will process queued commands run in the console:
 
@@ -356,7 +356,7 @@ If you'd like to change default credentials check behavior you can do it here: `
 
 ### ACL
 
-For the purpose of Authorization [Zend ACL](https://docs.zendframework.com/zend-permissions-acl/usage/) has been used. ACL roles, resources, permissions cen be defined seperately in each package in `app/[PackageName]/Application/Acl/[PackageName]Acl.php` which should extend `System\Application\Service\Register\AclRegister`.
+For the purpose of Authorization [Zend ACL](https://docs.zendframework.com/zend-permissions-acl/usage/) has been used. ACL roles, resources, permissions cen be defined seperately in each package in `app/[PackageName]/Application/Acl/[PackageName]Acl.php` which should extend `Cordo\Core\Application\Service\Register\AclRegister`.
 
 In `Auth` package that is shipped with this framework there are CRUD actions prepared for users ACL rules.
 

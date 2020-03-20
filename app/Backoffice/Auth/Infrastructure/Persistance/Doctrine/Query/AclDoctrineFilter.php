@@ -4,7 +4,7 @@ namespace App\Backoffice\Auth\Infrastructure\Persistance\Doctrine\Query;
 
 use Doctrine\DBAL\Query\QueryBuilder;
 use App\Backoffice\Auth\Application\Query\AclFilter;
-use System\Infractructure\Persistance\Doctrine\Query\QueryFilter;
+use Cordo\Core\Infractructure\Persistance\Doctrine\Query\QueryFilter;
 
 class AclDoctrineFilter implements QueryFilter
 {

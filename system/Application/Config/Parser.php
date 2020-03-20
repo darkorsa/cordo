@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace System\Application\Config;
+namespace Cordo\Core\Application\Config;
 
 use Exception;
 use Noodlehaus\Exception\ParseException;

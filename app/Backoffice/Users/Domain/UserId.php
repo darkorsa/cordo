@@ -2,9 +2,8 @@
 
 namespace App\Backoffice\Users\Domain;
 
-use System\Domain\ValueObject\Uuid;
+use Cordo\Core\Domain\ValueObject\Uuid;
 
 class UserId extends Uuid
 {
-    
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace System\Application\Event\Listener;
+namespace Cordo\Core\Application\Event\Listener;
 
 use League\Event\EventInterface;
 use League\Event\ListenerInterface;

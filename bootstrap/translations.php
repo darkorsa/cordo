@@ -1,7 +1,7 @@
 <?php
 
 use App\Register;
-use System\UI\Locale;
+use Cordo\Core\UI\Locale;
 use Symfony\Component\Translation\Translator;
 use Symfony\Component\Translation\Loader\YamlFileLoader;
 

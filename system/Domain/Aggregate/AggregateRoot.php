@@ -1,6 +1,6 @@
 <?php
 
-namespace System\Domain\Aggregate;
+namespace Cordo\Core\Domain\Aggregate;
 
 use League\Event\EventInterface;
 

@@ -7,7 +7,7 @@ namespace App\Backoffice\Users\UI\Console\Command;
 use DateTime;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\Console\Input\InputOption;
-use System\UI\Console\Command\BaseConsoleCommand;
+use Cordo\Core\UI\Console\Command\BaseConsoleCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputDefinition;

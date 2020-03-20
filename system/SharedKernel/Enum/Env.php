@@ -1,6 +1,6 @@
 <?php
 
-namespace System\SharedKernel\Enum;
+namespace Cordo\Core\SharedKernel\Enum;
 
 use MyCLabs\Enum\Enum;
 

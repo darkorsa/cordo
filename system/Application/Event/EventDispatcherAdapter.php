@@ -1,6 +1,6 @@
 <?php
 
-namespace System\Application\Event;
+namespace Cordo\Core\Application\Event;
 
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;

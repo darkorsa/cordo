@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace System\Module\Welcome\Message\UI\Http\Route;
+namespace Cordo\Core\Module\Welcome\Message\UI\Http\Route;
 
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\ServerRequestInterface;
-use System\Application\Service\Register\RoutesRegister;
+use Cordo\Core\Application\Service\Register\RoutesRegister;
 
 class MessageRoutes extends RoutesRegister
 {

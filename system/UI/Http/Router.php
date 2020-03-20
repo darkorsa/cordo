@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace System\UI\Http;
+namespace Cordo\Core\UI\Http;
 
 use stdClass;
 use Relay\Relay;

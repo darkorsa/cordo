@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace System\Domain\ValueObject;
+namespace Cordo\Core\Domain\ValueObject;
 
 use Assert\Assert;
 use Ramsey\Uuid\Uuid as RamseyUuid;

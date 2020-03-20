@@ -4,11 +4,11 @@ use App\Register;
 use Ramsey\Uuid\Uuid;
 use DI\ContainerBuilder;
 use League\Plates\Engine;
-use System\SharedKernel\Enum\Env;
+use Cordo\Core\SharedKernel\Enum\Env;
 use Symfony\Component\Dotenv\Dotenv;
 
-use System\Infractructure\Mailer\ZendMail\MailerFactory;
-use System\SharedKernel\Uuid\Helper\UuidFactoryHelper;
+use Cordo\Core\Infractructure\Mailer\ZendMail\MailerFactory;
+use Cordo\Core\SharedKernel\Uuid\Helper\UuidFactoryHelper;
 
 $dotenv = new Dotenv();
 $dotenv->load(root_path() . '.env');

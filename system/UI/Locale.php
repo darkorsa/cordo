@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace System\UI;
+namespace Cordo\Core\UI;
 
 use Psr\Container\ContainerInterface;
 

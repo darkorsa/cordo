@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace System\UI\Transformer;
+namespace Cordo\Core\UI\Transformer;
 
 use Exception;
 use League\Fractal\Manager;

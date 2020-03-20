@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace System\Application\Service\Register;
+namespace Cordo\Core\Application\Service\Register;
 
-use System\UI\Http\Router;
+use Cordo\Core\UI\Http\Router;
 use Psr\Container\ContainerInterface;
 
 abstract class RoutesRegister

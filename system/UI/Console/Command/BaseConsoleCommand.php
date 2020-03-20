@@ -1,6 +1,6 @@
 <?php
 
-namespace System\UI\Console\Command;
+namespace Cordo\Core\UI\Console\Command;
 
 use Exception;
 use Psr\Container\ContainerInterface;

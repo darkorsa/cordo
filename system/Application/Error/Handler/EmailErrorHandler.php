@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace System\Application\Error\Handler;
+namespace Cordo\Core\Application\Error\Handler;
 
 use Throwable;
 use Laminas\Mail\Message;
-use System\Application\Error\ErrorHandlerInterface;
-use System\Infractructure\Mailer\ZendMail\MailerFactory;
+use Cordo\Core\Application\Error\ErrorHandlerInterface;
+use Cordo\Core\Infractructure\Mailer\ZendMail\MailerFactory;
 
 class EmailErrorHandler implements ErrorHandlerInterface
 {

@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace System\Application\Service\Register;
+namespace Cordo\Core\Application\Service\Register;
 
 use DI\Container;
 use Noodlehaus\Config;
 use League\Plates\Engine;
-use System\UI\Http\Router;
+use Cordo\Core\UI\Http\Router;
 use Laminas\Permissions\Acl\Acl;
 use RecursiveIteratorIterator;
 use RecursiveDirectoryIterator;
 use League\Event\EmitterInterface;
-use System\SharedKernel\Enum\Scope;
+use Cordo\Core\SharedKernel\Enum\Scope;
 use Psr\Container\ContainerInterface;
-use System\Application\Config\Parser;
+use Cordo\Core\Application\Config\Parser;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Translation\Translator;
 
@@ -275,7 +275,7 @@ class ModulesRegister
     {
         return $scope == SCOPE::APP()
             ? "App\\{$context}\\{$module}"
-            : "System\Module\\{$context}\\{$module}";
+            : "Cordo\Core\Module\\{$context}\\{$module}";
     }
 
     private static function getModulePath(string $context, string $module, Scope $scope)

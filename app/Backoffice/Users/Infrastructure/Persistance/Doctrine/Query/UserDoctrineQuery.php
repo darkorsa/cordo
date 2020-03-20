@@ -7,7 +7,7 @@ namespace App\Backoffice\Users\Infrastructure\Persistance\Doctrine\Query;
 use App\Backoffice\Users\Application\Query\UserView;
 use App\Backoffice\Users\Application\Query\UserFilter;
 use Doctrine\Common\Collections\ArrayCollection;
-use System\Infractructure\Persistance\Doctrine\Query\BaseQuery;
+use Cordo\Core\Infractructure\Persistance\Doctrine\Query\BaseQuery;
 use App\Backoffice\Users\Application\Query\UserQuery;
 
 class UserDoctrineQuery extends BaseQuery implements UserQuery

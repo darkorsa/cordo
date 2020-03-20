@@ -3,18 +3,18 @@
 use Noodlehaus\Config;
 use League\Event\Emitter;
 use League\Plates\Engine;
-use System\UI\Http\Router;
+use Cordo\Core\UI\Http\Router;
 use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManager;
 use League\Event\EmitterInterface;
 use Psr\Container\ContainerInterface;
-use System\Application\Config\Parser;
+use Cordo\Core\Application\Config\Parser;
 use Psr\Http\Message\ServerRequestInterface;
 use Symfony\Component\Translation\Translator;
-use System\UI\Transformer\TransformerManager;
-use System\Application\Error\ErrorReporterInterface;
-use System\UI\Transformer\TransformerManagerInterface;
-use System\Infractructure\Mailer\ZendMail\MailerInterface;
+use Cordo\Core\UI\Transformer\TransformerManager;
+use Cordo\Core\Application\Error\ErrorReporterInterface;
+use Cordo\Core\UI\Transformer\TransformerManagerInterface;
+use Cordo\Core\Infractructure\Mailer\ZendMail\MailerInterface;
 
 return [
     'config'    => DI\factory(static function () {

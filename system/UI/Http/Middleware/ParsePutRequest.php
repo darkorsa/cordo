@@ -1,6 +1,6 @@
 <?php
 
-namespace System\UI\Http\Middleware;
+namespace Cordo\Core\UI\Http\Middleware;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Server\MiddlewareInterface;

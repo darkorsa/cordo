@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Backoffice\Users\Domain;
 
 use DateTime;
-use System\Domain\Aggregate\AggregateRoot;
+use Cordo\Core\Domain\Aggregate\AggregateRoot;
 use App\Backoffice\Users\Domain\Event\UserCreated;
 
 class User extends AggregateRoot

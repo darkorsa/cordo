@@ -1,6 +1,6 @@
 <?php
 
-namespace System\Domain\ValueObject;
+namespace Cordo\Core\Domain\ValueObject;
 
 abstract class BooleanValueObject
 {

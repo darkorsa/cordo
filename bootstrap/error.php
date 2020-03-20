@@ -11,10 +11,10 @@ use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 use Whoops\Handler\PlainTextHandler;
 use Whoops\Handler\PrettyPageHandler;
-use System\Application\Error\ErrorReporter;
-use System\Application\Error\Handler\EmailErrorHandler;
-use System\Application\Error\Handler\LoggerErrorHandler;
-use System\Application\Error\Handler\PrettyErrorHandler;
+use Cordo\Core\Application\Error\ErrorReporter;
+use Cordo\Core\Application\Error\Handler\EmailErrorHandler;
+use Cordo\Core\Application\Error\Handler\LoggerErrorHandler;
+use Cordo\Core\Application\Error\Handler\PrettyErrorHandler;
 
 $errorReporter = new ErrorReporter();
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace System\Application\Queue;
+namespace Cordo\Core\Application\Queue;
 
 class AbstractMessage implements MessageInterface
 {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace System\UI\Http\Controller;
+namespace Cordo\Core\UI\Http\Controller;
 
 use Error;
 use Exception;
@@ -11,9 +11,9 @@ use GuzzleHttp\Psr7\Response;
 use InvalidArgumentException;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\RequestInterface;
-use System\Application\Error\ErrorReporterInterface;
-use System\UI\Transformer\TransformerManagerInterface;
-use System\Application\Exception\ResourceNotFoundException;
+use Cordo\Core\Application\Error\ErrorReporterInterface;
+use Cordo\Core\UI\Transformer\TransformerManagerInterface;
+use Cordo\Core\Application\Exception\ResourceNotFoundException;
 
 abstract class BaseController
 {

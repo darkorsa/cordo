@@ -7,7 +7,7 @@ namespace App\Backoffice\Auth\Infrastructure\Persistance\Doctrine\ORM;
 use App\Backoffice\Auth\Domain\Acl;
 use Doctrine\ORM\EntityManager;
 use App\Backoffice\Auth\Domain\AclRepository;
-use System\Application\Exception\ResourceNotFoundException;
+use Cordo\Core\Application\Exception\ResourceNotFoundException;
 
 class AclDoctrineRepository implements AclRepository
 {

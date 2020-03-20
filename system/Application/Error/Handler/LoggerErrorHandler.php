@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace System\Application\Error\Handler;
+namespace Cordo\Core\Application\Error\Handler;
 
 use Throwable;
 use Psr\Log\LoggerInterface;
-use System\Application\Error\ErrorHandlerInterface;
+use Cordo\Core\Application\Error\ErrorHandlerInterface;
 
 class LoggerErrorHandler implements ErrorHandlerInterface
 {

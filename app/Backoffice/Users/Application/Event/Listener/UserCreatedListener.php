@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Backoffice\Users\Application\Event\Listener;
 
 use League\Event\EventInterface;
-use System\Application\Event\Listener\AbstractListener;
+use Cordo\Core\Application\Event\Listener\AbstractListener;
 use App\Backoffice\Users\Application\Command\SendUserWelcomeMessage;
 
 class UserCreatedListener extends AbstractListener

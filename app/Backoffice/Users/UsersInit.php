@@ -9,7 +9,7 @@ use OAuth2\GrantType\RefreshToken;
 use OAuth2\GrantType\UserCredentials;
 use OAuth2\GrantType\ClientCredentials;
 use App\Backoffice\Users\UI\Http\Auth\OAuth2UserCredentials;
-use System\Application\Service\Register\ModuleInit;
+use Cordo\Core\Application\Service\Register\ModuleInit;
 
 class UsersInit implements ModuleInit
 {

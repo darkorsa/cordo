@@ -6,7 +6,7 @@ use DateTime;
 use Ramsey\Uuid\Uuid;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use System\UI\Http\Controller\BaseController;
+use Cordo\Core\UI\Http\Controller\BaseController;
 use App\Backoffice\Users\UI\Validator\NewUserValidator;
 use App\Backoffice\Users\Application\Command\DeleteUser;
 use App\Backoffice\Users\Application\Command\UpdateUser;

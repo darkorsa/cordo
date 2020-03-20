@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace System\UI\Http\Response;
+namespace Cordo\Core\UI\Http\Response;
 
 use Psr\Http\Message\ResponseInterface;
 
-class JsonResponse implements \System\UI\ResponseInterface
+class JsonResponse implements \Cordo\Core\UI\ResponseInterface
 {
     private $response;
 

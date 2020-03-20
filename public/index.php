@@ -5,9 +5,9 @@
  */
 
 use App\Register;
-use System\UI\Http\Dispatcher;
-use System\UI\Http\Response\JsonResponse;
-use System\UI\Http\Middleware\ParsePutRequest;
+use Cordo\Core\UI\Http\Dispatcher;
+use Cordo\Core\UI\Http\Response\JsonResponse;
+use Cordo\Core\UI\Http\Middleware\ParsePutRequest;
 
 require __DIR__ . '/../bootstrap/autoload.php';
 

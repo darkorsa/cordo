@@ -1,6 +1,6 @@
 <?php
 
-namespace System\Application\Service\Register;
+namespace Cordo\Core\Application\Service\Register;
 
 use DI\Container;
 

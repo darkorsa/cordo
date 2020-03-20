@@ -6,7 +6,7 @@ namespace App\Backoffice\Users\UI\Http\Route;
 
 use App\Backoffice\Users\UI\Http\Route\OAuthRoutes;
 use App\Backoffice\Users\UI\Http\Middleware\OAuthMiddleware;
-use System\Application\Service\Register\RoutesRegister;
+use Cordo\Core\Application\Service\Register\RoutesRegister;
 use App\Backoffice\Auth\UI\Http\Middleware\AclMiddleware;
 
 class UsersRoutes extends RoutesRegister

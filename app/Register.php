@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App;
 
-use System\Application\Service\Register\ModulesRegister;
+use Cordo\Core\Application\Service\Register\ModulesRegister;
 
 class Register extends ModulesRegister
 {

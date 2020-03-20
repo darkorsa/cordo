@@ -1,6 +1,6 @@
 <?php
 
-namespace System\UI;
+namespace Cordo\Core\UI;
 
 interface ResponseInterface
 {

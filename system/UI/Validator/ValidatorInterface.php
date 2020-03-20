@@ -1,6 +1,6 @@
 <?php
 
-namespace System\UI\Validator;
+namespace Cordo\Core\UI\Validator;
 
 interface ValidatorInterface
 {

@@ -1,10 +1,12 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace System\Application\Error\Handler;
+declare(strict_types=1);
+
+namespace Cordo\Core\Application\Error\Handler;
 
 use Throwable;
 use Whoops\Run;
-use System\Application\Error\ErrorHandlerInterface;
+use Cordo\Core\Application\Error\ErrorHandlerInterface;
 
 class PrettyErrorHandler implements ErrorHandlerInterface
 {

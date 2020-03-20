@@ -1,8 +1,8 @@
 <?php
 
-namespace System\SharedKernel\Uuid\Doctrine;
+namespace Cordo\Core\SharedKernel\Uuid\Doctrine;
 
-use System\SharedKernel\Uuid\Helper\UuidFactoryHelper;
+use Cordo\Core\SharedKernel\Uuid\Helper\UuidFactoryHelper;
 use Ramsey\Uuid\Doctrine\UuidBinaryOrderedTimeType as BaseUuidBinaryOrderedTimeType;
 
 class UuidBinaryOrderedTimeType extends BaseUuidBinaryOrderedTimeType

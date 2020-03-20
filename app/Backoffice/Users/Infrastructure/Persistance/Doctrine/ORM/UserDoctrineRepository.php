@@ -7,7 +7,7 @@ namespace App\Backoffice\Users\Infrastructure\Persistance\Doctrine\ORM;
 use App\Backoffice\Users\Domain\User;
 use Doctrine\ORM\EntityManager;
 use App\Backoffice\Users\Domain\UserRepository;
-use System\Application\Exception\ResourceNotFoundException;
+use Cordo\Core\Application\Exception\ResourceNotFoundException;
 
 class UserDoctrineRepository implements UserRepository
 {

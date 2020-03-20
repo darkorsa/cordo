@@ -1,6 +1,6 @@
 <?php
 
-namespace System\Application\Exception;
+namespace Cordo\Core\Application\Exception;
 
 use Exception;
 

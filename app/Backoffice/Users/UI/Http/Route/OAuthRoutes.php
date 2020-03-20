@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Backoffice\Users\UI\Http\Route;
 
 use OAuth2\Request;
-use System\Application\Service\Register\RoutesRegister;
+use Cordo\Core\Application\Service\Register\RoutesRegister;
 
 class OAuthRoutes extends RoutesRegister
 {

@@ -4,7 +4,7 @@ namespace App\Backoffice\Users\Infrastructure\Persistance\Doctrine\Query;
 
 use Doctrine\DBAL\Query\QueryBuilder;
 use App\Backoffice\Users\Application\Query\UserFilter;
-use System\Infractructure\Persistance\Doctrine\Query\QueryFilter;
+use Cordo\Core\Infractructure\Persistance\Doctrine\Query\QueryFilter;
 
 class UserDoctrineFilter implements QueryFilter
 {

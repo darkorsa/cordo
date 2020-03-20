@@ -1,13 +1,13 @@
 <?php
 
-namespace System\UI\Console\Command;
+namespace Cordo\Core\UI\Console\Command;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\SchemaTool;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\HelperSet;
 use Symfony\Component\Console\Input\ArrayInput;
-use System\UI\Console\Command\BaseConsoleCommand;
+use Cordo\Core\UI\Console\Command\BaseConsoleCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper;

@@ -7,7 +7,7 @@ use Bernard\Producer;
 use Monolog\Handler\StreamHandler;
 use Bernard\Router\ClassNameRouter;
 use Bernard\Router\ContainerReceiverResolver;
-use System\Application\Event\EventDispatcherAdapter;
+use Cordo\Core\Application\Event\EventDispatcherAdapter;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use App\Backoffice\Users\Application\Command\SendUserWelcomeMessage;
 use App\Backoffice\Users\Application\Command\Handler\SendUserWelcomeMessageHandler;

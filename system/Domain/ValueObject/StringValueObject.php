@@ -1,8 +1,8 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
-namespace System\Domain\ValueObject;
+namespace Cordo\Core\Domain\ValueObject;
 
 abstract class StringValueObject
 {

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace System\Infractructure\Persistance\Doctrine\Query;
+namespace Cordo\Core\Infractructure\Persistance\Doctrine\Query;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Query\QueryBuilder;
-use System\Application\Exception\ResourceNotFoundException;
+use Cordo\Core\Application\Exception\ResourceNotFoundException;
 
 abstract class BaseQuery
 {

@@ -2,7 +2,7 @@
 
 use App\Register;
 use Laminas\Permissions\Acl\Acl;
-use System\SharedKernel\Enum\SystemRole;
+use Cordo\Core\SharedKernel\Enum\SystemRole;
 use Laminas\Permissions\Acl\Role\GenericRole as Role;
 
 $acl = new Acl();

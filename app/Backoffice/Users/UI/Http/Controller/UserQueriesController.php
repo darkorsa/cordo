@@ -8,7 +8,7 @@ use Psr\Http\Message\ResponseInterface;
 use App\Backoffice\Users\Application\Query\UserFilter;
 use Psr\Http\Message\ServerRequestInterface;
 use App\Backoffice\Users\UI\Transformer\UserTransformer;
-use System\UI\Http\Controller\BaseController;
+use Cordo\Core\UI\Http\Controller\BaseController;
 
 class UserQueriesController extends BaseController
 {

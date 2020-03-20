@@ -5,7 +5,7 @@ namespace App\Backoffice\Auth\UI\Http\Middleware;
 use GuzzleHttp\Psr7\Response;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
-use System\SharedKernel\Enum\SystemRole;
+use Cordo\Core\SharedKernel\Enum\SystemRole;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;

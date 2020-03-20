@@ -1,6 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace System\UI\Transformer;
+declare(strict_types=1);
+
+namespace Cordo\Core\UI\Transformer;
 
 use League\Fractal\TransformerAbstract;
 

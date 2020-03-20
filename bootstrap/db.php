@@ -4,7 +4,7 @@ use App\Register;
 use Doctrine\DBAL\Types\Type;
 use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
-use System\SharedKernel\Enum\Env;
+use Cordo\Core\SharedKernel\Enum\Env;
 
 $paths = Register::registerEntities();
 $isDevMode = getenv('APP_ENV') == Env::DEV();
@@ -18,7 +18,7 @@ $dbParams = [
     'driver'    => 'pdo_mysql',
 ];
 
-Type::addType('uuid_binary_ordered_time', 'System\SharedKernel\Uuid\Doctrine\UuidBinaryOrderedTimeType');
+Type::addType('uuid_binary_ordered_time', 'Cordo\Core\SharedKernel\Uuid\Doctrine\UuidBinaryOrderedTimeType');
 
 $proxyDir = storage_path() . 'cache/doctrine/';
 

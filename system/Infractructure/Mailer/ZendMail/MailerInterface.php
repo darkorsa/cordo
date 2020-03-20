@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace System\Infractructure\Mailer\ZendMail;
+namespace Cordo\Core\Infractructure\Mailer\ZendMail;
 
 use Laminas\Mail\Message;
 

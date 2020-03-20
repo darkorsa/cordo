@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Backoffice\Users\Application\Acl;
 
-use System\SharedKernel\Enum\SystemRole;
-use System\Application\Service\Register\AclRegister;
+use Cordo\Core\SharedKernel\Enum\SystemRole;
+use Cordo\Core\Application\Service\Register\AclRegister;
 use Laminas\Permissions\Acl\Resource\GenericResource as Resource;
 
 class UsersAcl extends AclRegister
