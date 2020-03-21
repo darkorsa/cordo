@@ -7,14 +7,14 @@ use Doctrine\ORM\EntityManager;
 use Cordo\Core\SharedKernel\Enum\Env;
 
 $paths = Register::registerEntities();
-$isDevMode = getenv('APP_ENV') == Env::DEV();
+$isDevMode = env('APP_ENV') == Env::DEV();
 
 // the connection configuration
 $dbParams = [
-    'dbname'    => getenv('DB_DATABASE'),
-    'user'      => getenv('DB_USERNAME'),
-    'password'  => getenv('DB_PASSWORD'),
-    'host'      => getenv('DB_HOST'),
+    'dbname'    => env('DB_DATABASE'),
+    'user'      => env('DB_USERNAME'),
+    'password'  => env('DB_PASSWORD'),
+    'host'      => env('DB_HOST'),
     'driver'    => 'pdo_mysql',
 ];
 

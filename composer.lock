@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "abce06daff1beb4d61f87dad68aba03d",
+    "content-hash": "dbb715e7d49237f4ec0effbd5eec5bf8",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -63,40 +63,40 @@
         },
         {
             "name": "bernard/bernard",
-            "version": "1.0.0-alpha9",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bernardphp/bernard.git",
-                "reference": "1144b4dd9b87f22091dfceabb91d74f295ade034"
+                "reference": "fee41761e8a22dcec9e535d530ccf52204b64022"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bernardphp/bernard/zipball/1144b4dd9b87f22091dfceabb91d74f295ade034",
-                "reference": "1144b4dd9b87f22091dfceabb91d74f295ade034",
+                "url": "https://api.github.com/repos/bernardphp/bernard/zipball/fee41761e8a22dcec9e535d530ccf52204b64022",
+                "reference": "fee41761e8a22dcec9e535d530ccf52204b64022",
                 "shasum": ""
             },
             "require": {
-                "beberlei/assert": "~2.1",
-                "bernard/normalt": "~1.0",
+                "beberlei/assert": "^2.1 || ^3.0",
+                "bernard/normalt": "^1.0",
                 "php": "^5.6 || ^7.0",
-                "symfony/event-dispatcher": "^2.7|^3.0|^4.0"
+                "symfony/event-dispatcher": "^3.0 || ^4.0"
             },
             "require-dev": {
-                "aws/aws-sdk-php": "~2.4|~3.0",
-                "doctrine/dbal": "~2.3",
-                "iron-io/iron_mq": "~4.0",
-                "league/container": "~2.3",
-                "pda/pheanstalk": "~3.0",
-                "php-amqplib/php-amqplib": "~2.5",
-                "phpspec/phpspec": "^2.4",
-                "phpunit/phpunit": "^5.5|^6.0",
-                "pimple/pimple": "~1.0",
-                "predis/predis": "~0.8",
-                "psr/log": "~1.0",
+                "aws/aws-sdk-php": "^3.0",
+                "doctrine/dbal": "^2.5",
+                "doctrine/instantiator": "^1.0.5",
+                "iron-io/iron_mq": "^4.0",
+                "leanphp/phpspec-code-coverage": "^3.0 || ^4.0",
+                "pda/pheanstalk": "^3.0",
+                "php-amqplib/php-amqplib": "^2.5",
+                "phpspec/phpspec": "^3.0 || ^4.0",
+                "phpunit/phpunit": "^5.7 || ^6.0 || ^7.0",
+                "predis/predis": "^1.0",
+                "psr/container": "^1.0",
+                "psr/log": "^1.0",
                 "queue-interop/amqp-interop": "^0.6",
                 "queue-interop/queue-interop": "^0.6",
-                "symfony/console": "^2.7|^3.0|^4.0",
-                "symfony/dependency-injection": "^2.7|^3.0|^4.0"
+                "symfony/console": "^3.0 || ^4.0"
             },
             "suggest": {
                 "aws/aws-sdk-php": "Allow sending messages to AWS services like Simple Queue Service",
@@ -132,7 +132,7 @@
                 "message queue",
                 "queue"
             ],
-            "time": "2018-02-13T07:52:58+00:00"
+            "time": "2019-10-20T16:07:51+00:00"
         },
         {
             "name": "bernard/normalt",
@@ -270,27 +270,26 @@
         },
         {
             "name": "darkorsa/cordo-core",
-            "version": "0.1.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/darkorsa/cordo-core.git",
-                "reference": "fd714e74cfa2219fe50da7233d2c5684d3de209f"
+                "reference": "1a68efebd19fcf93a0970a6af5d39dd52bf5402e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/darkorsa/cordo-core/zipball/fd714e74cfa2219fe50da7233d2c5684d3de209f",
-                "reference": "fd714e74cfa2219fe50da7233d2c5684d3de209f",
+                "url": "https://api.github.com/repos/darkorsa/cordo-core/zipball/1a68efebd19fcf93a0970a6af5d39dd52bf5402e",
+                "reference": "1a68efebd19fcf93a0970a6af5d39dd52bf5402e",
                 "shasum": ""
             },
             "require": {
                 "beberlei/assert": "^2.6",
-                "bernard/bernard": "^1.0@dev",
+                "bernard/bernard": "dev-master",
                 "bshaffer/oauth2-server-php": "^1.10",
                 "doctrine/collections": "^1.6",
                 "doctrine/dbal": "^2.9",
                 "doctrine/orm": "~2.6.6",
                 "doctrine/persistence": "~1.2.0",
-                "ext-redis": "^5.0",
                 "filp/whoops": "^2.3",
                 "guzzlehttp/psr7": "^1.5",
                 "hassankhan/config": "^2.0",
@@ -316,14 +315,15 @@
                 "relay/relay": "2.x@dev",
                 "sensiolabs/security-checker": "^6.0",
                 "symfony/console": "^4.2",
-                "symfony/dotenv": "^4.2",
+                "symfony/dotenv": "^5.0",
                 "symfony/property-access": "^4.2",
                 "symfony/translation": "^5.0",
                 "symfony/yaml": "^5.0"
             },
             "require-dev": {
                 "nunomaduro/phpinsights": "^1.7",
-                "phpstan/phpstan": "^0.11.2"
+                "phpstan/phpstan": "^0.11.2",
+                "symfony/var-dumper": "^4.2"
             },
             "type": "library",
             "autoload": {
@@ -358,10 +358,10 @@
             ],
             "description": "Core libraries for Cordo microframework",
             "support": {
-                "source": "https://github.com/darkorsa/cordo-core/tree/master",
+                "source": "https://github.com/darkorsa/cordo-core/tree/0.1.2",
                 "issues": "https://github.com/darkorsa/cordo-core/issues"
             },
-            "time": "2020-03-20T13:18:09+00:00"
+            "time": "2020-03-21T11:40:47+00:00"
         },
         {
             "name": "doctrine/annotations",
@@ -1184,16 +1184,16 @@
         },
         {
             "name": "doctrine/reflection",
-            "version": "v1.1.0",
+            "version": "1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/reflection.git",
-                "reference": "bc420ead87fdfe08c03ecc3549db603a45b06d4c"
+                "reference": "b699ecc7f2784d1e49924fd9858cf1078db6b0e2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/reflection/zipball/bc420ead87fdfe08c03ecc3549db603a45b06d4c",
-                "reference": "bc420ead87fdfe08c03ecc3549db603a45b06d4c",
+                "url": "https://api.github.com/repos/doctrine/reflection/zipball/b699ecc7f2784d1e49924fd9858cf1078db6b0e2",
+                "reference": "b699ecc7f2784d1e49924fd9858cf1078db6b0e2",
                 "shasum": ""
             },
             "require": {
@@ -1214,7 +1214,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0.x-dev"
+                    "dev-master": "1.2.x-dev"
                 }
             },
             "autoload": {
@@ -1258,7 +1258,7 @@
                 "reflection",
                 "static"
             ],
-            "time": "2020-01-08T19:53:19+00:00"
+            "time": "2020-03-21T11:34:59+00:00"
         },
         {
             "name": "filp/whoops",
@@ -3540,28 +3540,28 @@
         },
         {
             "name": "symfony/dotenv",
-            "version": "v4.4.5",
+            "version": "v5.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/dotenv.git",
-                "reference": "9bba981ecb1f57c04520d4165b3e6a17ac49319f"
+                "reference": "48c8fdda51e5b24d031ce8ec221caa186337e36f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/dotenv/zipball/9bba981ecb1f57c04520d4165b3e6a17ac49319f",
-                "reference": "9bba981ecb1f57c04520d4165b3e6a17ac49319f",
+                "url": "https://api.github.com/repos/symfony/dotenv/zipball/48c8fdda51e5b24d031ce8ec221caa186337e36f",
+                "reference": "48c8fdda51e5b24d031ce8ec221caa186337e36f",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.1.3"
+                "php": "^7.2.5"
             },
             "require-dev": {
-                "symfony/process": "^3.4.2|^4.0|^5.0"
+                "symfony/process": "^4.4|^5.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "4.4-dev"
+                    "dev-master": "5.0-dev"
                 }
             },
             "autoload": {
@@ -3593,7 +3593,21 @@
                 "env",
                 "environment"
             ],
-            "time": "2020-02-29T10:04:02+00:00"
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2020-02-29T10:07:09+00:00"
         },
         {
             "name": "symfony/event-dispatcher",
@@ -7024,11 +7038,14 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "darkorsa/cordo-core": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
         "ext-redis": "^5.0"
     },
-    "platform-dev": []
+    "platform-dev": [],
+    "plugin-api-version": "1.1.0"
 }

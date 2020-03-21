@@ -25,9 +25,9 @@ class UsersInit implements ModuleInit
         $config = $container->get('config');
 
         $storage = new Pdo([
-            'dsn' => 'mysql:dbname=' . getenv('DB_DATABASE') . ';host=' . getenv('DB_HOST'),
-            'username' => getenv('DB_USERNAME'),
-            'password' => getenv('DB_PASSWORD'),
+            'dsn' => 'mysql:dbname=' . env('DB_DATABASE') . ';host=' . env('DB_HOST'),
+            'username' => env('DB_USERNAME'),
+            'password' => env('DB_PASSWORD'),
         ]);
 
         $tokenLifetime = $config->get('auth.expire');

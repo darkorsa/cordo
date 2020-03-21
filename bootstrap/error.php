@@ -1,6 +1,6 @@
 <?php
 
-$debug = getenv('APP_DEBUG') === 'true';
+$debug = env('APP_DEBUG') === 'true';
 
 ini_set('display_errors', (int) $debug);
 ini_set('display_startup_errors', (int) $debug);

@@ -26,7 +26,7 @@ $containerBuilder = new ContainerBuilder();
 $containerBuilder->addDefinitions(Register::registerDefinitions());
 $containerBuilder->useAutowiring(true);
 
-if (getenv('APP_ENV') == Env::PRODUCTION()) {
+if (env('APP_ENV') == Env::PRODUCTION()) {
     $containerBuilder->enableCompilation(storage_path() . 'cache');
 }
 

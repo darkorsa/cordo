@@ -1,5 +1,10 @@
 <?php
 
+function env(string $index): string
+{
+    return $_ENV[$index];
+}
+
 function root_path(): string
 {
     return __DIR__ . '/../';

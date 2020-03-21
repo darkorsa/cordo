@@ -4,7 +4,7 @@
     "license": "MIT",
     "require": {
         "ext-redis": "^5.0",
-        "darkorsa/cordo-core": "^0.1.0"
+        "darkorsa/cordo-core": "dev-master"
     },
     "require-dev": {
         "nunomaduro/phpinsights": "^1.7",

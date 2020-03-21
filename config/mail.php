@@ -1,12 +1,12 @@
 <?php
 
 return [
-    'driver'    => getenv('MAIL_DRIVER'),
+    'driver'    => env('MAIL_DRIVER'),
     // smtp
-    'host'      => getenv('MAIL_HOST'),
-    'port'      => getenv('MAIL_PORT'),
-    'username'  => getenv('MAIL_USERNAME'),
-    'password'  => getenv('MAIL_PASSWORD'),
+    'host'      => env('MAIL_HOST'),
+    'port'      => env('MAIL_PORT'),
+    'username'  => env('MAIL_USERNAME'),
+    'password'  => env('MAIL_PASSWORD'),
     'from'      => 'noreply@yourdomain.com',
     // log
     'log_path'  => storage_path() . 'logs/mail.log',
