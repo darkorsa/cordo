@@ -9,12 +9,12 @@
     "require-dev": {
         "nunomaduro/phpinsights": "^1.7",
         "phpstan/phpstan": "^0.11.2",
-        "symfony/var-dumper": "^4.2"
+        "symfony/var-dumper": "^5.0"
     },
     "repositories": [
         {
-            "type": "vcs",
-            "url": "git@github.com:darkorsa/cordo-core.git"
+            "type": "path",
+            "url": "../cordo-core"
         }
     ],
     "autoload": {
