@@ -306,7 +306,7 @@ In order to add/change drivers you can just replace `MailerFactory` class with y
 
 Translations are handled with [Symfony Translations](https://symfony.com/doc/current/translation.html). Default file format for translations is `Yaml`. 
 
-You should place your translation files in `app/[Context]/[PackageName]/UI/trans/` folder or subfolders. Naming convention is: `[domain].[lang].yaml`, for example: `mail.pl.yaml`.
+You should place your translation files in `app/[Context]/[PackageName]/UI/trans/` folder or subfolders. Naming convention is: `[domain].[locale].yaml`, for example: `mail.en.yaml`.
 
 Usage:
 ``` php
