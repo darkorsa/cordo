@@ -27,7 +27,7 @@ class SendUserWelcomeMessageHandler
 
     public function __invoke(SendUserWelcomeMessage $command): void
     {
-        $body = $this->templates->render('users::mail/new-user-welcome', [
+        $body = $this->templates->render('backoffice.users::mail/new-user-welcome', [
             'message' => $this->translator->trans('welcome.mail.message', [], 'mail', $command->locale)
         ]);
         $subject = $this->translator->trans('welcome.mail.subject', [], 'mail', $command->locale);

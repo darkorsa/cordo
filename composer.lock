@@ -274,12 +274,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/darkorsa/cordo-core.git",
-                "reference": "57393bb90a0c021bd22522c8bc7bca882fb581ae"
+                "reference": "3964d0248b262d6a2a2788f80235f46436758bcf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/darkorsa/cordo-core/zipball/57393bb90a0c021bd22522c8bc7bca882fb581ae",
-                "reference": "57393bb90a0c021bd22522c8bc7bca882fb581ae",
+                "url": "https://api.github.com/repos/darkorsa/cordo-core/zipball/3964d0248b262d6a2a2788f80235f46436758bcf",
+                "reference": "3964d0248b262d6a2a2788f80235f46436758bcf",
                 "shasum": ""
             },
             "require": {
@@ -336,7 +336,7 @@
                 "MIT"
             ],
             "description": "Core libraries for Cordo microframework",
-            "time": "2020-03-22T15:03:50+00:00"
+            "time": "2020-03-22T19:07:34+00:00"
         },
         {
             "name": "doctrine/annotations",
