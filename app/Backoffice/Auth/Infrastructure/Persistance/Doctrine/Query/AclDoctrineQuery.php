@@ -17,7 +17,7 @@ class AclDoctrineQuery extends BaseQuery implements AclQuery
         $queryBuilder = $this->createQB();
         $queryBuilder
             ->select('count(a.id_acl)')
-            ->from('acl', 'a');
+            ->from('backoffice_acl', 'a');
 
         return (int) $this->column($queryBuilder, new AclDoctrineFilter($aclFilter));
     }
@@ -29,7 +29,7 @@ class AclDoctrineQuery extends BaseQuery implements AclQuery
             ->select('a.*')
             ->addSelect('ouuid_to_uuid(a.id_acl) as id_acl')
             ->addSelect('ouuid_to_uuid(a.id_user) as id_user')
-            ->from('acl', 'a')
+            ->from('backoffice_acl', 'a')
             ->where('ouuid_to_uuid(a.id_acl) = :id')
             ->setParameter('id', $id);
 
@@ -45,7 +45,7 @@ class AclDoctrineQuery extends BaseQuery implements AclQuery
             ->select('a.*')
             ->addSelect('ouuid_to_uuid(a.id_acl) as id_acl')
             ->addSelect('ouuid_to_uuid(a.id_user) as id_user')
-            ->from('acl', 'a')
+            ->from('backoffice_acl', 'a')
             ->where('ouuid_to_uuid(a.id_user) = :userId')
             ->setParameter('userId', $userId);
 
@@ -61,7 +61,7 @@ class AclDoctrineQuery extends BaseQuery implements AclQuery
             ->select('a.*')
             ->addSelect('ouuid_to_uuid(a.id_acl) as id_acl')
             ->addSelect('ouuid_to_uuid(a.id_user) as id_user')
-            ->from('acl', 'a');
+            ->from('backoffice_acl', 'a');
 
         $data = $this->all($queryBuilder, new AclDoctrineFilter($aclFilter));
 

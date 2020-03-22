@@ -17,7 +17,7 @@ class UserDoctrineQuery extends BaseQuery implements UserQuery
         $queryBuilder = $this->createQB();
         $queryBuilder
             ->select('count(u.id_user)')
-            ->from('user', 'u');
+            ->from('backoffice_user', 'u');
 
         return (int) $this->column($queryBuilder, new UserDoctrineFilter($userFilter));
     }
@@ -28,7 +28,7 @@ class UserDoctrineQuery extends BaseQuery implements UserQuery
         $queryBuilder
             ->select('u.*')
             ->addSelect('ouuid_to_uuid(u.id_user) as id_user')
-            ->from('user', 'u')
+            ->from('backoffice_user', 'u')
             ->where('ouuid_to_uuid(u.id_user) = :userId')
             ->setParameter('userId', $userId);
 
@@ -43,7 +43,7 @@ class UserDoctrineQuery extends BaseQuery implements UserQuery
         $queryBuilder
             ->select('u.*')
             ->addSelect('ouuid_to_uuid(u.id_user) as id_user')
-            ->from('user', 'u')
+            ->from('backoffice_user', 'u')
             ->where('email = :email')
             ->setParameter('email', $email);
 
@@ -58,7 +58,7 @@ class UserDoctrineQuery extends BaseQuery implements UserQuery
         $queryBuilder
             ->select('u.*')
             ->addSelect('ouuid_to_uuid(u.id_user) as id_user')
-            ->from('user', 'u');
+            ->from('backoffice_user', 'u');
 
         $usersData = $this->all($queryBuilder, new UserDoctrineFilter($userFilter));
 

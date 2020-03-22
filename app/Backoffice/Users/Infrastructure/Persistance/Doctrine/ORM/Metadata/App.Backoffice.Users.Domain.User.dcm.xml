@@ -4,7 +4,7 @@
       xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                           https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
-    <entity name="App\Backoffice\Users\Domain\User" table="user">
+    <entity name="App\Backoffice\Users\Domain\User" table="backoffice_user">
 
         <indexes>
             <index name="email_idx" columns="email"/>
