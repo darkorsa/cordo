@@ -19,7 +19,7 @@ class UserCommandsController extends BaseController
     public function createAction(ServerRequestInterface $request): ResponseInterface
     {
         $params = (array) $request->getParsedBody();
-        $service = $this->container->get('users.query.service');
+        $service = $this->container->get('backoffice.users.query.service');
 
         $validator = new NewUserValidator($params);
         $validator->addCallbackValidator('email', new EmailExistsValidation($service));
@@ -52,7 +52,7 @@ class UserCommandsController extends BaseController
             return $this->respondBadRequestError($validator->messages());
         }
 
-        $user = $this->container->get('users.query.service')->getOneById($userId);
+        $user = $this->container->get('backoffice.users.query.service')->getOneById($userId);
 
         $params = (object) $params;
 
@@ -72,7 +72,7 @@ class UserCommandsController extends BaseController
     {
         $userId = $request->getAttribute('user_id');
 
-        $user = $this->container->get('users.query.service')->getOneById($userId);
+        $user = $this->container->get('backoffice.users.query.service')->getOneById($userId);
 
         $command = new DeleteUser($user->id());
 

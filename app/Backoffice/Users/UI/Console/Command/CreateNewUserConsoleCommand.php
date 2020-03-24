@@ -37,7 +37,7 @@ class CreateNewUserConsoleCommand extends BaseConsoleCommand
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $params = $input->getArguments();
-        $service = $this->container->get('users.query.service');
+        $service = $this->container->get('backoffice.users.query.service');
 
         $validator = new NewUserValidator($params);
         $validator->addCallbackValidator('email', new EmailExistsValidation($service));

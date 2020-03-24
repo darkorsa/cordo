@@ -25,7 +25,7 @@ class UserQueriesController extends BaseController
             ->setOffset($offset)
             ->setLimit($limit);
 
-        $service = $this->container->get('users.query.service');
+        $service = $this->container->get('backoffice.users.query.service');
 
         $data = $this->transformerManager->transform($service->getCollection($userFilter), 'user');
         $data['total'] = $service->getCount($userFilter);
@@ -35,7 +35,7 @@ class UserQueriesController extends BaseController
 
     public function getAction(ServerRequestInterface $request, $params): ResponseInterface
     {
-        $service = $this->container->get('users.query.service');
+        $service = $this->container->get('backoffice.users.query.service');
 
         $userFilter = new UserFilter();
         $userFilter->setActive(true);

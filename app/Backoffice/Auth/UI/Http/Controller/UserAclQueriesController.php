@@ -21,7 +21,7 @@ class UserAclQueriesController extends BaseController
             $aclFilter->setUserId($queryParams['id_user']);
         }
 
-        $service = $this->container->get('acl.query.service');
+        $service = $this->container->get('backoffice.acl.query.service');
 
         $data = $this->transformerManager->transform($service->getCollection($aclFilter), 'acl');
         $data['total'] = $service->getCount($aclFilter);
@@ -31,7 +31,7 @@ class UserAclQueriesController extends BaseController
 
     public function getAction(ServerRequestInterface $request, $params): ResponseInterface
     {
-        $service = $this->container->get('acl.query.service');
+        $service = $this->container->get('backoffice.acl.query.service');
 
         $result = $service->getOneById($params['id']);
 

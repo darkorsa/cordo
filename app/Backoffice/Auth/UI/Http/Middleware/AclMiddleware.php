@@ -26,7 +26,7 @@ class AclMiddleware implements MiddlewareInterface
     {
         $this->container    = $container;
         $this->acl          = $container->get('acl');
-        $this->service      = $container->get('acl.query.service');
+        $this->service      = $container->get('backoffice.acl.query.service');
         $this->privilage    = $privilage;
     }
 

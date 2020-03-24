@@ -26,6 +26,6 @@ return [
             DI\get(AclDoctrineRepository::class),
             DI\get('emitter')
         ),
-    'acl.query.service' => DI\create(AclQueryService::class)
+    'backoffice.acl.query.service' => DI\create(AclQueryService::class)
         ->constructor(DI\get(AclDoctrineQuery::class)),
 ];
