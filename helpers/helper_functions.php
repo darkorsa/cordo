@@ -2,6 +2,10 @@
 
 function env(string $index): string
 {
+    if (!array_key_exists($index, $_ENV)) {
+        throw new OutOfBoundsException("{$index} is not a valid key for .env variables.");
+    }
+    
     return $_ENV[$index];
 }
 

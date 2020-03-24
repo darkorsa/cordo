@@ -17,15 +17,15 @@ use Cordo\Core\UI\Transformer\TransformerManagerInterface;
 use Cordo\Core\Infractructure\Mailer\ZendMail\MailerInterface;
 
 return [
-    'config'    => DI\factory(static function () {
+    'config' => DI\factory(static function () {
         return new Config(config_path(), new Parser());
     }),
-    'lang'      => DI\factory(static function () {
+    'lang' => DI\factory(static function () {
         return new Config(resources_path() . 'lang', new Parser());
     }),
-    'request'   => DI\get(ServerRequestInterface::class),
-    'router'    => DI\get(Router::class),
-    'emitter'   => DI\get(EmitterInterface::class),
+    'request' => DI\get(ServerRequestInterface::class),
+    'router' => DI\get(Router::class),
+    'emitter' => DI\get(EmitterInterface::class),
     ServerRequestInterface::class => DI\factory('GuzzleHttp\Psr7\ServerRequest::fromGlobals'),
     ErrorReporterInterface::class => DI\get('error_reporter'),
     MailerInterface::class => DI\get('mailer'),
@@ -37,4 +37,5 @@ return [
     }),
     Engine::class => DI\get('templates'),
     Translator::class => DI\get('translator'),
+    Config::class => DI\get('config'),
 ];

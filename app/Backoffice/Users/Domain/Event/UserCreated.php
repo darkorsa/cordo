@@ -17,7 +17,7 @@ class UserCreated extends AbstractEvent
 
     public function getName()
     {
-        return 'users.created';
+        return 'backoffice.users.created';
     }
 
     public function email(): string

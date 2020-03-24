@@ -13,7 +13,7 @@ class UsersListeners extends ListenersRegister
     public function register(): void
     {
         $this->emitter->addListener(
-            "users.created",
+            "backoffice.users.created",
             function (UserCreated $userCreated) {
                 (new UserCreatedListener($this->container))->handle($userCreated);
             }

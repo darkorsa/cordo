@@ -20,7 +20,7 @@ class OAuth2UserCredentials implements UserCredentialsInterface
 
         $queryBuilder
             ->select('u.password')
-            ->from('user', 'u')
+            ->from('backoffice_user', 'u')
             ->where('u.email = :email')
             ->setParameter('email', $username);
 
@@ -39,7 +39,7 @@ class OAuth2UserCredentials implements UserCredentialsInterface
 
         $queryBuilder
             ->select('ouuid_to_uuid(u.id_user) as id_user')
-            ->from('user', 'u')
+            ->from('backoffice_user', 'u')
             ->where('u.email = :email')
             ->setParameter('email', $username);
 
