@@ -44,6 +44,6 @@ class UsersInit implements ModuleInit
             'always_issue_new_refresh_token' => $config->get('auth.always_issue_new_refresh_token'),
         ]));
 
-        $container->set('oauth_server', $server);
+        $container->set('backoffice_oauth_server', $server);
     }
 }

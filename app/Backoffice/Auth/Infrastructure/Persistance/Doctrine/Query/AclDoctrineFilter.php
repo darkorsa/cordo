@@ -22,7 +22,7 @@ class AclDoctrineFilter implements QueryFilter
         }
 
         if (!is_null($this->filter->getUserId())) {
-            $queryBuilder->where('ouuid_to_uuid(a.id_user) = :userId')
+            $queryBuilder->andWhere('ouuid_to_uuid(a.id_user) = :userId')
                 ->setParameter('userId', $this->filter->getUserId());
         }
     }

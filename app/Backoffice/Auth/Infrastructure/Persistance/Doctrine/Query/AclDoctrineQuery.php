@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace App\Backoffice\Auth\Infrastructure\Persistance\Doctrine\Query;
 
+use Doctrine\DBAL\Query\QueryBuilder;
+use Doctrine\Common\Collections\ArrayCollection;
 use App\Backoffice\Auth\Application\Query\AclView;
 use App\Backoffice\Auth\Application\Query\AclQuery;
 use App\Backoffice\Auth\Application\Query\AclFilter;
-use Doctrine\Common\Collections\ArrayCollection;
 use Cordo\Core\Infractructure\Persistance\Doctrine\Query\BaseQuery;
 
 class AclDoctrineQuery extends BaseQuery implements AclQuery
@@ -26,32 +27,20 @@ class AclDoctrineQuery extends BaseQuery implements AclQuery
     {
         $queryBuilder = $this->createQB();
         $queryBuilder
-            ->select('a.*')
-            ->addSelect('ouuid_to_uuid(a.id_acl) as id_acl')
-            ->addSelect('ouuid_to_uuid(a.id_user) as id_user')
-            ->from('backoffice_acl', 'a')
             ->where('ouuid_to_uuid(a.id_acl) = :id')
             ->setParameter('id', $id);
 
-        $aclData = $this->assoc($queryBuilder, new AclDoctrineFilter($aclFilter));
-
-        return AclView::fromArray($aclData);
+        return $this->getOneByQuery($queryBuilder, $aclFilter);
     }
 
     public function getByUserId(string $userId, ?AclFilter $aclFilter = null): AclView
     {
         $queryBuilder = $this->createQB();
         $queryBuilder
-            ->select('a.*')
-            ->addSelect('ouuid_to_uuid(a.id_acl) as id_acl')
-            ->addSelect('ouuid_to_uuid(a.id_user) as id_user')
-            ->from('backoffice_acl', 'a')
             ->where('ouuid_to_uuid(a.id_user) = :userId')
             ->setParameter('userId', $userId);
 
-        $aclData = $this->assoc($queryBuilder, new AclDoctrineFilter($aclFilter));
-
-        return AclView::fromArray($aclData);
+        return $this->getOneByQuery($queryBuilder, $aclFilter);
     }
 
     public function getAll(?AclFilter $aclFilter = null): ArrayCollection
@@ -71,5 +60,18 @@ class AclDoctrineQuery extends BaseQuery implements AclQuery
         }, $data);
 
         return $collection;
+    }
+
+    private function getOneByQuery(QueryBuilder $queryBuilder, ?AclFilter $aclFilter = null): AclView
+    {
+        $queryBuilder
+            ->select('a.*')
+            ->addSelect('ouuid_to_uuid(a.id_acl) as id_acl')
+            ->addSelect('ouuid_to_uuid(a.id_user) as id_user')
+            ->from('backoffice_acl', 'a');
+
+        $userData = $this->assoc($queryBuilder, new AclDoctrineFilter($aclFilter));
+
+        return AclView::fromArray($userData);
     }
 }

@@ -18,9 +18,9 @@ class OAuthRoutes extends RoutesRegister
     private function addOauthToken(): void
     {
         /**
-         * @api {post} /token Generate auth token
+         * @api {post} /backoffice-token Generate auth token
          * @apiName AuthToken
-         * @apiGroup Auth
+         * @apiGroup BackofficeAuth
          *
          * @apiParam {String} [username] Username
          * @apiParam {String} [password] Password
@@ -40,11 +40,11 @@ class OAuthRoutes extends RoutesRegister
          */
         $this->router->addRoute(
             'POST',
-            '/token',
+            '/backoffice-token',
             function () {
                 $request = Request::createFromGlobals();
 
-                $response = $this->container->get('oauth_server')->handleTokenRequest($request);
+                $response = $this->container->get('backoffice_oauth_server')->handleTokenRequest($request);
 
                 if ($response->getStatusText() === 'OK') {
                     $response->setParameter('login', $request->request('username'));
@@ -59,9 +59,9 @@ class OAuthRoutes extends RoutesRegister
     private function addOauthTokenRefresh(): void
     {
         /**
-         * @api {post} /token Refresh auth token
-         * @apiName AuthToken
-         * @apiGroup Auth
+         * @api {post} /backoffice-token-refresh Refresh auth token
+         * @apiName RefreshAuthToken
+         * @apiGroup BackofficeAuth
          *
          * @apiParam {String} [username] Username
          * @apiParam {String} [password] Password
@@ -81,9 +81,11 @@ class OAuthRoutes extends RoutesRegister
          */
         $this->router->addRoute(
             'POST',
-            '/token-refresh',
+            '/backoffice-token-refresh',
             function () {
-                $response = $this->container->get('oauth_server')->handleTokenRequest(Request::createFromGlobals());
+                $response = $this->container
+                    ->get('backoffice_oauth_server')
+                    ->handleTokenRequest(Request::createFromGlobals());
                 $response->send();
                 die;
             }

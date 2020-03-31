@@ -26,9 +26,9 @@ class UsersRoutes extends RoutesRegister
     private function addGetUsers(): void
     {
         /**
-         * @api {get} /users Get users list
+         * @api {get} /backoffice-users Get users list
          * @apiName GetUsers
-         * @apiGroup Users
+         * @apiGroup BackofficeUsers
          *
          * @apiParam {Number} [offset] Records offset
          * @apiParam {Number} [limit] Records limit
@@ -60,7 +60,7 @@ class UsersRoutes extends RoutesRegister
          */
         $this->router->addRoute(
             'GET',
-            "/{$this->resource}",
+            "/backoffice-users",
             'App\Backoffice\Users\UI\Http\Controller\UserQueriesController@index',
             [new AclMiddleware($this->container)]
         );
@@ -69,9 +69,9 @@ class UsersRoutes extends RoutesRegister
     private function addGetUser(): void
     {
         /**
-         * @api {get} /users/:id Get user
+         * @api {get} /backoffice-users/:id Get user
          * @apiName GetUser
-         * @apiGroup Users
+         * @apiGroup BackofficeUsers
          *
          * @apiParam {Number} id User ID
          *
@@ -102,7 +102,7 @@ class UsersRoutes extends RoutesRegister
          */
         $this->router->addRoute(
             'GET',
-            "/{$this->resource}/" . static::UUID_PATTERN,
+            "/backoffice-users/" . static::UUID_PATTERN,
             'App\Backoffice\Users\UI\Http\Controller\UserQueriesController@get',
             [new AclMiddleware($this->container)]
         );
@@ -111,9 +111,9 @@ class UsersRoutes extends RoutesRegister
     private function addCreateUser(): void
     {
         /**
-         * @api {post} /users Create new user
+         * @api {post} /backoffice-users Create new user
          * @apiName CreateUser
-         * @apiGroup Users
+         * @apiGroup BackofficeUsers
          *
          * @apiParam {String{..50}} email E-mail address
          * @apiParam {String{6..18}} password User password
@@ -139,7 +139,7 @@ class UsersRoutes extends RoutesRegister
          */
         $this->router->addRoute(
             'POST',
-            "/{$this->resource}",
+            "/backoffice-users",
             'App\Backoffice\Users\UI\Http\Controller\UserCommandsController@create',
             [new AclMiddleware($this->container)]
         );
@@ -148,9 +148,9 @@ class UsersRoutes extends RoutesRegister
     private function addUpdateUser()
     {
         /**
-         * @api {put} /users Update user
+         * @api {put} /backoffice-users Update user
          * @apiName UpdateUser
-         * @apiGroup Users
+         * @apiGroup BackofficeUsers
          *
          * @apiParam {String{..50}} email E-mail address
          * @apiParam {String} access_token Auth token
@@ -176,7 +176,7 @@ class UsersRoutes extends RoutesRegister
          */
         $this->router->addRoute(
             'PUT',
-            "/{$this->resource}",
+            "/backoffice-users",
             'App\Backoffice\Users\UI\Http\Controller\UserCommandsController@update',
             [new OAuthMiddleware($this->container), new AclMiddleware($this->container)]
         );
@@ -185,9 +185,9 @@ class UsersRoutes extends RoutesRegister
     private function addDeleteUser(): void
     {
         /**
-         * @api {delete} /users/:id Delete user
+         * @api {delete} /backoffice-users/:id Delete user
          * @apiName DeleteUser
-         * @apiGroup Users
+         * @apiGroup BackofficeUsers
          *
          * @apiParam {Number} id User ID
          * @apiParam {String} access_token Auth token
@@ -203,7 +203,7 @@ class UsersRoutes extends RoutesRegister
          */
         $this->router->addRoute(
             'DELETE',
-            "/{$this->resource}",
+            "/backoffice-users",
             'App\Backoffice\Users\UI\Http\Controller\UserCommandsController@delete',
             [new OAuthMiddleware($this->container), new AclMiddleware($this->container)]
         );

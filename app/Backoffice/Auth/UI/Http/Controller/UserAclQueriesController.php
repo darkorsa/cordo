@@ -23,7 +23,7 @@ class UserAclQueriesController extends BaseController
 
         $service = $this->container->get('backoffice.acl.query.service');
 
-        $data = $this->transformerManager->transform($service->getCollection($aclFilter), 'acl');
+        $data = $this->transformerManager->transform($service->getCollection($aclFilter), 'backoffice-acl');
         $data['total'] = $service->getCount($aclFilter);
 
         return $this->respondWithData($data);
@@ -35,11 +35,11 @@ class UserAclQueriesController extends BaseController
 
         $result = $service->getOneById($params['id']);
 
-        return $this->respondWithData($this->transformerManager->transform($result, 'acl'));
+        return $this->respondWithData($this->transformerManager->transform($result, 'backoffice-acl'));
     }
 
     protected function registerTransformers(): void
     {
-        $this->transformerManager->add(new AclTransformer(), 'acl');
+        $this->transformerManager->add(new AclTransformer(), 'backoffice-acl');
     }
 }

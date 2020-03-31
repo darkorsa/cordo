@@ -20,10 +20,10 @@ class OAuthMiddleware implements MiddlewareInterface
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        $tokenData = $this->container->get('oauth_server')->getAccessTokenData(Request::createFromGlobals());
+        $tokenData = $this->container->get('backoffice_oauth_server')->getAccessTokenData(Request::createFromGlobals());
 
         if (!is_array($tokenData) || !array_key_exists('user_id', $tokenData)) {
-            $this->container->get('oauth_server')->getResponse()->send();
+            $this->container->get('backoffice_oauth_server')->getResponse()->send();
             die;
         }
 

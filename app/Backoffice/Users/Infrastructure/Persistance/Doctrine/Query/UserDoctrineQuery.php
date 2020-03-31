@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace App\Backoffice\Users\Infrastructure\Persistance\Doctrine\Query;
 
-use App\Backoffice\Users\Application\Query\UserView;
-use App\Backoffice\Users\Application\Query\UserFilter;
+use Doctrine\DBAL\Query\QueryBuilder;
 use Doctrine\Common\Collections\ArrayCollection;
-use Cordo\Core\Infractructure\Persistance\Doctrine\Query\BaseQuery;
+use App\Backoffice\Users\Application\Query\UserView;
 use App\Backoffice\Users\Application\Query\UserQuery;
+use App\Backoffice\Users\Application\Query\UserFilter;
+use Cordo\Core\Infractructure\Persistance\Doctrine\Query\BaseQuery;
 
 class UserDoctrineQuery extends BaseQuery implements UserQuery
 {
@@ -26,30 +27,20 @@ class UserDoctrineQuery extends BaseQuery implements UserQuery
     {
         $queryBuilder = $this->createQB();
         $queryBuilder
-            ->select('u.*')
-            ->addSelect('ouuid_to_uuid(u.id_user) as id_user')
-            ->from('backoffice_user', 'u')
             ->where('ouuid_to_uuid(u.id_user) = :userId')
             ->setParameter('userId', $userId);
 
-        $userData = $this->assoc($queryBuilder, new UserDoctrineFilter($userFilter));
-
-        return UserView::fromArray($userData);
+        return $this->getOneByQuery($queryBuilder, $userFilter);
     }
 
     public function getByEmail(string $email, ?UserFilter $userFilter = null): UserView
     {
         $queryBuilder = $this->createQB();
         $queryBuilder
-            ->select('u.*')
-            ->addSelect('ouuid_to_uuid(u.id_user) as id_user')
-            ->from('backoffice_user', 'u')
             ->where('email = :email')
             ->setParameter('email', $email);
 
-        $userData = $this->assoc($queryBuilder, new UserDoctrineFilter($userFilter));
-
-        return UserView::fromArray($userData);
+        return $this->getOneByQuery($queryBuilder, $userFilter);
     }
 
     public function getAll(?UserFilter $userFilter = null): ArrayCollection
@@ -68,5 +59,17 @@ class UserDoctrineQuery extends BaseQuery implements UserQuery
         }, $usersData);
 
         return $collection;
+    }
+
+    private function getOneByQuery(QueryBuilder $queryBuilder, ?UserFilter $userFilter = null): UserView
+    {
+        $queryBuilder
+            ->select('u.*')
+            ->addSelect('ouuid_to_uuid(u.id_user) as id_user')
+            ->from('backoffice_user', 'u');
+
+        $userData = $this->assoc($queryBuilder, new UserDoctrineFilter($userFilter));
+
+        return UserView::fromArray($userData);
     }
 }

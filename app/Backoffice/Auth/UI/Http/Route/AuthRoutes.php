@@ -21,7 +21,7 @@ class AuthRoutes extends RoutesRegister
     {
         $this->router->addRoute(
             'GET',
-            "/{$this->resource}/acl",
+            "/backoffice-acl",
             'App\Backoffice\Auth\UI\Http\Controller\UserAclQueriesController@index'
         );
     }
@@ -30,7 +30,7 @@ class AuthRoutes extends RoutesRegister
     {
         $this->router->addRoute(
             'GET',
-            "/{$this->resource}/acl/" . static::UUID_PATTERN,
+            "/backoffice-acl/" . static::UUID_PATTERN,
             'App\Backoffice\Auth\UI\Http\Controller\UserAclQueriesController@get'
         );
     }
@@ -39,7 +39,7 @@ class AuthRoutes extends RoutesRegister
     {
         $this->router->addRoute(
             'POST',
-            "/{$this->resource}/acl",
+            "/backoffice-acl",
             'App\Backoffice\Auth\UI\Http\Controller\UserAclCommandsController@create'
         );
     }
@@ -48,7 +48,7 @@ class AuthRoutes extends RoutesRegister
     {
         $this->router->addRoute(
             'PUT',
-            "/{$this->resource}/acl/" . static::UUID_PATTERN,
+            "/backoffice-acl/" . static::UUID_PATTERN,
             'App\Backoffice\Auth\UI\Http\Controller\UserAclCommandsController@update'
         );
     }
@@ -57,7 +57,7 @@ class AuthRoutes extends RoutesRegister
     {
         $this->router->addRoute(
             'DELETE',
-            "/{$this->resource}/acl/" . static::UUID_PATTERN,
+            "/backoffice-acl/" . static::UUID_PATTERN,
             'App\Backoffice\Auth\UI\Http\Controller\UserAclCommandsController@delete'
         );
     }

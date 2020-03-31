@@ -12,8 +12,8 @@ class UsersAcl extends AclRegister
 {
     public function register(): void
     {
-        $this->acl->addResource(new Resource($this->resource))
-            ->allow(SystemRole::GUEST(), $this->resource)
-            ->allow(SystemRole::LOGGED(), $this->resource);
+        $this->acl->addResource(new Resource('backoffice-users'))
+            ->allow(SystemRole::GUEST(), 'backoffice-users')
+            ->allow(SystemRole::LOGGED(), 'backoffice-users');
     }
 }

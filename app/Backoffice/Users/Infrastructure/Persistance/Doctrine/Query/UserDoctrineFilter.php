@@ -22,7 +22,9 @@ class UserDoctrineFilter implements QueryFilter
         }
 
         if (!is_null($this->userFilter->getIsActive())) {
-            $queryBuilder->andWhere('u.is_active', $this->userFilter->getIsActive());
+            $queryBuilder
+                ->andWhere('u.is_active = :is_active')
+                ->setParameter('is_active', $this->userFilter->getIsActive());
         }
 
         if (!is_null($this->userFilter->getOffset()) && !is_null($this->userFilter->getLimit())) {

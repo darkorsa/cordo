@@ -27,7 +27,7 @@ class UserQueriesController extends BaseController
 
         $service = $this->container->get('backoffice.users.query.service');
 
-        $data = $this->transformerManager->transform($service->getCollection($userFilter), 'user');
+        $data = $this->transformerManager->transform($service->getCollection($userFilter), 'backoffice-users');
         $data['total'] = $service->getCount($userFilter);
 
         return $this->respondWithData($data);
@@ -42,11 +42,11 @@ class UserQueriesController extends BaseController
 
         $result = $service->getOneById($params['id'], $userFilter);
 
-        return $this->respondWithData($this->transformerManager->transform($result, 'user'));
+        return $this->respondWithData($this->transformerManager->transform($result, 'backoffice-users'));
     }
 
     protected function registerTransformers(): void
     {
-        $this->transformerManager->add(new UserTransformer(), 'user');
+        $this->transformerManager->add(new UserTransformer(), 'backoffice-users');
     }
 }
