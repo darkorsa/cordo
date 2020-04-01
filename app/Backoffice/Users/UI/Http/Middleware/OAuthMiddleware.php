@@ -2,7 +2,9 @@
 
 namespace App\Backoffice\Users\UI\Http\Middleware;
 
+use App\Backoffice\Users\SharedKernel\Consts\OAuthConsts;
 use OAuth2\Request;
+use OAuth2\Response;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -20,10 +22,20 @@ class OAuthMiddleware implements MiddlewareInterface
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        $tokenData = $this->container->get('backoffice_oauth_server')->getAccessTokenData(Request::createFromGlobals());
+        $server = $this->container->get('backoffice_oauth_server');
+        $response = new Response();
 
-        if (!is_array($tokenData) || !array_key_exists('user_id', $tokenData)) {
-            $this->container->get('backoffice_oauth_server')->getResponse()->send();
+        if (!$server->verifyResourceRequest(Request::createFromGlobals(), $response, OAuthConsts::OAUTH_SCOPE)) {
+            // if the scope required is different from what the token allows,
+            // this will send a "401 insufficient_scope" error
+            $response->send();
+            die;
+        }
+
+        $tokenData = (array) $server->getAccessTokenData(Request::createFromGlobals());
+
+        if (!array_key_exists('user_id', $tokenData)) {
+            $response->send();
             die;
         }
 
