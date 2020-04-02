@@ -2,7 +2,6 @@
 
 namespace App\Backoffice\Users\UI\Http\Middleware;
 
-use App\Backoffice\Users\SharedKernel\Consts\OAuthConsts;
 use OAuth2\Request;
 use OAuth2\Response;
 use Psr\Container\ContainerInterface;
@@ -22,10 +21,15 @@ class OAuthMiddleware implements MiddlewareInterface
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
+        $config = $this->container->get('config');
         $server = $this->container->get('backoffice_oauth_server');
         $response = new Response();
 
-        if (!$server->verifyResourceRequest(Request::createFromGlobals(), $response, OAuthConsts::OAUTH_SCOPE)) {
+        if (!$server->verifyResourceRequest(
+            Request::createFromGlobals(),
+            $response,
+            $config->get('backoffice_users::oauth.scope')
+        )) {
             // if the scope required is different from what the token allows,
             // this will send a "401 insufficient_scope" error
             $response->send();

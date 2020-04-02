@@ -17,7 +17,8 @@ class UserQueriesController extends BaseController
         $queryParams = $request->getQueryParams();
 
         $offset = (int) ($queryParams['offset'] ?? 0);
-        $limit  = (int) ($queryParams['limit'] ?? $this->container->get('config')->get('users.limit'));
+        $limit  = (int) ($queryParams['limit']
+            ?? $this->container->get('config')->get('backoffice_users::users.limit'));
 
         $userFilter = new UserFilter();
         $userFilter

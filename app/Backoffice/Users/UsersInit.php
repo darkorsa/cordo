@@ -2,7 +2,6 @@
 
 namespace App\Backoffice\Users;
 
-use App\Backoffice\Users\SharedKernel\Consts\OAuthConsts;
 use DI\Container;
 use OAuth2\Scope;
 use OAuth2\Server;
@@ -41,17 +40,17 @@ class UsersInit implements ModuleInit
 
         // setting scope
         $scopeUtil = new Scope(new Memory(array(
-            'default_scope' => OAuthConsts::OAUTH_SCOPE,
-            'supported_scopes' => OAuthConsts::OAUTH_ALLOWED_SCOPES
+            'default_scope' => $config->get('backoffice_users::oauth.scope'),
+            'supported_scopes' => $config->get('backoffice_users::oauth.allowed_scopes')
         )));
 
         $server = new Server($storage, [
-            'access_lifetime' => $config->get('auth.expire'),
+            'access_lifetime' => $config->get('backoffice_users::oauth.token_expire'),
         ]);
         $server->addGrantType(new ClientCredentials($storage));
         $server->addGrantType(new UserCredentials($credentials));
         $server->addGrantType(new RefreshToken($storage, [
-            'always_issue_new_refresh_token' => $config->get('auth.always_issue_new_refresh_token'),
+            'always_issue_new_refresh_token' => $config->get('backoffice_users::oauth.always_issue_new_refresh_token'),
         ]));
         $server->setScopeUtil($scopeUtil);
 
