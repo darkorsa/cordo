@@ -5,16 +5,10 @@
                           https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
     <entity name="App\Backoffice\Users\Domain\User" table="backoffice_user">
-
         <indexes>
             <index name="email_idx" columns="email"/>
         </indexes>
-
-        <id name="id" column="id_user" type="uuid_binary_ordered_time">
-            <generator strategy="CUSTOM"/>
-            <custom-id-generator class="Ramsey\Uuid\Doctrine\UuidOrderedTimeGenerator"/>
-        </id>
-
+        <id name="id" column="id_user" type="uuid_binary_ordered_time" />
         <field name="email" column="email" type="string" length="50" nullable="false" unique="true" />
         <field name="password" column="password" type="string" length="150" nullable="false" />
         <field name="isActive" column="is_active" type="boolean">

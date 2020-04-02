@@ -32,7 +32,7 @@ class UserAclCommandsController extends BaseController
         $user = $this->container->get('backoffice.users.query.service')->getOneById($params->id_user);
 
         $command = new CreateUserAcl(
-            Uuid::uuid4()->toString(),
+            Uuid::uuid1()->toString(),
             $user,
             (array) $params->privileges,
             new DateTime(),

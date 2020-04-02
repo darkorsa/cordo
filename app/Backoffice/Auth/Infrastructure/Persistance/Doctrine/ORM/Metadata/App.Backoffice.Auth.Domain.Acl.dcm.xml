@@ -5,18 +5,11 @@
                           https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
     <entity name="App\Backoffice\Auth\Domain\Acl" table="backoffice_acl">
-
-        <id name="id" column="id_acl" type="uuid_binary_ordered_time">
-            <generator strategy="CUSTOM"/>
-            <custom-id-generator class="Ramsey\Uuid\Doctrine\UuidOrderedTimeGenerator"/>
-        </id>
-
+        <id name="id" column="id_acl" type="uuid_binary_ordered_time" />
         <one-to-one field="id_user" target-entity="App\Backoffice\Users\Domain\User">
             <join-column name="id_user" referenced-column-name="id_user" on-delete="CASCADE" on-update="CASCADE"/>
         </one-to-one>
-
         <field name="privileges" column="privileges" type="text" nullable="false" />
-
         <field name="createdAt" column="created_at" type="datetime">
             <options>
                 <option name="default">CURRENT_TIMESTAMP</option>
