@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace App\Backoffice\Users\UI\Http\Route;
 
-use App\Backoffice\Users\UI\Http\Route\OAuthRoutes;
-use App\Backoffice\Users\UI\Http\Middleware\OAuthMiddleware;
+use App\Backoffice\Shared\UI\Http\Middleware\AclMiddleware;
 use Cordo\Core\Application\Service\Register\RoutesRegister;
-use App\Backoffice\Auth\UI\Http\Middleware\AclMiddleware;
+use App\Backoffice\Shared\UI\Http\Middleware\AuthMiddleware;
 
 class UsersRoutes extends RoutesRegister
 {
@@ -18,9 +17,6 @@ class UsersRoutes extends RoutesRegister
         $this->addCreateUser();
         $this->addUpdateUser();
         $this->addDeleteUser();
-
-        $oAuthRoutes = new OAuthRoutes($this->router, $this->container, $this->resource);
-        $oAuthRoutes->register();
     }
 
     private function addGetUsers(): void
@@ -178,7 +174,7 @@ class UsersRoutes extends RoutesRegister
             'PUT',
             "/backoffice-users",
             'App\Backoffice\Users\UI\Http\Controller\UserCommandsController@update',
-            [new OAuthMiddleware($this->container), new AclMiddleware($this->container)]
+            [new AuthMiddleware($this->container), new AclMiddleware($this->container)]
         );
     }
 
@@ -205,7 +201,7 @@ class UsersRoutes extends RoutesRegister
             'DELETE',
             "/backoffice-users",
             'App\Backoffice\Users\UI\Http\Controller\UserCommandsController@delete',
-            [new OAuthMiddleware($this->container), new AclMiddleware($this->container)]
+            [new AuthMiddleware($this->container), new AclMiddleware($this->container)]
         );
     }
 }

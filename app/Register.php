@@ -15,6 +15,7 @@ class Register extends ModulesRegister
      */
     protected static $register = [
         'Backoffice\Users',
+        'Backoffice\Acl',
         'Backoffice\Auth',
         'Welcome\Message',
     ];
