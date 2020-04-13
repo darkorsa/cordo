@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace App\Backoffice\Acl\Application\Service;
 
 use Laminas\Permissions\Acl\Acl;
+use Cordo\Core\SharedKernel\Enum\SystemRole;
+use Doctrine\Common\Collections\ArrayCollection;
 use App\Backoffice\Acl\Application\Query\AclView;
 use App\Backoffice\Acl\Application\Query\AclQuery;
-use Cordo\Core\SharedKernel\Enum\SystemRole;
-use App\Backoffice\Acl\Application\Query\AclFilter;
-use Doctrine\Common\Collections\ArrayCollection;
+use Cordo\Core\Application\Query\QueryFilterInterface;
 use Cordo\Core\Application\Exception\ResourceNotFoundException;
 
 class AclQueryService
@@ -21,22 +21,22 @@ class AclQueryService
         $this->aclQuery = $aclQuery;
     }
 
-    public function getOneById(string $id, ?AclFilter $aclFilter = null): AclView
+    public function getOneById(string $id, ?QueryFilterInterface $aclFilter = null): AclView
     {
         return $this->aclQuery->getById($id, $aclFilter);
     }
 
-    public function getOneByUserId(string $userId, ?AclFilter $aclFilter = null): AclView
+    public function getOneByUserId(string $userId, ?QueryFilterInterface $aclFilter = null): AclView
     {
         return $this->aclQuery->getByUserId($userId, $aclFilter);
     }
 
-    public function getCollection(?AclFilter $aclFilter = null): ArrayCollection
+    public function getCollection(?QueryFilterInterface $aclFilter = null): ArrayCollection
     {
         return $this->aclQuery->getAll($aclFilter);
     }
 
-    public function getCount(?AclFilter $aclFilter = null): int
+    public function getCount(?QueryFilterInterface $aclFilter = null): int
     {
         return $this->aclQuery->count($aclFilter);
     }

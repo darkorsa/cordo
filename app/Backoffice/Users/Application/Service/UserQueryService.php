@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace App\Backoffice\Users\Application\Service;
 
+use Cordo\Core\Application\Query\QueryFilter;
+use Doctrine\Common\Collections\ArrayCollection;
 use App\Backoffice\Users\Application\Query\UserView;
 use App\Backoffice\Users\Application\Query\UserQuery;
-use App\Backoffice\Users\Application\Query\UserFilter;
-use Doctrine\Common\Collections\ArrayCollection;
+use Cordo\Core\Application\Query\QueryFilterInterface;
 
 class UserQueryService
 {
@@ -18,23 +19,29 @@ class UserQueryService
         $this->userQuery = $userQuery;
     }
 
-    public function getOneById(string $id, ?UserFilter $userFilter = null): UserView
+    public function getOneById(string $id, ?QueryFilterInterface $queryFilter = null): UserView
     {
-        return $this->userQuery->getById($id, $userFilter);
+        $userFilter = $queryFilter ?: new QueryFilter();
+        $userFilter->addFilter('idUser', $id);
+
+        return $this->userQuery->getOne($userFilter);
     }
 
-    public function getOneByEmail(string $email, ?UserFilter $userFilter = null): UserView
+    public function getOneByEmail(string $email, ?QueryFilterInterface $queryFilter = null): UserView
     {
-        return $this->userQuery->getByEmail($email, $userFilter);
+        $userFilter = $queryFilter ?: new QueryFilter();
+        $userFilter->addFilter('email', $email);
+
+        return $this->userQuery->getOne($userFilter);
     }
 
-    public function getCollection(?UserFilter $userFilter = null): ArrayCollection
+    public function getCollection(?QueryFilterInterface $queryFilter = null): ArrayCollection
     {
-        return $this->userQuery->getAll($userFilter);
+        return $this->userQuery->getAll($queryFilter);
     }
 
-    public function getCount(?UserFilter $userFilter = null): int
+    public function getCount(?QueryFilterInterface $queryFilter = null): int
     {
-        return $this->userQuery->count($userFilter);
+        return $this->userQuery->count($queryFilter);
     }
 }

@@ -8,12 +8,12 @@ use Doctrine\DBAL\Query\QueryBuilder;
 use Doctrine\Common\Collections\ArrayCollection;
 use App\Backoffice\Acl\Application\Query\AclView;
 use App\Backoffice\Acl\Application\Query\AclQuery;
-use App\Backoffice\Acl\Application\Query\AclFilter;
+use Cordo\Core\Application\Query\QueryFilterInterface;
 use Cordo\Core\Infractructure\Persistance\Doctrine\Query\BaseQuery;
 
 class AclDoctrineQuery extends BaseQuery implements AclQuery
 {
-    public function count(?AclFilter $aclFilter = null): int
+    public function count(?QueryFilterInterface $aclFilter = null): int
     {
         $queryBuilder = $this->createQB();
         $queryBuilder
@@ -23,7 +23,7 @@ class AclDoctrineQuery extends BaseQuery implements AclQuery
         return (int) $this->column($queryBuilder, new AclDoctrineFilter($aclFilter));
     }
 
-    public function getById(string $id, ?AclFilter $aclFilter = null): AclView
+    public function getById(string $id, ?QueryFilterInterface $aclFilter = null): AclView
     {
         $queryBuilder = $this->createQB();
         $queryBuilder
@@ -33,7 +33,7 @@ class AclDoctrineQuery extends BaseQuery implements AclQuery
         return $this->getOneByQuery($queryBuilder, $aclFilter);
     }
 
-    public function getByUserId(string $userId, ?AclFilter $aclFilter = null): AclView
+    public function getByUserId(string $userId, ?QueryFilterInterface $aclFilter = null): AclView
     {
         $queryBuilder = $this->createQB();
         $queryBuilder
@@ -43,7 +43,7 @@ class AclDoctrineQuery extends BaseQuery implements AclQuery
         return $this->getOneByQuery($queryBuilder, $aclFilter);
     }
 
-    public function getAll(?AclFilter $aclFilter = null): ArrayCollection
+    public function getAll(?QueryFilterInterface $aclFilter = null): ArrayCollection
     {
         $queryBuilder = $this->createQB();
         $queryBuilder
@@ -62,7 +62,7 @@ class AclDoctrineQuery extends BaseQuery implements AclQuery
         return $collection;
     }
 
-    private function getOneByQuery(QueryBuilder $queryBuilder, ?AclFilter $aclFilter = null): AclView
+    private function getOneByQuery(QueryBuilder $queryBuilder, ?QueryFilterInterface $aclFilter = null): AclView
     {
         $queryBuilder
             ->select('a.*')

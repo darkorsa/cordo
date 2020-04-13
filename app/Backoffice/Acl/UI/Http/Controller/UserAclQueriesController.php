@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace App\Backoffice\Acl\UI\Http\Controller;
 
 use Psr\Http\Message\ResponseInterface;
-use App\Backoffice\Acl\Application\Query\AclFilter;
-use App\Backoffice\Acl\UI\Transformer\AclTransformer;
 use Psr\Http\Message\ServerRequestInterface;
+use Cordo\Core\Application\Query\QueryFilter;
 use Cordo\Core\UI\Http\Controller\BaseController;
+use App\Backoffice\Acl\UI\Transformer\AclTransformer;
 
 class UserAclQueriesController extends BaseController
 {
@@ -16,11 +16,8 @@ class UserAclQueriesController extends BaseController
     {
         $queryParams = $request->getQueryParams();
 
-        $aclFilter = new AclFilter();
-        if (array_key_exists('id_user', $queryParams)) {
-            $aclFilter->setUserId($queryParams['id_user']);
-        }
-
+        $aclFilter = QueryFilter::fromQueryParams($queryParams);
+        
         $service = $this->container->get('backoffice.acl.query.service');
 
         $data = $this->transformerManager->transform($service->getCollection($aclFilter), 'backoffice-acl');

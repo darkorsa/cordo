@@ -8,12 +8,12 @@ use Doctrine\DBAL\Query\QueryBuilder;
 use Doctrine\Common\Collections\ArrayCollection;
 use App\Backoffice\Users\Application\Query\UserView;
 use App\Backoffice\Users\Application\Query\UserQuery;
-use App\Backoffice\Users\Application\Query\UserFilter;
+use Cordo\Core\Application\Query\QueryFilterInterface;
 use Cordo\Core\Infractructure\Persistance\Doctrine\Query\BaseQuery;
 
 class UserDoctrineQuery extends BaseQuery implements UserQuery
 {
-    public function count(?UserFilter $userFilter = null): int
+    public function count(?QueryFilterInterface $userFilter = null): int
     {
         $queryBuilder = $this->createQB();
         $queryBuilder
@@ -23,27 +23,12 @@ class UserDoctrineQuery extends BaseQuery implements UserQuery
         return (int) $this->column($queryBuilder, new UserDoctrineFilter($userFilter));
     }
 
-    public function getById(string $userId, ?UserFilter $userFilter = null): UserView
+    public function getOne(QueryFilterInterface $userFilter): UserView
     {
-        $queryBuilder = $this->createQB();
-        $queryBuilder
-            ->where('ouuid_to_uuid(u.id_user) = :userId')
-            ->setParameter('userId', $userId);
-
-        return $this->getOneByQuery($queryBuilder, $userFilter);
+        return $this->getOneByQuery($this->createQB(), $userFilter);
     }
 
-    public function getByEmail(string $email, ?UserFilter $userFilter = null): UserView
-    {
-        $queryBuilder = $this->createQB();
-        $queryBuilder
-            ->where('email = :email')
-            ->setParameter('email', $email);
-
-        return $this->getOneByQuery($queryBuilder, $userFilter);
-    }
-
-    public function getAll(?UserFilter $userFilter = null): ArrayCollection
+    public function getAll(?QueryFilterInterface $userFilter = null): ArrayCollection
     {
         $queryBuilder = $this->createQB();
         $queryBuilder
@@ -61,7 +46,7 @@ class UserDoctrineQuery extends BaseQuery implements UserQuery
         return $collection;
     }
 
-    private function getOneByQuery(QueryBuilder $queryBuilder, ?UserFilter $userFilter = null): UserView
+    private function getOneByQuery(QueryBuilder $queryBuilder, ?QueryFilterInterface $userFilter = null): UserView
     {
         $queryBuilder
             ->select('u.*')

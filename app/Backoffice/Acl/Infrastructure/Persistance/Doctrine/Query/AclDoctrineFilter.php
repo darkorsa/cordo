@@ -3,27 +3,16 @@
 namespace App\Backoffice\Acl\Infrastructure\Persistance\Doctrine\Query;
 
 use Doctrine\DBAL\Query\QueryBuilder;
-use App\Backoffice\Acl\Application\Query\AclFilter;
-use Cordo\Core\Infractructure\Persistance\Doctrine\Query\QueryFilter;
+use Cordo\Core\Infractructure\Persistance\Doctrine\Query\QueryBuilderFilter;
 
-class AclDoctrineFilter implements QueryFilter
+class AclDoctrineFilter extends QueryBuilderFilter
 {
-    private $filter;
-
-    public function __construct(?AclFilter $aclFilter)
+    public function doFilter(QueryBuilder $queryBuilder): void
     {
-        $this->filter = $aclFilter;
-    }
-
-    public function filter(QueryBuilder $queryBuilder): void
-    {
-        if (is_null($this->filter)) {
-            return;
-        }
-
-        if (!is_null($this->filter->getUserId())) {
-            $queryBuilder->andWhere('ouuid_to_uuid(a.id_user) = :userId')
-                ->setParameter('userId', $this->filter->getUserId());
+        if ($this->queryFilter->getFilter('idUser') !== null) {
+            $queryBuilder
+                ->andWhere('ouuid_to_uuid(a.id_user) = :userId')
+                ->setParameter('userId', $this->queryFilter->getFilter('idUser'));
         }
     }
 }
