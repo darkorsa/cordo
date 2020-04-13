@@ -59,7 +59,6 @@ $ php cordo system:init
 ```
 
 It will create:
-- DB schema based on Doctrine XML metadata files
 - All the neccessary DB tables for OAuth2
 - Uuid DB helper functions
 
@@ -93,9 +92,9 @@ Some of the used libraries:
 
 This documentation does not focus on describing in detail how to deal with Routes, Command Bus, DI Container, querying DB, etc., for that use the documentation of the relevant library.
 
-You are also encouraged to find for yourself how things work under the hood, check the [cordo-core](https://github.com/darkorsa/cordo-core) library where abstract classes and interfaces are located.
+You are also encouraged to find for yourself how things work under the hood, check the [Cordo Core](https://github.com/darkorsa/cordo-core) library where abstract classes and interfaces are located.
 
-Cordo is shipped with one previously prepared module: `Backoffice\Users`. It presents how the code can be organized within all the layers and utilizes of `Events` and `Queues`.
+If you want to see how the code can be organizen within all the layers, how to utilize of `CQRS`, `Repository Pattern`, `Events`, `Queues`, etc. take a look at the [Backoffice Bundle](https://github.com/darkorsa/cordo-bundle-backoffice). Check the installation instructions [here](https://github.com/darkorsa/cordo-bundle-backoffice/blob/master/README.md).
 
 ### Entry points
 
