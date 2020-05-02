@@ -55,7 +55,7 @@ Next copy `.env_example` file and rename it to `.env`. Then complete it with you
 Final step is running console command:
 
 ``` bash
-$ php cordo system:init
+$ php cordo core:init --withOAuth --withUuid
 ```
 
 It will create:
@@ -244,7 +244,7 @@ This structure consists of layers: **User Interface**, **Application**, **Domain
 If you want to quickly boilerplate your new module there's a command for that:
 
 ``` bash
-php cordo system:module-builder <context> <module_name> [module_archive_file]
+php cordo core:module-builder <context> <module_name> [module_archive_file]
 ```
 
 you can find pre-prepared archive in `app/resources/module`.
