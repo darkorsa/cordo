@@ -39,15 +39,10 @@ $ sudo pecl install redis
 $ sudo service php7.4-fpm restart
 ```
 
-Next clone this repository into your new project folder.
+Next create your new project folder and within this folder type:
 
 ``` bash
-$ git clone git@github.com:darkorsa/cordo.git .
-```
-
-Run:
-``` bash
-$ composer install
+$ composer create-project darkorsa/cordo ./ -s dev
 ```
 
 Next copy `.env_example` file and rename it to `.env`. Then complete it with your configuration data.
@@ -61,8 +56,6 @@ $ php cordo core:init --withOAuth --withUuid
 It will create:
 - All the neccessary DB tables for OAuth2
 - Uuid DB helper functions
-
-After that you are good to go with Authentication, Acl and basic CRUD operations in Backoffice\Users module.
 
 ## Still missing
 - Caching
