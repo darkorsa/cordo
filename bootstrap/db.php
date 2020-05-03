@@ -18,7 +18,9 @@ $dbParams = [
     'driver'    => 'pdo_mysql',
 ];
 
-Type::addType('uuid_binary_ordered_time', 'Cordo\Core\SharedKernel\Uuid\Doctrine\UuidBinaryOrderedTimeType');
+if (!Type::hasType('uuid_binary_ordered_time')) {
+    Type::addType('uuid_binary_ordered_time', 'Cordo\Core\SharedKernel\Uuid\Doctrine\UuidBinaryOrderedTimeType');
+}
 
 $proxyDir = storage_path() . 'cache/doctrine/';
 
