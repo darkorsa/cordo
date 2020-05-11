@@ -1,22 +1,21 @@
 #!/usr/bin/env php
 <?php
 
+use App\Register;
 use Monolog\Logger;
 use Bernard\Consumer;
 use Bernard\Producer;
 use Monolog\Handler\StreamHandler;
 use Bernard\Router\ClassNameRouter;
 use Bernard\Router\ContainerReceiverResolver;
-use Cordo\Core\Application\Event\EventDispatcherAdapter;
 use Symfony\Component\EventDispatcher\EventDispatcher;
-use App\Backoffice\Users\Application\Command\SendUserWelcomeMessage;
-use App\Backoffice\Users\Application\Command\Handler\SendUserWelcomeMessageHandler;
+use Cordo\Core\Application\Event\EventDispatcherAdapter;
 
 require __DIR__ . '/bootstrap/autoload.php';
 
 // bootstapping
-$container      = require __DIR__ . '/bootstrap/app.php';
-$queueFactory   = require __DIR__ . '/bootstrap/queue_factory.php';
+$container = require __DIR__ . '/bootstrap/app.php';
+$queueFactory = require __DIR__ . '/bootstrap/queue_factory.php';
 
 $eventDispatcher = new EventDispatcherAdapter(new EventDispatcher());
 $producer = new Producer($queueFactory, new EventDispatcher());
@@ -24,9 +23,10 @@ $producer = new Producer($queueFactory, new EventDispatcher());
 $logger = new Logger('errorlog');
 $logger->pushHandler(new StreamHandler(storage_path() . 'logs/error.log', Logger::DEBUG));
 
-$router = new ClassNameRouter([
-    SendUserWelcomeMessage::class => SendUserWelcomeMessageHandler::class,
-], new ContainerReceiverResolver($container));
+$router = new ClassNameRouter(
+    Register::registerHandlersMap(),
+    new ContainerReceiverResolver($container)
+);
 
 $eventDispatcher->addListener(
     Bernard\BernardEvents::INVOKE,
