@@ -2,15 +2,14 @@
 <?php
 
 use App\Register;
-use Monolog\Logger;
 use Bernard\Consumer;
 use Bernard\Producer;
 use Noodlehaus\Config;
-use Monolog\Handler\StreamHandler;
 use Bernard\Router\ClassNameRouter;
 use Bernard\Router\ContainerReceiverResolver;
 use Cordo\Core\Application\Queue\MessageInterface;
 use Symfony\Component\EventDispatcher\EventDispatcher;
+use Cordo\Core\Application\Error\ErrorReporterInterface;
 use Cordo\Core\Application\Event\EventDispatcherAdapter;
 
 require __DIR__ . '/bootstrap/autoload.php';
@@ -22,13 +21,15 @@ $queueFactory = require __DIR__ . '/bootstrap/queue_factory.php';
 $eventDispatcher = new EventDispatcherAdapter(new EventDispatcher());
 $producer = new Producer($queueFactory, new EventDispatcher());
 
-$logger = new Logger('errorlog');
-$logger->pushHandler(new StreamHandler(storage_path() . 'logs/error.log', Logger::DEBUG));
-
 /**
  * @var Config
  */
 $config = $container->get('config');
+
+/**
+ * @var ErrorReporterInterface
+ */
+$errorReporter = $container->get('error_reporter');
 
 $router = new ClassNameRouter(
     Register::registerHandlersMap(),
@@ -38,7 +39,7 @@ $router = new ClassNameRouter(
 $eventDispatcher->addListener(
     Bernard\BernardEvents::INVOKE,
     function (Bernard\Event\EnvelopeEvent $envelopeEvent) {
-        // log job invoked 
+        // log job invoked
     }
 );
 $eventDispatcher->addListener(
@@ -49,7 +50,7 @@ $eventDispatcher->addListener(
 );
 $eventDispatcher->addListener(
     Bernard\BernardEvents::REJECT,
-    function (Bernard\Event\RejectEnvelopeEvent $envelopeEvent) use ($logger, $producer, $config) {
+    function (Bernard\Event\RejectEnvelopeEvent $envelopeEvent) use ($errorReporter, $producer, $config) {
         /**
          * @var MessageInterface
          */
@@ -61,7 +62,7 @@ $eventDispatcher->addListener(
             return;
         }
 
-        $logger->error($envelopeEvent->getException());
+        $errorReporter->report($envelopeEvent->getException());
     }
 );
 
