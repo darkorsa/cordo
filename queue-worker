@@ -5,9 +5,11 @@ use App\Register;
 use Monolog\Logger;
 use Bernard\Consumer;
 use Bernard\Producer;
+use Noodlehaus\Config;
 use Monolog\Handler\StreamHandler;
 use Bernard\Router\ClassNameRouter;
 use Bernard\Router\ContainerReceiverResolver;
+use Cordo\Core\Application\Queue\MessageInterface;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Cordo\Core\Application\Event\EventDispatcherAdapter;
 
@@ -22,6 +24,11 @@ $producer = new Producer($queueFactory, new EventDispatcher());
 
 $logger = new Logger('errorlog');
 $logger->pushHandler(new StreamHandler(storage_path() . 'logs/error.log', Logger::DEBUG));
+
+/**
+ * @var Config
+ */
+$config = $container->get('config');
 
 $router = new ClassNameRouter(
     Register::registerHandlersMap(),
@@ -42,12 +49,15 @@ $eventDispatcher->addListener(
 );
 $eventDispatcher->addListener(
     Bernard\BernardEvents::REJECT,
-    function (Bernard\Event\RejectEnvelopeEvent $envelopeEvent) use ($logger, $producer) {
+    function (Bernard\Event\RejectEnvelopeEvent $envelopeEvent) use ($logger, $producer, $config) {
+        /**
+         * @var MessageInterface
+         */
         $message = $envelopeEvent->getEnvelope()->getMessage();
 
-        if ($message->fired() < 3) {
+        if ($message->fired() < $config->get('queue.tries')) {
             $message->fire();
-            $producer->produce($message, 'default');
+            $producer->produce($message, $config->get('queue.default_queue'));
             return;
         }
 
@@ -56,4 +66,4 @@ $eventDispatcher->addListener(
 );
 
 $consumer = new Consumer($router, $eventDispatcher);
-$consumer->consume($queueFactory->create('default'));
+$consumer->consume($queueFactory->create($config->get('queue.default_queue')));

@@ -37,7 +37,7 @@ return new CommandBus([
     new LoggerMiddleware(new ClassNameFormatter(), $commandLogger),
     new LockingMiddleware(),
     new TransactionMiddleware($entityManager),
-    new QueueMiddleware($producer),
+    new QueueMiddleware($producer, $container->get('config')->get('queue.default_queue')),
     new EventMiddleware($emitter),
     $commandHandlerMiddleware,
 ]);
