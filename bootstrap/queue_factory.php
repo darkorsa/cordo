@@ -10,7 +10,7 @@ use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer as SymfonySerializer;
 
 $redis = new Redis();
-$redis->connect('127.0.0.1', env('REDIS_PORT'));
+$redis->connect(env('REDIS_SERVER'), env('REDIS_PORT'));
 $redis->setOption(Redis::OPT_PREFIX, 'bernard:');
 
 $driver = new Driver($redis);
