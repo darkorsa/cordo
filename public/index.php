@@ -5,7 +5,9 @@
  */
 
 use App\Register;
+use GuzzleHttp\Psr7\Response;
 use Cordo\Core\UI\Http\Dispatcher;
+use Tuupola\Middleware\CorsMiddleware;
 use Cordo\Core\UI\Http\Response\JsonResponse;
 use Cordo\Core\UI\Http\Middleware\ParsePutRequest;
 
@@ -19,7 +21,15 @@ Register::initModules($container, false);
 
 // router
 $router = $container->get('router');
+$router->addMiddleware(new CorsMiddleware($container->get('config')->get('cors')));
 $router->addMiddleware(new ParsePutRequest());
+$router->addRoute(
+    'OPTIONS',
+    "/{endpoint:.+}",
+    function () {
+        return new Response();
+    }
+);
 
 // load routes
 Register::registerRoutes($router, $container);
