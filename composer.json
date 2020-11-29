@@ -4,11 +4,11 @@
     "license": "MIT",
     "require": {
         "ext-redis": "^5.0",
-        "darkorsa/cordo-core": "^0.6"
+        "darkorsa/cordo-core": "^0.7"
     },
     "require-dev": {
         "nunomaduro/phpinsights": "^1.7",
-        "phpstan/phpstan": "^0.11.2",
+        "phpstan/phpstan": "^0.12",
         "symfony/var-dumper": "^5.0"
     },
     "autoload": {
