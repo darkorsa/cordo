@@ -6,7 +6,7 @@ Cordo is a microframework designed for efficient development of REST APIs using 
 - CQRS (Command Query Responsibility Segregation)
 - Event Dispatcher
 - Repository pattern
-- Queues (Redis, RabbitMQ, Amazon SQS)
+- Queues (Redis)
 - OAuth2
 - UUIDs
 - Package by feature
@@ -27,25 +27,20 @@ Main goal to create this framework was to have an efficient tool to build API ba
 
 ## Install
 
-If you'd like to utilize of the *Queues* functionality make sure that you have Redis server installed on your machine by typing in your shell:
-
-``` bash
-$ redis-cli ping
-```
-If Redis is properly installed it replies with *PONG*. Otherwise you should install it from [PECL](https://pecl.php.net/) repository:
+If you'd like to utilize of the *Queues* functionality make sure that you have Redis extension for PHP installed. You can install it from [PECL](https://pecl.php.net/) repository:
 
 ``` bash
 $ sudo pecl install redis
 $ sudo service php7.4-fpm restart
 ```
 
-Next create your new project folder and within this folder type:
+To create a new project go to your project folder and within this folder type:
 
 ``` bash
 $ composer create-project darkorsa/cordo ./ -s dev
 ```
 
-Next copy `.env_example` file and rename it to `.env`. Then complete it with your configuration data.
+Next copy `.env_example` file and rename it to `.env`. Then fill it with your configuration data.
 
 Final step is running console command:
 
@@ -58,18 +53,17 @@ It will create:
 - Uuid DB helper functions
 
 ## Still missing
-- Caching
+- Caching - for caching you can check [Cordo Gateway](https://github.com/darkorsa/cordo-gateway)
 
 ## How things work
 
-Cordo does not reinvent the wheel. It is basically a set of popular PHP libraries put together and configured in order to create a simple framework that is in compliance with good programming practices for modern PHP.
+Cordo does not reinvent the wheel. It's basically a set of popular PHP libraries put together and configured in order to create a simple framework that is in compliance with good programming practices for modern PHP.
 
 Some of the used libraries:
 
 - [Doctrine](https://www.doctrine-project.org/)
 - [OAuth2](https://bshaffer.github.io/oauth2-server-php-docs/)
 - [Fast Route](https://github.com/nikic/FastRoute)
-- [Guzzle](http://docs.guzzlephp.org/en/stable/)
 - [Tactician](https://tactician.thephpleague.com/)
 - [Fractal](https://fractal.thephpleague.com/)
 - [Plates](http://platesphp.com/)
@@ -78,6 +72,7 @@ Some of the used libraries:
 - [Bernard](https://bernard.readthedocs.io/)
 - [Whoops](http://filp.github.io/whoops/)
 - [Relay](https://relayphp.com/)
+- [Guzzle](http://docs.guzzlephp.org/en/stable/)
 - [Symfony Console](https://symfony.com/doc/current/components/console.html)
 - [Symfony Dotenv](https://symfony.com/doc/current/components/dotenv.html)
 - [Laminas ACL](https://docs.laminas.dev/laminas-permissions-acl/)
@@ -101,7 +96,7 @@ Entry point for HTTP requests is `public/index.php`. Your apache/nginx configura
 
 Command-line commands are handled with use of [Symfony Console](https://symfony.com/doc/current/components/console.html) component.
 
-You can fire your commands through command-line with:
+You can fire your commands through the command-line with:
 ``` shell
 php cordo [command_name]
 ```
@@ -387,7 +382,7 @@ To better understand how to deal with events check Users module how welcome mess
 
 ### OAuth2
 
-OAuth2 authorization is shipped with *Users* module and is ready to use. Endpoints for token generation and token refresh are located at `app/Backoffice/Users/UI/Http/Route/OAuthRoutes.php`. Default Client ID is *Cordo*.
+OAuth2 authorization is shipped with [Backoffice Users](https://github.com/darkorsa/cordo-bundle-backoffice) module and is ready to use. Endpoints for token generation and token refresh are located at `app/Backoffice/Users/UI/Http/Route/OAuthRoutes.php`. Default Client ID is *Cordo*.
 
 General OAuth2 configuration is performed during *Users* initialization at: `app/Backoffice/Users/UsersInit.php`. 
 
@@ -397,9 +392,9 @@ If you'd like to change default credentials check behavior you can do it here: `
 
 For the purpose of Authorization [Zend ACL](https://docs.zendframework.com/zend-permissions-acl/usage/) has been used. ACL roles, resources, permissions cen be defined seperately in each package in `app/[Context]/[PackageName]/Application/Acl/[PackageName]Acl.php` which should extend `Cordo\Core\Application\Service\Register\AclRegister`.
 
-In `Auth` package that is shipped with this framework there are CRUD actions prepared for users ACL rules.
+In `Auth` package that is shipped with  [Backoffice Users bundle](https://github.com/darkorsa/cordo-bundle-backoffice) there are CRUD actions prepared for users ACL rules.
 
-There is also a `Middeware` for authorizing access to API endpoints in `system/Module/Auth/UI/Http/Middleware/AclMiddleware.php`. You can pass privilage name in constructor or leave empty then it will simply map http request method (GET, POST, PUT, DELETE) as acl privilage.
+There is also a `Middeware` for authorizing access to API endpoints in `app/Backoffice/Shared/UI/Http/Middleware/AclMiddleware.php`. You can pass privilage name in constructor or leave empty then it will simply map http request method (GET, POST, PUT, DELETE) as acl privilage.
 
 ### Errors
 
