@@ -6,12 +6,19 @@
  */
 
 use App\Register;
+use Doctrine\DBAL\Connection;
 use SensioLabs\Security\SecurityChecker;
 use Symfony\Component\Console\Application;
 use Cordo\Core\UI\Console\Command\InitCommand;
-use Cordo\Core\UI\Console\Command\ModuleBuilderCommand;
+use Symfony\Component\Console\Helper\HelperSet;
+use Symfony\Component\Console\Helper\ProcessHelper;
+use Symfony\Component\Console\Helper\QuestionHelper;
+use Symfony\Component\Console\Helper\FormatterHelper;
 use Doctrine\DBAL\Tools\Console\Command\ImportCommand;
+use Cordo\Core\UI\Console\Command\ModuleBuilderCommand;
 use SensioLabs\Security\Command\SecurityCheckerCommand;
+use Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper;
+use Symfony\Component\Console\Helper\DebugFormatterHelper;
 
 require __DIR__ . '/bootstrap/autoload.php';
 
@@ -21,7 +28,16 @@ $container = require_once __DIR__ . '/bootstrap/app.php';
 // init modules
 Register::initModules($container, true);
 
+$helperSet = new HelperSet([
+    new FormatterHelper(),
+    new DebugFormatterHelper(),
+    new ProcessHelper(),
+    new QuestionHelper(),
+    'db' => new ConnectionHelper($container->get(Connection::class)),
+]);
+
 $application = new Application();
+$application->setHelperSet($helperSet);
 $application->add(new SecurityCheckerCommand(new SecurityChecker()));
 $application->add(new ImportCommand());
 $application->add(new ModuleBuilderCommand());
