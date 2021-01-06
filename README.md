@@ -27,13 +27,6 @@ Main goal to create this framework was to have an efficient tool to build API ba
 
 ## Install
 
-If you'd like to utilize of the *Queues* functionality make sure that you have Redis extension for PHP installed. You can install it from [PECL](https://pecl.php.net/) repository:
-
-``` bash
-$ sudo pecl install redis
-$ sudo service php7.4-fpm restart
-```
-
 To create a new project go to your project folder and within this folder type:
 
 ``` bash
@@ -42,7 +35,7 @@ $ composer create-project darkorsa/cordo ./ -s dev
 
 Next copy `.env_example` file and rename it to `.env`. Then fill it with your configuration data.
 
-Final step is running console command:
+Optionally you can run console command:
 
 ``` bash
 $ php cordo core:init --withOAuth --withUuid
@@ -354,23 +347,15 @@ $emitter->addListener(
 
 For background processing [Bernard](https://bernard.readthedocs.io/) library is used.
 
-Bernard supports several different drivers:
+Currently supported drivers are:
 
-- Google AppEngine
-- Doctrine DBAL
 - Flatfile
-- IronMQ
-- MongoDB
-- Pheanstalk
-- PhpAmqp / RabbitMQ
 - Redis Extension
-- Predis
-- Amazon SQS
-- Queue Interop
 
-This framework is configured with Redis Extention driver by default. Driver declaration is placed in `bootstrap/queue_factory.php` and can be changed there.
+The config file for queues where you can specify the driver to be used in your application is located here `config/queue.php`.
 
-If you want to make your Command to be queued just make it implementing `Cordo\Core\Application\Queue\MessageInterface` interface or just extend `Cordo\Core\Application\Queue\AbstractMessage` class.
+If you want to make your Command to be queued just make it implementing `Cordo\Core\Application\Queue\MessageInterface` interface
+or just extend `Cordo\Core\Application\Queue\AbstractMessage` class.
 
 To launch background process that will process queued commands run in the console:
 
@@ -378,7 +363,14 @@ To launch background process that will process queued commands run in the consol
 php queue-worker &
 ```
 
-To better understand how to deal with events check Users module how welcome message is being sent for newly created users.
+To better understand how to deal with events check [Backoffice Users](https://github.com/darkorsa/cordo-bundle-backoffice) module and see how welcome message is being sent for newly created users.
+
+> **Note**: if you'd like to use the *Redis driver* for queues make sure that you have Redis extension for PHP installed. You can install it from [PECL](https://pecl.php.net/) repository:
+
+``` bash
+$ sudo pecl install redis
+$ sudo service php7.4-fpm restart
+``` 
 
 ### OAuth2
 

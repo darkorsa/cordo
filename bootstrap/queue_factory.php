@@ -1,19 +1,15 @@
 <?php
 
 use Bernard\Serializer;
-use Bernard\Driver\PhpRedis\Driver;
 use Bernard\Normalizer\EnvelopeNormalizer;
 use Bernard\QueueFactory\PersistentFactory;
 use Normalt\Normalizer\AggregateNormalizer;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer as SymfonySerializer;
+use Cordo\Core\Infractructure\Persistance\Bernard\Driver\QueueDriverFactory;
 
-$redis = new Redis();
-$redis->connect(env('REDIS_SERVER'), env('REDIS_PORT'));
-$redis->setOption(Redis::OPT_PREFIX, 'bernard:');
-
-$driver = new Driver($redis);
+$driver = QueueDriverFactory::factory($container->get('config')->get('queue'));
 
 return new PersistentFactory(
     $driver,

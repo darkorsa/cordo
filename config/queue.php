@@ -14,4 +14,18 @@ return [
      * @var int
      */
     'tries' => 5,
+
+    'driver' => env('QUEUE_DRIVER', 'file'),
+
+    'drivers' => [
+        'redis' => [
+            'server' => env('REDIS_SERVER'),
+            'port' => env('REDIS_PORT'),
+            'secret' => env('REDIS_SECRET'),
+            'prefix' => env('REDIS_OPT_PREFIX', 'bernard:')
+        ],
+        'file' => [
+            'path' => storage_path() . 'messages/'
+        ]
+    ]
 ];
