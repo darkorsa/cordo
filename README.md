@@ -6,7 +6,7 @@ Cordo is a microframework designed for efficient development of REST APIs using 
 - CQRS (Command Query Responsibility Segregation)
 - Event Dispatcher
 - Repository pattern
-- Queues (Redis)
+- Queues
 - OAuth2
 - UUIDs
 - Package by feature
@@ -22,8 +22,10 @@ Main goal to create this framework was to have an efficient tool to build API ba
 
 - PHP 7.4.0 or newer
 - Apache/Nginx
-- MySql 5.7
-- PHP Redis extension (default driver for queues)
+
+### Optional requirements
+- MySql 5.7 (default DB driver)
+- PHP Redis extension (driver for queues)
 
 ## Install
 
