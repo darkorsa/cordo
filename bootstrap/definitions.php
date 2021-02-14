@@ -20,6 +20,10 @@ return [
     'config' => DI\factory(static function () {
         return new Config(config_path(), new Parser());
     }),
+    'db_config' => DI\factory(static function (ContainerInterface $container) {
+        $db = $container->get('config')->get('db');
+        return $db['drivers'][$db['driver']];
+    }),
     'lang' => DI\factory(static function () {
         return new Config(resources_path() . 'lang', new Parser());
     }),
