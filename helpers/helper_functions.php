@@ -20,32 +20,32 @@ function env(string $key, $default = null)
     return $value;
 }
 
-function root_path(): string
+function root_path(string $path = null): string
 {
-    return __DIR__ . '/../';
+    return realpath(__DIR__ . '/..') . '/' . $path;
 }
 
-function app_path(): string
+function app_path(string $path = null): string
 {
-    return __DIR__ . '/../app/';
+    return realpath(__DIR__ . '/../app') . '/' . $path;
 }
 
-function config_path(): string
+function config_path(string $path = null): string
 {
-    return __DIR__ . '/../config/';
+    return realpath(__DIR__ . '/../config') . '/' . $path;
 }
 
-function resources_path(): string
+function storage_path(string $path = null): string
 {
-    return __DIR__ . '/../resources/';
+    return realpath(__DIR__ . '/../storage') . '/' . $path;
 }
 
-function storage_path(): string
+function resources_path(string $path = null): string
 {
-    return __DIR__ . '/../storage/';
+    return realpath(__DIR__ . '/../resources') . '/' . $path;
 }
 
-function vendor_path(): string
+function vendor_path(string $path = null): string
 {
-    return __DIR__ . '/../vendor/';
+    return realpath(__DIR__ . '/../vendor') . '/' . $path;
 }
