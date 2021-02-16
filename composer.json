@@ -3,7 +3,7 @@
     "description": "Microframework designed to efficienly develop REST APIs based on layered architecture and using CQRS, Layered Architecture, Events, Queues, etc.",
     "license": "MIT",
     "require": {
-        "darkorsa/cordo-core": "^0.10"
+        "darkorsa/cordo-core": "^0.11"
     },
     "require-dev": {
         "nunomaduro/phpinsights": "^1.7",

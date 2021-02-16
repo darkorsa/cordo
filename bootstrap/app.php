@@ -1,17 +1,16 @@
 <?php
 
 use App\Register;
+use Dotenv\Dotenv;
 use Ramsey\Uuid\Uuid;
 use DI\ContainerBuilder;
 use League\Plates\Engine;
 use Cordo\Core\SharedKernel\Enum\Env;
-use Symfony\Component\Dotenv\Dotenv;
-
-use Cordo\Core\Infractructure\Mailer\ZendMail\MailerFactory;
 use Cordo\Core\SharedKernel\Uuid\Helper\UuidFactoryHelper;
+use Cordo\Core\Infractructure\Mailer\ZendMail\MailerFactory;
 
-$dotenv = new Dotenv();
-$dotenv->load(root_path() . '.env');
+$dotenv = Dotenv::createImmutable(root_path());
+$dotenv->load();
 
 // Errors
 $errorReporter = require __DIR__ . '/error.php';
