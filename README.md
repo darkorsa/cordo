@@ -69,7 +69,6 @@ Some of the used libraries:
 - [Relay](https://relayphp.com/)
 - [Guzzle](http://docs.guzzlephp.org/en/stable/)
 - [Symfony Console](https://symfony.com/doc/current/components/console.html)
-- [Symfony Dotenv](https://symfony.com/doc/current/components/dotenv.html)
 - [Laminas ACL](https://docs.laminas.dev/laminas-permissions-acl/)
 - [Laminas Mail](https://docs.laminas.dev/laminas-mail/)
 
