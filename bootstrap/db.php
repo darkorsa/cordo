@@ -10,12 +10,11 @@ $paths = Register::registerEntities();
 $isDevMode = env('APP_ENV') == Env::DEV();
 
 // the connection configuration
-$dbConfig = $container->get('db_config');
 $dbParams = [
-    'dbname'    => $dbConfig['database'],
-    'user'      => $dbConfig['user'],
-    'password'  => $dbConfig['password'],
-    'host'      => $dbConfig['host'],
+    'dbname'    => env('DB_DATABASE'),
+    'user'      => env('DB_USERNAME'),
+    'password'  => env('DB_PASSWORD'),
+    'host'      => env('DB_HOST'),
     'driver'    => 'pdo_mysql',
 ];
 
