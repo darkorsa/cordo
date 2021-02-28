@@ -76,7 +76,7 @@ This documentation does not focus on describing in detail how to deal with Route
 
 You are also encouraged to find for yourself how things work under the hood, check the [Cordo Core](https://github.com/darkorsa/cordo-core) library where abstract classes and interfaces are located.
 
-If you want to see how the code can be organizen within all the layers, how to utilize of `CQRS`, `Repository Pattern`, `Events`, `Queues`, etc. take a look at the [Backoffice Bundle](https://github.com/darkorsa/cordo-bundle-backoffice). Check the installation instructions [here](https://github.com/darkorsa/cordo-bundle-backoffice/blob/master/README.md).
+If you want to see how the code can be organizen within all the layers, how to utilize of `CQRS`, `Repository Pattern`, `Events`, `Queues`, etc. take a look at the [Users Bundle](https://github.com/darkorsa/cordo-bundle-users). Check the installation instructions [here](https://github.com/darkorsa/cordo-bundle-users/blob/master/README.md).
 
 ### Entry points
 
@@ -123,7 +123,7 @@ Just add your package folder name to the `app/Register.php`:
 
 ``` php
 protected static $register = [
-    'Backoffice\Users',
+    'Shop\Users',
     // add you packages here
 ];
 ```
@@ -137,7 +137,7 @@ Users package is shipped by default with implemented basic CRUD actions.
 Here's how the code is organised:
 
 ``` bash
-app/Backoffice/Users/
+app/Shop/Users/
 .
 ├── Application
 │   ├── Acl
@@ -182,7 +182,7 @@ app/Backoffice/Users/
 │       └── Doctrine
 │           ├── ORM
 │           │   ├── Metadata
-│           │   │   └── App.Backoffice.Users.Domain.User.dcm.xml
+│           │   │   └── App.Shop.Users.Domain.User.dcm.xml
 │           │   └── UserDoctrineRepository.php
 │           └── Query
 │               ├── UserDoctrineFilter.php
@@ -364,7 +364,7 @@ To launch background process that will process queued commands run in the consol
 php queue-worker &
 ```
 
-To better understand how to deal with events check [Backoffice Users](https://github.com/darkorsa/cordo-bundle-backoffice) module and see how welcome message is being sent for newly created users.
+To better understand how to deal with events check [Users Bundle](https://github.com/darkorsa/cordo-bundle-users) module and see how welcome message is being sent for newly created users.
 
 > **Note**: if you'd like to use the *Redis driver* for queues make sure that you have Redis extension for PHP installed. You can install it from [PECL](https://pecl.php.net/) repository:
 
@@ -375,19 +375,15 @@ $ sudo service php7.4-fpm restart
 
 ### OAuth2
 
-OAuth2 authorization is shipped with [Backoffice Users](https://github.com/darkorsa/cordo-bundle-backoffice) module and is ready to use. Endpoints for token generation and token refresh are located at `app/Backoffice/Users/UI/Http/Route/OAuthRoutes.php`. Default Client ID is *Cordo*.
+This framework is shipped with OAuth2 as the default authorization method. OAuth2 servers configuration is located at: `app/config/auth.php`.
 
-General OAuth2 configuration is performed during *Users* initialization at: `app/Backoffice/Users/UsersInit.php`. 
-
-If you'd like to change default credentials check behavior you can do it here: `app/Backoffice/Users/UI/Http/Auth/OAuth2UserCredentials.php`.
+For real life OAuth2 implementation please check [Users Bundle](https://github.com/darkorsa/cordo-bundle-users))
 
 ### ACL
 
 For the purpose of Authorization [Zend ACL](https://docs.zendframework.com/zend-permissions-acl/usage/) has been used. ACL roles, resources, permissions cen be defined seperately in each package in `app/[Context]/[PackageName]/Application/Acl/[PackageName]Acl.php` which should extend `Cordo\Core\Application\Service\Register\AclRegister`.
 
-In `Auth` package that is shipped with  [Backoffice Users bundle](https://github.com/darkorsa/cordo-bundle-backoffice) there are CRUD actions prepared for users ACL rules.
-
-There is also a `Middeware` for authorizing access to API endpoints in `app/Backoffice/Shared/UI/Http/Middleware/AclMiddleware.php`. You can pass privilage name in constructor or leave empty then it will simply map http request method (GET, POST, PUT, DELETE) as acl privilage.
+In `Auth` package that is shipped with  [Users Bundle](https://github.com/darkorsa/cordo-bundle-users) there are CRUD actions prepared for users ACL rules.
 
 ### Errors
 
