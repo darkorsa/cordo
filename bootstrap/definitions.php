@@ -1,12 +1,14 @@
 <?php
 
+use Monolog\Logger;
 use Noodlehaus\Config;
 use League\Event\Emitter;
 use League\Plates\Engine;
-use Cordo\Core\UI\Http\Router;
 use Doctrine\DBAL\Connection;
+use Cordo\Core\UI\Http\Router;
 use Doctrine\ORM\EntityManager;
 use League\Event\EmitterInterface;
+use Monolog\Handler\StreamHandler;
 use Psr\Container\ContainerInterface;
 use Cordo\Core\Application\Config\Parser;
 use Psr\Http\Message\ServerRequestInterface;
@@ -30,6 +32,9 @@ return [
     'request' => DI\get(ServerRequestInterface::class),
     'router' => DI\get(Router::class),
     'emitter' => DI\get(EmitterInterface::class),
+    'logger' => DI\factory(static function () {
+        return (new Logger('debug'))->pushHandler(new StreamHandler(storage_path('logs/debug.log'), Logger::DEBUG));
+    }),
     ServerRequestInterface::class => DI\factory('GuzzleHttp\Psr7\ServerRequest::fromGlobals'),
     ErrorReporterInterface::class => DI\get('error_reporter'),
     MailerInterface::class => DI\get('mailer'),
@@ -42,4 +47,5 @@ return [
     Engine::class => DI\get('templates'),
     Translator::class => DI\get('translator'),
     Config::class => DI\get('config'),
+    LoggerInterface::class => DI\get('logger'),
 ];
