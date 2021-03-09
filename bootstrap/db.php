@@ -4,10 +4,8 @@ use App\Register;
 use Doctrine\DBAL\Types\Type;
 use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
-use Cordo\Core\SharedKernel\Enum\Env;
 
 $paths = Register::registerEntities();
-$isDevMode = env('APP_ENV') == Env::DEV();
 
 // the connection configuration
 $dbParams = [
@@ -24,8 +22,8 @@ if (!Type::hasType('uuid_binary_ordered_time')) {
 
 $proxyDir = storage_path() . 'cache/doctrine/';
 
-$config = Setup::createXMLMetadataConfiguration($paths, $isDevMode, $proxyDir);
-$config->setAutoGenerateProxyClasses($isDevMode);
+$config = Setup::createXMLMetadataConfiguration($paths, isLocalEnv(), $proxyDir);
+$config->setAutoGenerateProxyClasses(isLocalEnv());
 
 $entityManager = EntityManager::create($dbParams, $config);
 $entityManager

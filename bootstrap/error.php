@@ -1,9 +1,9 @@
 <?php
 
-$debug = env('APP_DEBUG');
+$isDebug = isDebug();
 
-ini_set('display_errors', (int) $debug);
-ini_set('display_startup_errors', (int) $debug);
+ini_set('display_errors', (int) $isDebug);
+ini_set('display_startup_errors', (int) $isDebug);
 error_reporting(-1);
 
 use Noodlehaus\Config;
@@ -13,7 +13,7 @@ use Cordo\Core\Application\Error\ErrorReporterBuilder;
 
 $config = new Config(config_path(), new Parser());
 
-$errorReporter = (new ErrorReporterBuilder(new ErrorReporter(), $config, env('APP_ENV'), $debug))->build();
+$errorReporter = (new ErrorReporterBuilder(new ErrorReporter(), $config, env('APP_ENV'), $isDebug))->build();
 
 // set php error handlers
 set_error_handler([$errorReporter, 'errorHandler']);

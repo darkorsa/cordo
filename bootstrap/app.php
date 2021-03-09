@@ -5,7 +5,6 @@ use Dotenv\Dotenv;
 use Ramsey\Uuid\Uuid;
 use DI\ContainerBuilder;
 use League\Plates\Engine;
-use Cordo\Core\SharedKernel\Enum\Env;
 use Cordo\Core\SharedKernel\Uuid\Helper\UuidFactoryHelper;
 use Cordo\Core\Infractructure\Mailer\ZendMail\MailerFactory;
 
@@ -25,7 +24,7 @@ $containerBuilder = new ContainerBuilder();
 $containerBuilder->addDefinitions(Register::registerDefinitions());
 $containerBuilder->useAutowiring(true);
 
-if (env('APP_ENV') == Env::PRODUCTION()) {
+if (isProductionEnv()) {
     $containerBuilder->enableCompilation(storage_path() . 'cache');
 }
 

@@ -1,5 +1,7 @@
 <?php
 
+use Cordo\Core\SharedKernel\Enum\Env;
+
 function env(string $key, $default = null)
 {
     $value = $_ENV[$key] ?? false;
@@ -18,6 +20,21 @@ function env(string $key, $default = null)
     }
 
     return $value;
+}
+
+function isDebug(): bool
+{
+    return env('APP_DEBUG');
+}
+
+function isProductionEnv(): bool
+{
+    return env('APP_ENV') == Env::PRODUCTION();
+}
+
+function isLocalEnv(): bool
+{
+    return env('APP_ENV') == Env::DEV();
 }
 
 function root_path(string $path = null): string
