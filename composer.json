@@ -3,10 +3,12 @@
     "description": "Microframework designed to efficienly develop REST APIs based on layered architecture and using CQRS, Layered Architecture, Events, Queues, etc.",
     "license": "MIT",
     "require": {
-        "darkorsa/cordo-core": "^0.16"
+        "darkorsa/cordo-core": "^0.21"
     },
     "require-dev": {
         "nunomaduro/phpinsights": "dev-master",
+        "pestphp/pest": "^1.18",
+        "pestphp/pest-plugin-faker": "^1.0",
         "phpstan/phpstan": "^0.12",
         "symfony/var-dumper": "^5.2"
     },
@@ -26,8 +28,8 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "scripts": {
-        "test": "phpunit",
-        "analyse": "phpstan analyse -l max -c phpstan.neon app tests",
+        "test": "pest",
+        "analyse": "phpstan analyse -l 5 -c phpstan.neon app",
         "insights": "phpinsights -v",
         "schema-create": "doctrine orm:schema-tool:create",
         "schema-drop": "doctrine orm:schema-tool:drop --force",

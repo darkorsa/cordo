@@ -4,3 +4,4 @@ build/
 apidoc/
 logs/
 public_html/
+.phpunit.result.cache
