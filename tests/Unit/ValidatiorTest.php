@@ -2,9 +2,9 @@
 
 use Cordo\Core\UI\Validator\AbstractValidator;
 
-function createValidator(array $data, array $customDefaultMessages = null)
+function createValidator()
 {
-    return new class($data, $customDefaultMessages) extends AbstractValidator
+    return new class() extends AbstractValidator
     {
         protected function validationRules(): void
         {
@@ -21,7 +21,8 @@ test('validation with custom messages', function () {
         'email' => 'test@example',
     ];
     $customMessages = require resources_path('lang/pl/validation.php');
-    $validator = createValidator($data, $customMessages);
+
+    $validator = createValidator();
 
     expect($validator->isValid($data, $customMessages))->toBeFalse();
     expect($validator->messages())->toEqual([
