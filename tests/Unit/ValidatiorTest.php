@@ -23,7 +23,7 @@ test('validation with custom messages', function () {
     $customMessages = require resources_path('lang/pl/validation.php');
     $validator = createValidator($data, $customMessages);
 
-    expect($validator->isValid())->toBeFalse();
+    expect($validator->isValid($data, $customMessages))->toBeFalse();
     expect($validator->messages())->toEqual([
         'email' => [
             'Email::INVALID_VALUE' => 'Niepoprawny adres email',
