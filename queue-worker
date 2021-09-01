@@ -7,7 +7,7 @@ use Bernard\Producer;
 use Noodlehaus\Config;
 use Bernard\Router\ClassNameRouter;
 use Bernard\Router\ContainerReceiverResolver;
-use Cordo\Core\Application\Queue\MessageInterface;
+use Cordo\Core\Application\Queue\QueueMessageInterface;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Cordo\Core\Application\Error\ErrorReporterInterface;
 use Cordo\Core\Application\Event\EventDispatcherAdapter;
@@ -39,20 +39,20 @@ $router = new ClassNameRouter(
 $eventDispatcher->addListener(
     Bernard\BernardEvents::INVOKE,
     function (Bernard\Event\EnvelopeEvent $envelopeEvent) {
-        // log job invoked
+        echo 'invoked: ' . $envelopeEvent->getEnvelope()->getName() . PHP_EOL;
     }
 );
 $eventDispatcher->addListener(
     Bernard\BernardEvents::ACKNOWLEDGE,
     function (Bernard\Event\EnvelopeEvent $envelopeEvent) {
-        // log job processed
+        echo 'processed: ' . $envelopeEvent->getEnvelope()->getName() . PHP_EOL;
     }
 );
 $eventDispatcher->addListener(
     Bernard\BernardEvents::REJECT,
     function (Bernard\Event\RejectEnvelopeEvent $envelopeEvent) use ($errorReporter, $producer, $config) {
         /**
-         * @var MessageInterface
+         * @var QueueMessageInterface
          */
         $message = $envelopeEvent->getEnvelope()->getMessage();
 
@@ -63,6 +63,7 @@ $eventDispatcher->addListener(
         }
 
         $errorReporter->report($envelopeEvent->getException());
+        echo 'rejected: ' . $envelopeEvent->getEnvelope()->getName() . PHP_EOL;
     }
 );
 
