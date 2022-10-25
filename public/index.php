@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Handling HTTP request
- */
-
-use App\Register;
 use GuzzleHttp\Psr7\Response;
 use Cordo\Core\UI\Http\Dispatcher;
 use Tuupola\Middleware\CorsMiddleware;
@@ -14,17 +9,17 @@ use Cordo\Core\UI\Http\Middleware\OAuth2ServerMiddleware;
 
 require __DIR__ . '/../bootstrap/autoload.php';
 
-// bootstapping
-$container = require_once __DIR__ . '/../bootstrap/app.php';
+// bootstrap
+$app = require_once __DIR__ . '/../bootstrap/app.php';
 
 // router
-$router = $container->get('router');
-$router->addMiddleware(new CorsMiddleware($container->get('config')->get('cors')));
+$router = $app->router;
+$router->addMiddleware(new CorsMiddleware($app->config->get('cors')));
 $router->addMiddleware(new ParsePutRequest());
 $router->addMiddleware(new OAuth2ServerMiddleware(
-    $container,
-    $container->get('config')->get('auth'),
-    $container->get('db_config')
+    $app->container,
+    $app->config->get('auth'),
+    $app->db_config
 ));
 $router->addRoute(
     'OPTIONS',
@@ -34,11 +29,11 @@ $router->addRoute(
     }
 );
 
-// load routes
-Register::registerRoutes($router, $container);
+# register services and modules
+$app->register();
 
 // dispatch request
-$dispatcher = new Dispatcher(FastRoute\simpleDispatcher($router->routes()), $container);
+$dispatcher = new Dispatcher(FastRoute\simpleDispatcher($router->routes()), $app->container);
 
-$response = new JsonResponse($dispatcher->dispatch($container->get('request')));
+$response = new JsonResponse($dispatcher->dispatch($app->request));
 $response->send();

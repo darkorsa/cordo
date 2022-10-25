@@ -3,13 +3,13 @@
     "description": "Microframework designed to efficienly develop REST APIs based on layered architecture and using CQRS, Layered Architecture, Events, Queues, etc.",
     "license": "MIT",
     "require": {
-        "darkorsa/cordo-core": "~0.23.0"
+        "darkorsa/cordo-core": "~0.30.0"
     },
     "require-dev": {
         "nunomaduro/phpinsights": "dev-master",
         "pestphp/pest": "^1.18",
         "pestphp/pest-plugin-faker": "^1.0",
-        "phpstan/phpstan": "^0.12",
+        "phpstan/phpstan": "^1.8",
         "symfony/var-dumper": "^5.2"
     },
     "autoload": {
@@ -40,6 +40,10 @@
         "fix-style": "phpcbf -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 app/"
     },
     "config": {
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "pestphp/pest-plugin": true
+        }
     }
 }

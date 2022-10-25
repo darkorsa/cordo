@@ -1,6 +1,7 @@
 <?php
 
 use Bernard\Serializer;
+use Cordo\Core\Application\App;
 use Bernard\Normalizer\EnvelopeNormalizer;
 use Bernard\QueueFactory\PersistentFactory;
 use Normalt\Normalizer\AggregateNormalizer;
@@ -9,7 +10,7 @@ use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer as SymfonySerializer;
 use Cordo\Core\Infractructure\Persistance\Bernard\Driver\QueueDriverFactory;
 
-$driver = QueueDriverFactory::factory($container->get('config')->get('queue'));
+$driver = QueueDriverFactory::factory(App::config()->get('queue'));
 
 return new PersistentFactory(
     $driver,

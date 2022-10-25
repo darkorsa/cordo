@@ -20,7 +20,7 @@ Main goal to create this framework was to have an efficient tool to build API ba
 
 ## Requirements
 
-- PHP 7.4.0 or newer
+- PHP 8.1 or newer
 - Apache/Nginx
 
 ### Optional requirements

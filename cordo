@@ -1,45 +1,20 @@
 #!/usr/bin/env php
 <?php
 
-/**
- * Handling console script execution
- */
-
-use App\Register;
-use Doctrine\DBAL\Connection;
-use SensioLabs\Security\SecurityChecker;
-use Symfony\Component\Console\Application;
 use Cordo\Core\UI\Console\Command\InitCommand;
-use Symfony\Component\Console\Helper\HelperSet;
-use Symfony\Component\Console\Helper\ProcessHelper;
-use Symfony\Component\Console\Helper\QuestionHelper;
-use Symfony\Component\Console\Helper\FormatterHelper;
 use Doctrine\DBAL\Tools\Console\Command\ImportCommand;
 use Cordo\Core\UI\Console\Command\ModuleBuilderCommand;
-use SensioLabs\Security\Command\SecurityCheckerCommand;
-use Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper;
-use Symfony\Component\Console\Helper\DebugFormatterHelper;
 
 require __DIR__ . '/bootstrap/autoload.php';
 
 // bootstapping
-$container = require_once __DIR__ . '/bootstrap/app.php';
+$app = require_once __DIR__ . '/bootstrap/app.php';
 
-$helperSet = new HelperSet([
-    new FormatterHelper(),
-    new DebugFormatterHelper(),
-    new ProcessHelper(),
-    new QuestionHelper(),
-    'db' => new ConnectionHelper($container->get(Connection::class)),
-]);
+# register services and modules
+$app->register();
 
-$application = new Application();
-$application->setHelperSet($helperSet);
-$application->add(new SecurityCheckerCommand(new SecurityChecker()));
-$application->add(new ImportCommand());
-$application->add(new ModuleBuilderCommand());
-$application->add(new InitCommand($container));
+$app->console->add(new ImportCommand());
+$app->console->add(new ModuleBuilderCommand());
+$app->console->add(new InitCommand($app->container));
 
-Register::registerCommands($application, $container);
-
-$application->run();
+$app->console->run();

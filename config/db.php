@@ -5,10 +5,11 @@ return [
 
     'drivers' => [
         'mysql' => [
-            'database' => env('DB_DATABASE'),
+            'dbname' => env('DB_DATABASE'),
             'user' => env('DB_USERNAME'),
             'password' => env('DB_PASSWORD'),
             'host' => env('DB_HOST'),
+            'driver' => 'pdo_mysql',
         ],
     ],
 ];
