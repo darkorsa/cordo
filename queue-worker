@@ -1,70 +1,27 @@
 #!/usr/bin/env php
 <?php
 
-use Bernard\Consumer;
-use Bernard\Producer;
-use Noodlehaus\Config;
+use Illuminate\Queue\Worker;
 use Cordo\Core\Application\App;
-use Bernard\Router\ClassNameRouter;
-use Bernard\Router\ContainerReceiverResolver;
-use Symfony\Component\EventDispatcher\EventDispatcher;
-use Cordo\Core\Application\Queue\QueueMessageInterface;
-use Cordo\Core\Application\Error\ErrorReporterInterface;
-use Cordo\Core\Application\Event\EventDispatcherAdapter;
+use Illuminate\Queue\WorkerOptions;
 
 require __DIR__ . '/bootstrap/autoload.php';
 
-// bootstapping
 /** @var App $app */
 $app = require __DIR__ . '/bootstrap/app.php';
-$queueFactory = require __DIR__ . '/bootstrap/queue_factory.php';
-
 $app->register();
 
-$eventDispatcher = new EventDispatcherAdapter(new EventDispatcher());
-$producer = new Producer($queueFactory, new EventDispatcher());
+$laravel = $app->laravel;
 
-/** @var Config */
-$config = App::config();
+$queue = $laravel['queue'];
+$events = $laravel['events'];
+$handler = $laravel['exception.handler'];
+$isDownForMaintenance = fn () => $laravel->isDownForMaintenance();
 
-/** @var ErrorReporterInterface */
-$errorReporter = $app->error_reporter;
-
-$router = new ClassNameRouter(
-    App::getInstance()->handlers_map,
-    new ContainerReceiverResolver(App::getInstance()->container)
+$worker = new Worker($queue, $events, $handler, $isDownForMaintenance);
+$options = new WorkerOptions(
+    maxTries: 3,
+    sleep: 5,
 );
 
-$eventDispatcher->addListener(
-    Bernard\BernardEvents::INVOKE,
-    function (Bernard\Event\EnvelopeEvent $envelopeEvent) {
-        echo 'invoked: ' . $envelopeEvent->getEnvelope()->getName() . PHP_EOL;
-    }
-);
-$eventDispatcher->addListener(
-    Bernard\BernardEvents::ACKNOWLEDGE,
-    function (Bernard\Event\EnvelopeEvent $envelopeEvent) {
-        echo 'processed: ' . $envelopeEvent->getEnvelope()->getName() . PHP_EOL;
-    }
-);
-$eventDispatcher->addListener(
-    Bernard\BernardEvents::REJECT,
-    function (Bernard\Event\RejectEnvelopeEvent $envelopeEvent) use ($errorReporter, $producer, $config) {
-        /**
-         * @var QueueMessageInterface
-         */
-        $message = $envelopeEvent->getEnvelope()->getMessage();
-
-        if ($message->fired() < $config->get('queue.tries')) {
-            $message->fire();
-            $producer->produce($message, $config->get('queue.default_queue'));
-            return;
-        }
-
-        $errorReporter->report($envelopeEvent->getException());
-        echo 'rejected: ' . $envelopeEvent->getEnvelope()->getName() . PHP_EOL;
-    }
-);
-
-$consumer = new Consumer($router, $eventDispatcher);
-$consumer->consume($queueFactory->create($config->get('queue.default_queue')));
+$worker->daemon('redis', 'default', $options);

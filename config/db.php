@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'driver' => 'mysql',
+    'driver' => env('DB_CONNECTION', 'mysql'),
 
     'drivers' => [
         'mysql' => [

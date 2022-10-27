@@ -1,40 +1,25 @@
 <?php
 
-use Cordo\Core\SharedKernel\Enum\Env;
+if (!function_exists('env')) {
+    function env(string $key, $default = null)
+    {
+        $value = $_ENV[$key] ?? false;
 
-function env(string $key, $default = null)
-{
-    $value = $_ENV[$key] ?? false;
+        if ($value === false) {
+            return $default;
+        }
 
-    if ($value === false) {
-        return $default;
+        switch (strtolower($value)) {
+            case 'true':
+                return true;
+            case 'false':
+                return false;
+            case 'null':
+                return null;
+        }
+
+        return $value;
     }
-
-    switch (strtolower($value)) {
-        case 'true':
-            return true;
-        case 'false':
-            return false;
-        case 'null':
-            return null;
-    }
-
-    return $value;
-}
-
-function isDebug(): bool
-{
-    return env('APP_DEBUG');
-}
-
-function isProductionEnv(): bool
-{
-    return env('APP_ENV') == Env::PRODUCTION();
-}
-
-function isLocalEnv(): bool
-{
-    return env('APP_ENV') == Env::DEV();
 }
 
 function root_path(string $path = null): string
