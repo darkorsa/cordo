@@ -1,31 +1,71 @@
 <?php
 
 return [
-    /**
-     * Default queue name
-     *
-     * @var string
-     */
-    'default_queue' => 'default',
 
-    /**
-     * The number of times the job may be attempted.
-     *
-     * @var int
-     */
-    'tries' => 5,
+    /*
+    |--------------------------------------------------------------------------
+    | Default Queue Connection Name
+    |--------------------------------------------------------------------------
+    |
+    | Laravel's queue API supports an assortment of back-ends via a single
+    | API, giving you convenient access to each back-end using the same
+    | syntax for every one. Here you may define a default connection.
+    |
+    */
 
-    'driver' => env('QUEUE_DRIVER', 'file'),
+    'default' => env('QUEUE_CONNECTION', 'sync'),
 
-    'drivers' => [
-        'redis' => [
-            'server' => env('REDIS_SERVER'),
-            'port' => env('REDIS_PORT'),
-            'secret' => env('REDIS_SECRET'),
-            'prefix' => env('REDIS_OPT_PREFIX', 'bernard:')
+    /*
+    |--------------------------------------------------------------------------
+    | Queue Connections
+    |--------------------------------------------------------------------------
+    |
+    | Here you may configure the connection information for each server that
+    | is used by your application. A default configuration has been added
+    | for each back-end shipped with Laravel. You are free to add more.
+    |
+    | Drivers: "sync", "database", "beanstalkd", "sqs", "redis", "null"
+    |
+    */
+    'connections' => [
+
+        'sync' => [
+            'driver' => 'sync',
         ],
-        'file' => [
-            'path' => storage_path() . 'messages/'
-        ]
-    ]
+
+        'database' => [
+            'driver' => 'database',
+            'table' => 'jobs',
+            'queue' => 'default',
+            'retry_after' => 90,
+            'after_commit' => false,
+        ],
+
+        'redis' => [
+            'driver' => 'redis',
+            'connection' => 'default',
+            'queue' => env('REDIS_QUEUE', 'default'),
+            'retry_after' => 90,
+            'block_for' => null,
+            'after_commit' => false,
+        ],
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Failed Queue Jobs
+    |--------------------------------------------------------------------------
+    |
+    | These options configure the behavior of failed queue job logging so you
+    | can control which database and table are used to store the jobs that
+    | have failed. You may change them to any database / table you wish.
+    |
+    */
+
+    'failed' => [
+        'driver' => env('QUEUE_FAILED_DRIVER', 'database-uuids'),
+        'database' => env('DB_CONNECTION', 'mysql'),
+        'table' => 'failed_jobs',
+    ],
+
 ];
