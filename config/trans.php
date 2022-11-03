@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'fallback_locale' => 'en_US',
+    'fallback_lang' => 'en',
     'accepted_langs' => [
         'en',
         'es',

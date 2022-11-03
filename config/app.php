@@ -17,6 +17,7 @@ return [
         Cordo\Core\Application\Bootstrap\Init\DatabaseInit::class,
         Cordo\Core\Application\Bootstrap\Init\TranslatorInit::class,
         Cordo\Core\Application\Bootstrap\Init\AclInit::class,
+        Cordo\Core\Application\Bootstrap\Init\ValidationInit::class,
     ],
 
     'modules' => [
