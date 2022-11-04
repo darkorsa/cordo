@@ -2,5 +2,5 @@ parameters:
     inferPrivatePropertyTypeFromConstructor: true
     checkGenericClassInNonGenericObjectType: false
     checkMissingIterableValueType: false
-    excludes_analyse:
+    excludePaths:
         - app/*/UI/views/*
