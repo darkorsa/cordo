@@ -8,6 +8,7 @@ return [
             'port' => env('MAIL_SMTP_PORT'),
             'username' => env('MAIL_SMTP_USERNAME'),
             'password' => env('MAIL_SMTP_PASSWORD'),
+            'encryption' => env('MAIL_ENCRYPTION', 'ssl'), # ssl/tls
         ],
         'log' => [
             'path' => storage_path() . 'logs/mail.log',
