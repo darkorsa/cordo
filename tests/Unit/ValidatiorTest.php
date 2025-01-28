@@ -2,33 +2,39 @@
 
 use Cordo\Core\UI\Validator\AbstractValidator;
 
-function createValidator()
+require_once __DIR__ . '/../../bootstrap/app.php';
+
+function createValidator(array $data)
 {
-    return new class() extends AbstractValidator
+    return new class($data) extends AbstractValidator
     {
-        protected function validationRules(): void
+        protected function rules(): array
         {
-            $this->validator
-                ->required('email')
-                ->email()
-                ->length(15);
+            return [
+                'email' => 'required|email|max:25'
+            ];
         }
     };
 }
 
-test('validation with custom messages', function () {
-    $data = [
-        'email' => 'test@example',
-    ];
-    $customMessages = require resources_path('lang/pl/validation.php');
+test('validation successfull', function () {
+    $validator = createValidator([
+        'email' => 'test@example.com',
+    ]);
 
-    $validator = createValidator();
+    expect($validator->passes())->toBeTrue();
+    expect($validator->messages()->toArray())->toBe([]);
+});
 
-    expect($validator->isValid($data, $customMessages))->toBeFalse();
-    expect($validator->messages())->toEqual([
+test('validation failed', function () {
+    $validator = createValidator([
+        'email' => '4werfwe',
+    ]);
+
+    expect($validator->fails())->toBeTrue();
+    expect($validator->messages()->toArray())->toBe([
         'email' => [
-            'Email::INVALID_VALUE' => 'Niepoprawny adres email',
-            'Length::TOO_SHORT' => 'Ilość znaków jest zbyt mała i powinna mieć wartość 15',
+            'The email must be a valid email address.'
         ],
     ]);
 });

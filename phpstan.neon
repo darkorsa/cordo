@@ -1,6 +1,7 @@
 parameters:
     inferPrivatePropertyTypeFromConstructor: true
-    checkGenericClassInNonGenericObjectType: false
-    checkMissingIterableValueType: false
     excludePaths:
         - app/*/UI/views/*
+    ignoreErrors:
+        - identifier: missingType.iterableValue
+        - identifier: missingType.generics

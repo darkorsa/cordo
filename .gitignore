@@ -5,3 +5,5 @@ apidoc/
 logs/
 public_html/
 .phpunit.result.cache
+.phpunit.cache/
+public/apidoc
