@@ -2,8 +2,9 @@
 <?php
 
 use Cordo\Core\UI\Console\Command\InitCommand;
-use Doctrine\DBAL\Tools\Console\Command\ImportCommand;
+use Doctrine\DBAL\Tools\Console\Command\RunSqlCommand;
 use Cordo\Core\UI\Console\Command\ModuleBuilderCommand;
+use Doctrine\DBAL\Tools\Console\ConnectionProvider\SingleConnectionProvider;
 
 require __DIR__ . '/bootstrap/autoload.php';
 
@@ -13,7 +14,7 @@ $app = require_once __DIR__ . '/bootstrap/app.php';
 # register services and modules
 $app->register();
 
-$app->console->add(new ImportCommand());
+$app->console->add(new RunSqlCommand(new SingleConnectionProvider($app->container->get('connection'))));
 $app->console->add(new ModuleBuilderCommand());
 $app->console->add(new InitCommand($app->container));
 

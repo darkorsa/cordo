@@ -3,7 +3,7 @@
     "description": "Microframework designed to efficienly develop REST APIs based on layered architecture and using CQRS, Layered Architecture, Events, Queues, etc.",
     "license": "MIT",
     "require": {
-        "darkorsa/cordo-core": "~0.70.0"
+        "darkorsa/cordo-core": "~0.80.0"
     },
     "require-dev": {
         "nunomaduro/phpinsights": "dev-master",
@@ -31,10 +31,10 @@
         "test": "pest",
         "analyse": "phpstan analyse -l 5 -c phpstan.neon app",
         "insights": "phpinsights -v",
-        "schema-create": "doctrine orm:schema-tool:create",
-        "schema-drop": "doctrine orm:schema-tool:drop --force",
-        "schema-update": "doctrine orm:schema-tool:update --force",
-        "schema-cache:clear-metadata": "doctrine orm:clear-cache:metadata",
+        "schema-create": "bin/doctrine orm:schema-tool:create",
+        "schema-drop": "bin/doctrine orm:schema-tool:drop --force",
+        "schema-update": "bin/doctrine orm:schema-tool:update --force",
+        "schema-cache:clear-metadata": "bin/doctrine orm:clear-cache:metadata",
         "apidoc": "apidoc -i app/ -o apidoc/",
         "check-style": "phpcs -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 app/",
         "fix-style": "phpcbf -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 app/"
