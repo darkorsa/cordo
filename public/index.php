@@ -16,8 +16,8 @@ $app = require_once __DIR__ . '/../bootstrap/app.php';
 
 # router
 $router = $app->router;
-$router->addMiddleware(new CorsMiddleware($app->config->get('cors')));
-$router->addMiddleware(new ParsePutRequest());
+$router->addMiddleware([CorsMiddleware::class, [$app->config->get('cors')]]);
+$router->addMiddleware([ParsePutRequest::class, []]);
 $router->addRoute(
     'OPTIONS',
     "/{endpoint:.+}",
