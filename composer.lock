@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "60df0a8803024a5c5a6597037027f8a5",
+    "content-hash": "54eaf46aca202a96a120d3881348516e",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -896,16 +896,16 @@
         },
         {
             "name": "darkorsa/cordo-core",
-            "version": "0.80.0",
+            "version": "0.81.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/darkorsa/cordo-core.git",
-                "reference": "4c81e5943dd1f02503229146b9e97b8882b92c20"
+                "reference": "affaffa9a9f972215f641e7beaa975fae9a54fa7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/darkorsa/cordo-core/zipball/4c81e5943dd1f02503229146b9e97b8882b92c20",
-                "reference": "4c81e5943dd1f02503229146b9e97b8882b92c20",
+                "url": "https://api.github.com/repos/darkorsa/cordo-core/zipball/affaffa9a9f972215f641e7beaa975fae9a54fa7",
+                "reference": "affaffa9a9f972215f641e7beaa975fae9a54fa7",
                 "shasum": ""
             },
             "require": {
@@ -973,9 +973,9 @@
             "description": "Core libraries for Cordo microframework",
             "support": {
                 "issues": "https://github.com/darkorsa/cordo-core/issues",
-                "source": "https://github.com/darkorsa/cordo-core/tree/0.80.0"
+                "source": "https://github.com/darkorsa/cordo-core/tree/0.81.0"
             },
-            "time": "2025-03-20T19:27:35+00:00"
+            "time": "2025-04-10T08:37:28+00:00"
         },
         {
             "name": "doctrine/cache",

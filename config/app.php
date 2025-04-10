@@ -24,4 +24,6 @@ return [
         // register your modules here
         App\Welcome\Message\ModuleRegister::class,
     ],
+
+    'oauth' => env('APP_ENABLE_OAUTH', false),
 ];
